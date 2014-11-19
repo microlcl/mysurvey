@@ -1,0 +1,132 @@
+<%@ page contentType="text/html;charset=UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+<c:set var="ctx" value="${pageContext.request.contextPath}" />
+
+
+<!-- combotreee -->
+<!-- link rel="stylesheet" type="text/css" href="${ctx}/static/easyui/themes/bootstrap/easyui.css"-->
+<link rel="stylesheet" type="text/css"
+	href="${ctx}/static/easyui/themes/icon.css">
+<link rel="stylesheet" type="text/css" href="${ctx}/static/easyui/themes/bootstrap/easyui.css">
+<link rel="stylesheet" type="text/css" href="${ctx}/static/easyui/mytree.css">
+<link rel="stylesheet" type="text/css" href="${ctx}/static/styles/mystyle.css">
+<script src="${ctx}/static/easyui/jquery.easyui.min.js" type="text/javascript"></script>
+<script src="${ctx}/static/nano/nano.js" type="text/javascript"></script>
+
+<style>
+</style>
+<div id="caseModalWindow" class="modal hide fade">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal"
+			aria-hidden="true">&times;</button>
+		<h4>案例选择</h4>
+	</div>
+	<div class="modal-body">
+		<!-- 模态对话框begin -->
+		<div class="search-panel">
+			<form class="form-search form-inline" action="#">
+						<div class="input-append">
+						<label>关键字：</label> 
+					    <input class="span3" id="caseSearchKeyword" type="text" placeholder="案例名称/客户姓名/描述/场地名称亦可">
+					    <button class="btn" style="border-radius:0px 4px 4px 0" type="button" onclick="caseSearch()" id="case_search_btn">Go!</button>
+						</div>
+			</form>
+		</div>
+
+		<div class="accordion" style="border-color: transparent" id="caseAccordion"></div>
+
+		<div id="caseLoadMore" class="pagination pagination-centered">
+			<button class="btn btn-link" type="button" onclick="caseLoadMore()">加载更多...</button>
+		</div>
+		<!-- 模态对话框end -->
+	</div>
+	<div class="modal-footer">
+		<a href="#" class="btn" data-dismiss="modal" aria-hidden="true"">关闭</a> 
+		<a href="#" class="btn btn-primary"	data-dismiss="modal" aria-hidden="true" onclick="getCaseSelectedValue()">确定</a>
+	</div>
+</div>
+
+<!-- 生成选项的JS模板 -->
+<div style="display:none" id="myCaseTemplate">
+<div class="accordion-group">
+	<div class="accordion-heading">
+	<ul class="inline">
+			<li><input id="myc_{id}" value="{id}:{title}" type="radio" name="selectedCases"/> </li>
+			<li><a class="accordion-toggle" data-toggle="collapse" data-parent="#caseAccordion" href="#case_collapse_{id}">{id}:{title}</a></li>
+</ul>
+	</div>
+</div>
+</div>
+
+
+<script>
+	var caseCurrentpage = 0;
+
+	//调用者输入参数
+	var caseParameters = {};
+
+	function caseSearch() {
+		caseCurrentpage = 0;
+		$('#caseAccordion').empty();
+		caseLoadMore();
+		return false;
+	}
+
+	function casePopupWindow(obj) {
+		caseParameters = obj;
+		$('#caseModalWindow').modal({
+			backdrop : false,
+		});
+		caseLoadMore();
+
+	}
+
+	function caseLoadMore() {
+		var nextPage = caseCurrentpage + 1;
+		console.log("next pageNum:" + nextPage);
+		$.ajax({
+			url : '${ctx}/case/api/search',
+			type : 'get',
+			data : {
+			page : nextPage,
+			search_keyword : $('#caseSearchKeyword').val(),
+			},
+
+			success : function(resp) {
+				caseCurrentpage++;
+				console.log("===========");
+				if (resp.lastPage) {
+					console.log("is true, hide");
+					$('#caseLoadMore').hide();
+				} else {
+					console.log("is false, show");
+					$('#caseLoadMore').show();
+				}
+				$.each(resp.content, function(i, cases) {
+					var mytemp = $('#myCaseTemplate').html();
+					var myvalue = nano(mytemp,cases);
+					$('#caseAccordion').append(myvalue);
+					$('#myc_' + cases.id).data('cases', cases);
+				});
+			}
+		});
+
+	}
+	
+	
+	function getCaseSelectedValue() {
+
+//		caseParameters.callback($('input:radio[name="selectedCases"]:checked'));
+		var result = {};
+
+		result.cases = [];
+		var selectedQuestions = $('input:radio[name="selectedCases"]:checked');
+		$.each(selectedQuestions, function(i, cases) {
+			var mydata = $('#' + cases.id).data('cases');
+			result.cases.push(mydata);
+		});
+		caseParameters.callback(result);
+				
+	}
+</script>

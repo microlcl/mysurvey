@@ -1,0 +1,16 @@
+<Context reloadable="true"> 
+    <WatchedResource>WEB-INF/web.xml</WatchedResource> 
+    <Resource name="jdbc/myscheme" auth="Container" type="javax.sql.DataSource"   
+    maxActive="100"   
+    maxIdle="20" 
+    maxWait="10000" 
+    username="myuser_test"   
+    password="mypassw0rd" 
+    driverClassName="com.mysql.jdbc.Driver" 
+    url="jdbc:mysql://107.170.194.160/mysurvey"
+    autoReconnect="true"
+    maxReconnects="10"
+    timeBetweenEvictionRunsMillis="3600000"
+    testWhileIdle="true"
+    validationQuery="select 1 from dual"/> 
+</Context>  

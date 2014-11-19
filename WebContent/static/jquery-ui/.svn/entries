@@ -1,0 +1,41 @@
+9
+
+dir
+443
+svn://107.170.194.160/newrepo/trunk/myprogram/WebContent/static/jquery-ui
+svn://107.170.194.160/newrepo
+
+
+
+2014-07-21T12:50:11.048154Z
+99
+lichlei
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+052042c4-83d1-4621-b229-53367eba24cb
+
+
+
+
+
+
+0
+
+1.10.2
+dir
+
+1.8.9
+dir
+

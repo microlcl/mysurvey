@@ -1,0 +1,15 @@
+<%@ page language="java" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://com.eastteam.myprogram/mytaglib" prefix="mytag" %>
+<c:set var="ctx" value="${pageContext.request.contextPath}" />
+
+<c:if test="${not empty user.id}">
+
+	<div id="leftbar" class="span2">
+		<h1>菜单</h1>
+		<div class="submenu">
+			<mytag:PermssionTag functionId="F7-1"><a id="question-tab" href="${ctx}/question/list">问题管理</a></mytag:PermssionTag>
+			<mytag:PermssionTag functionId="F8-1"><a id="paper-tab" href="${ctx}/paper/list">调查问卷</a></mytag:PermssionTag>		
+		</div>
+	</div>
+</c:if>

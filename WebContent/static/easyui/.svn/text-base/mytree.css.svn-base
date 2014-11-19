@@ -1,0 +1,20 @@
+.tree-info{
+	background:#FFFEE6;
+	color:#8F5700;
+	padding:12px;
+}
+.tree-tip{
+	width:16px;
+	height:16px;
+	margin-right:8px;
+	float:left;
+}
+
+.combo {
+	height: 28px !important;
+	border-radius: 4px 4px 4px 4px !important;
+}
+
+.combo .combo-text {
+	font-size: 14px !important;
+}
