@@ -3,7 +3,17 @@
 <%@ page import="org.slf4j.Logger,org.slf4j.LoggerFactory" %>
 <%response.setStatus(200);%>
 
+<%
+	Throwable ex = null;
+	if (exception != null)
+		ex = exception;
+	if (request.getAttribute("javax.servlet.error.exception") != null)
+		ex = (Throwable) request.getAttribute("javax.servlet.error.exception");
 
+	//记录日志
+	Logger logger = LoggerFactory.getLogger("500.jsp");
+	logger.error(ex.getMessage(), ex);
+%>
 <!DOCTYPE html>
 <html>
 <head>
