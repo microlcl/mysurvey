@@ -58,7 +58,6 @@
 		<filter-name>AuthFilter</filter-name>
 		<url-pattern>/question/*</url-pattern>
 		<url-pattern>/paper/*</url-pattern>
-		<url-pattern>/myGroup/*</url-pattern>
 
 	</filter-mapping>
 
