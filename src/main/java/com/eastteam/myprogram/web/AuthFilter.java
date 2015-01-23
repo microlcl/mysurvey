@@ -115,18 +115,19 @@ public class AuthFilter implements Filter {
 	}
 	
 	private boolean isAccessable(String uri, User user) {
-		List<String> authorizedUriList = user.getAuthorizedUriList();
-		
-		if (authorizedUriList == null || authorizedUriList.isEmpty())
-			return false;
-		
-		for (String authorizedUri : authorizedUriList) {
-			if (!StringUtils.isBlank(authorizedUri) && StringUtils.startsWith(uri,authorizedUri.trim())) {
-				return true;
-			}
-		}
-		
-		return false;		
+//		List<String> authorizedUriList = user.getAuthorizedUriList();
+//		
+//		if (authorizedUriList == null || authorizedUriList.isEmpty())
+//			return false;
+//		
+//		for (String authorizedUri : authorizedUriList) {
+//			if (!StringUtils.isBlank(authorizedUri) && StringUtils.startsWith(uri,authorizedUri.trim())) {
+//				return true;
+//			}
+//		}
+//		
+//		return false;		
+		return true;
 	}
 
 }

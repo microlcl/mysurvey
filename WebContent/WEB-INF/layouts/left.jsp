@@ -8,8 +8,26 @@
 	<div id="leftbar" class="span2">
 		<h1>菜单</h1>
 		<div class="submenu">
-			<mytag:PermssionTag functionId="F7-1"><a id="question-tab" href="${ctx}/question/list">问题管理</a></mytag:PermssionTag>
-			<mytag:PermssionTag functionId="F8-1"><a id="paper-tab" href="${ctx}/paper/list">调查问卷</a></mytag:PermssionTag>		
+			<p class="flip">
+				<mytag:PermssionTag functionId="">
+					<a id="">我的调查</a>
+				</mytag:PermssionTag>
+			</p>
+			<div class="panel" style="display: none;">
+					<a  href="${ctx}/myGroup/list">我的用户组</a>
+			</div>
+			
+			<div class="panel" style="display: none;">
+					<a href="">我发起的调查</a>
+			</div>
+
+
+			<mytag:PermssionTag functionId="F7-1">
+				<a id="question-tab" href="${ctx}/question/list">问题管理</a>
+			</mytag:PermssionTag>
+			<mytag:PermssionTag functionId="F8-1">
+				<a id="paper-tab" href="${ctx}/paper/list">调查问卷</a>
+			</mytag:PermssionTag>
 		</div>
 	</div>
 </c:if>

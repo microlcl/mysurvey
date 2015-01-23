@@ -34,7 +34,7 @@ public class QuestionService extends PageableService {
 		param.put("offset", pageRequest.getOffset());
 		param.put("pageSize", pageRequest.getPageSize());
 		param.put("sort", this.getOrderValue(pageRequest.getSort()));
-		List<Question> questions = questionMybatisDao.search(param);
+		List<Question> questions = questionMybatisDao.search(null);
 		
 		Iterator<Question> it = questions.iterator();
 		while(it.hasNext()){

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.eastteam.myprogram.dao.MyGroupMybatisDao">
+	<resultMap id="myGroupDetailMap" type="Group">
+		<id property="id" column="group_id"/>
+		<result property="groupName" column="group_name"/>
+		<result property="comment" column="comment"/>
+		<result property="content" column="content"/>
+		<result property="editDate" column="edit_date"/>
+		<result property="trashed" column="trashed" />
+		<association property="creater" column="user_id" javaType="User">
+			<id property="id" column="user_id" />
+			<result property="name" column="creater_name" />
+		</association>
+	</resultMap>
+	
+	
+	<select id="search" parameterType="String" resultMap="myGroupDetailMap">
+	   select g.group_id, g.group_name, g.comment, g.content , g.edit_date,u.name as creater_name from groups g
+		inner join users u on g.user_id=u.id 
+		<where>
+		  g.user_id=#{userId}
+		</where>
+
+	</select>
+	
+	<insert id="insertGroup" parameterType="Group" useGeneratedKeys="true" keyProperty="id" >
+		insert into groups (group_name, comment, content, trashed, edit_date, user_id)
+		values (#{groupName},#{comment}, #{content},'F',now(),#{creater.id});
+	</insert>
+	
+	<update id="updateGroup" parameterType="Group">
+		update groups set group_name=#{groupName}, comment=#{comment}, content=#{content},edit_date=now() 
+		where group_id=#{id}
+	</update>
+	
+	<delete id="deleteGroup" parameterType="Long">
+		delete from groups where group_id=#{id}
+	</delete>
+	
+	<select id="getSelectedGroup" parameterType="Long" resultMap="myGroupDetailMap">
+	    select group_id , group_name, comment, content, edit_date from groups where group_id=#{id}
+	</select>
+</mapper>

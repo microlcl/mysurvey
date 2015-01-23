@@ -12,8 +12,7 @@ delete from role_function;
 delete from roles;
 delete from user_role;
 delete from users;
-
-
+delete from groups;
 
 
 
@@ -22,6 +21,8 @@ insert into modules(module_id, pid, name, description, path) values('M1-7','M1',
 insert into modules(module_id, pid, name, description, path) values('M1-8','M1','问卷管理','问卷管理','');
 
 insert into functions(function_id, module_id, name, description, path) values('F0','M1','主界面','查看主界面','/index.jsp');
+
+insert into functions(function_id, module_id, name, description, path) values('F6-1','M1-6','问题：列表','菜单导航','/mySurvey/myGroup');
 
 insert into functions(function_id, module_id, name, description, path) values('F7-1','M1-7','问题：列表','菜单导航','/question/list');
 insert into functions(function_id, module_id, name, description, path) values('F7-2','M1-7','问题：增加','有权限增加','/question/addQuestion,/question/saveQuestion');
@@ -49,6 +50,9 @@ insert into user_role(user_id, role_id) values('admin','R0');
 
 insert into role_function(role_id, function_id, description) values('R0','F0','');
 insert into role_function(role_id, function_id, description) values('R0','F7-1','');
+
+
+insert into role_function(role_id, function_id, description) values('R0','F6-1','');
 insert into role_function(role_id, function_id, description) values('R0','F7-2','');
 insert into role_function(role_id, function_id, description) values('R0','F7-3','');
 insert into role_function(role_id, function_id, description) values('R0','F7-4','');
@@ -204,5 +208,8 @@ insert into paper_answers(business_id, paper_id, question_id, answer) values('C1
 
 insert into paper_answers(business_id, paper_id, question_id, answer) values('C2',6,1,'2');
 insert into paper_answers(business_id, paper_id, question_id, answer) values('C2',6,3,'abcde');
-
 insert into paper_answers(business_id, paper_id, question_id, answer) values('V6',7,3,'abcde');
+
+insert into groups(group_id, group_name, comment, content, edit_date, trashed, user_id) values(1,'群组1','测试群组','张三^zhangsan@cn.ibm.com|李四^lisi@cn.ibm.com|王五^wangwu@cn.ibm.com',now(),'F','admin');
+insert into groups(group_id, group_name, comment, content, edit_date, trashed, user_id) values(2,'群组2','测试群组','',now(),'F','zhang3');
+insert into groups(group_id, group_name, comment, content, edit_date, trashed, user_id) values(3,'群组3','测试群组','jack^jack@cn.ibm.com|tom^tom@cn.ibm.com|stan^stan@cn.ibm.com|^xxx@cn.ibm.com',now(),'F','admin');
