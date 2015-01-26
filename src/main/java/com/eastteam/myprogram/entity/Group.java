@@ -1,8 +1,8 @@
 package com.eastteam.myprogram.entity;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.TreeMap;
 
 /**
  * @author gongbinfeng
@@ -49,8 +49,24 @@ public class Group extends IdEntity{
 	public List<String[]> getGitems() {
 		return gitems;
 	}
-	public void setGitems(List<String[]> gitems) {
-		this.gitems = gitems;
+	public void setGitems() {
+		this.gitems = parseContent();
+	}
+	
+	
+	private List<String[]> parseContent(){
+		String[] contentArray=null;
+		List<String []> gitems=new ArrayList<String[]>();
+		if(content!=null){
+			contentArray=content.split("\\|");
+		}
+		
+		if(contentArray!=null && contentArray.length>=1){
+			for(String item : contentArray ){
+				gitems.add(item.split("\\^"));
+			}
+		}
+		return gitems;
 	}
     
 }
