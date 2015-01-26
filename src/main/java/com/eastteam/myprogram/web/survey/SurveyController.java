@@ -75,8 +75,12 @@ public class SurveyController {
 		survey.setCreater((User) session.getAttribute("user"));
 		survey.setPaper(paperService.selectPaper(paperid));
 		survey.setPaperURL("http://www.ibm.com/cn/zh/");
-		surveyService.publishSurvey(survey);
-		return "survey/publishOK";
+		if(surveyService.publishSurvey(survey)){
+			return "survey/publishOK";
+		}else {
+			return "survey/publishFail";
+		}
+		
 	}
 	
 

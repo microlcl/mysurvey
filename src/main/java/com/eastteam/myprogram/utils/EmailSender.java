@@ -16,7 +16,7 @@ import javax.mail.internet.MimeUtility;
 public class EmailSender {  
  
      
-    public  void sendmail(String subject,String from, String[] to,  
+    public boolean sendmail(String subject,String from, Object[] to,  
             String description, String paperURL, String mimeType) {  
         try {  
         	 String smtp = "smtp.163.com";   
@@ -46,8 +46,8 @@ public class EmailSender {
  
            InternetAddress[] sendTo = new InternetAddress[to.length];  
            for (int i = 0; i < to.length; i++) {  
-               System.out.println("send to:" + to[i]);  
-               sendTo[i] = new InternetAddress(to[i]);  
+               System.out.println("send to:" + to[i].toString());  
+               sendTo[i] = new InternetAddress(to[i].toString());  
            }  
  
            mimeMsg.setRecipients(  
@@ -78,9 +78,11 @@ public class EmailSender {
            mimeMsg.saveChanges();  
            transport.send(mimeMsg);  
            transport.close();  
-           System.out.println("success!!!");  
+           System.out.println("success!!!"); 
+           return true;
        } catch (Exception e) {  
            e.printStackTrace();  
+           return false;
        }  
    }  
  

@@ -31,7 +31,7 @@ public class SurveyService extends PageableService {
 	
 	private static Logger logger = LoggerFactory.getLogger(SurveyService.class);
 
-	public void publishSurvey(Survey survey){
+	public boolean publishSurvey(Survey survey){
 		logger.info("save new survey :"+ survey.getSubject());
 		surveyMybatisDao.save(survey);
 		HashSet<String> _receiver=new HashSet<String>();
@@ -46,7 +46,8 @@ public class SurveyService extends PageableService {
 				_receiver.add(emailaddr[1]);
 			}
 		}
-		new EmailSender().sendmail(survey.getSubject(), "easysurveytest@163.com",(String[]) _receiver.toArray(), survey.getDescription(), survey.getPaperURL(), "text/html;charset=gb2312");
+		
+	return new EmailSender().sendmail(survey.getSubject(), "easysurveytest@163.com",_receiver.toArray(), survey.getDescription(), survey.getPaperURL(), "text/html;charset=gb2312");
 	}
 	
 	@Override
