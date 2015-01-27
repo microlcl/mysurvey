@@ -31,10 +31,10 @@
 	   var i=0;
 	   var _content="";
 	   $("input[name='userId']").each(function(){
-	   if($(this).val()!=""){
-	      _content+=$("input[name='nickName']").get(i).value+"^"+$(this).val()+"|";
-	      $("#groupId_error").hide();
-	      i++;
+	   if($(this).val().match(/^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/)){
+                _content+=$("input[name='nickName']").get(i).value+"^"+$(this).val()+"|";
+	             $("#groupId_error").hide();
+	            i++;
 	   }else{
 	      _content="idError";
 	      $("#groupId_error").show();
@@ -100,7 +100,7 @@
 			<div class="control-group">
 			     <label for="option" class="control-label formlabel">添加新联系人</label>  <a title="创建" onclick="addOption()" href="javascript:void(0);"><span class="iconImg iconImg_create" style="margin:0px 0px -11px" ></span></a>
 			     <span id="groupContent_error" class="error" style="display:none">小组名单不能为空！</span>
-			     <span id="groupId_error" class="error" style="display:none">联系人id不能为空！</span>
+			     <span id="groupId_error" class="error" style="display:none">请输入正确的联系人id！</span>
 			</div>   
 		    <input style="display:none;" name="content">
 		
