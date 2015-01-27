@@ -92,7 +92,7 @@
 				</div>	
 				<div class="control-group">
 				<label for="question" class="control-label formlabel">请选择调查的群组:</label>		
-				 <div class="controls">
+				 <div class="controls" style="width:550px">
 				  <c:forEach items="${groups}"  var="group" varStatus="status">
 				    <div class="btn" onclick="markGroup(this)" >${group.groupName}<i class="icon-ok" style="width:20px;display :none;"></i><input type="text" value="${group.id }" id="groupid" name="groupid" style="display:none;"></div>
 				  </c:forEach>
