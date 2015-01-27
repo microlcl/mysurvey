@@ -51,7 +51,54 @@
  		       }
 		    });
 		    $("#surveyGroup").val(_surveyGroup);
-		    $("#surveyForm").submit();
+		    if($("#datetimepicker7").val()==""){
+		       $("#ddateEmptyError").show();
+		       $("#ddateInvalidError").hide();
+		       $("#subjectError").hide();
+		       $("#groupError").hide();
+		    }else if(deaddateVerification($("#datetimepicker7").val())){
+		        $("#ddateEmptyError").hide();
+		        $("#ddateInvalidError").show();
+		        $("#subjectError").hide();
+		        $("#groupError").hide();
+		    }else if($("#surveySubject").val()==""){
+		        $("#subjectError").show();
+		        $("#ddateEmptyError").hide();
+		        $("#ddateInvalidError").hide();
+		        $("#groupError").hide();
+		    }else if(_surveyGroup==""){
+		        $("#subjectError").hide();
+		        $("#ddateEmptyError").hide();
+		        $("#ddateInvalidError").hide();
+		        $("#groupError").show();
+		    }else{
+		        $("#subjectError").hide();
+		        $("#ddateEmptyError").hide();
+		        $("#ddateInvalidError").hide();
+		        $("#groupError").hide();
+		        $("#surveyForm").submit();
+		        $("#action-bar").hide();
+		        $("#submitOK").show();
+		    }
+		}
+		function deaddateVerification(time){
+		   var enddate=time.replace("/","").replace("/","").replace(" ","").replace(":","");
+		   var year=new Date().getFullYear();
+		   var month=checkNumbers(new Date().getMonth()+1);
+		   var day=checkNumbers(new Date().getDate());
+		   var hour=checkNumbers(new Date().getHours());
+		   var minutes=checkNumbers(new Date().getMinutes());
+		   var now=year.toString()+month.toString()+day.toString()+hour.toString()+minutes.toString();
+		 //  alert(enddate+"    "+now);
+		   return enddate<=now;
+		}
+		
+		function checkNumbers(arg){
+		    if(arg<10){
+		       arg="0"+arg.toString();
+		       return arg;
+		    }
+		    else return arg;
 		}
 	</script>
 </head>
@@ -67,6 +114,7 @@
 					<label for="question" class="control-label formlabel">问卷主题:</label>
 					<div class="controls">						
 						<input type="text" id="surveySubject" name="subject"  maxlength="128" class="input-large required" placeholder="0~128个字符" />
+						 <span id="subjectError" class="error" style="display:none">请输入调查主题</span>
 					</div>
 				</div>
 				<div class="control-group">
@@ -80,6 +128,8 @@
 					<label for="question" class="control-label formlabel">调查截止日期:</label>
 					<div class="controls">
 					   <input type="text" id="datetimepicker7" name="deadlineTiemstamp" readonly="true" placeholder="双击选择时间与日期" onclick="getDeadline()"  />
+					   <span id="ddateEmptyError" class="error" style="display:none">请设定调查截止日期！</span>
+					   <span id="ddateInvalidError" class="error" style="display:none">请设定有效的截止日期！</span>
 					</div>
 				</div>
 				<div class="control-group">
@@ -95,14 +145,16 @@
 				    <div class="btn" onclick="markGroup(this)" style="margin-top:5px" >${group.groupName}<i class="icon-ok" style="width:20px;display :none;"></i><input type="text" value="${group.id }" id="groupid" name="groupid" style="display:none;"></div>
 				  </c:forEach>
 				 </div>
+				 <span id="groupError" class="error" style="display:none">请勾选需要调查的群组</span>
 				</div>
 				<input type="text" name="surveyGroup" id="surveyGroup" style="display:none;">
 			</form>
 		</div>
-		<div class="form-actions" style="min-height: 23px;margin-top: 0 !important;">
+		<div id="action-bar" class="form-actions" style="min-height: 23px;margin-top: 0 !important;">
 			<input id="submit_btn" class="btn btn-warning"  type="button" value="提交" onclick="formatAndCheck();" />&nbsp;	
 			<input id="cancel_btn" class="btn" type="button" value="返回" onclick="history.back()"/>
 		</div>
+		<center><span id="submitOK" style="display:none;"><h3>请稍等...</h3></span></center>
 	</div>
 
 </body>
