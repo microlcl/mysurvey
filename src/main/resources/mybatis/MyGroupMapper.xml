@@ -22,6 +22,7 @@
 		<where>
 		  g.user_id=#{userId}
 		</where>
+		order by g.group_id
 
 	</select>
 	

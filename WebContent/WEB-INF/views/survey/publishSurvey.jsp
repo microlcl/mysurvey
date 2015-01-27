@@ -15,8 +15,6 @@
     <link rel="stylesheet" type="text/css" href="${ctx}/static/dateTimePicker/jquery.datetimepicker.css"/>
     <script src="${ctx}/static/dateTimePicker/jquery.js" type="text/javascript"></script>
     <script src="${ctx}/static/dateTimePicker/jquery.datetimepicker.js" type="text/javascript"></script>
-    
-    
 	<script src="${ctx}/static/easyui/jquery.easyui.min.js" type="text/javascript"></script>
 	<script src="${ctx}/static/nano/nano.js" type="text/javascript"></script>
 	
@@ -94,7 +92,7 @@
 				<label for="question" class="control-label formlabel">请选择调查的群组:</label>		
 				 <div class="controls" style="width:550px">
 				  <c:forEach items="${groups}"  var="group" varStatus="status">
-				    <div class="btn" onclick="markGroup(this)" >${group.groupName}<i class="icon-ok" style="width:20px;display :none;"></i><input type="text" value="${group.id }" id="groupid" name="groupid" style="display:none;"></div>
+				    <div class="btn" onclick="markGroup(this)" style="margin-top:5px" >${group.groupName}<i class="icon-ok" style="width:20px;display :none;"></i><input type="text" value="${group.id }" id="groupid" name="groupid" style="display:none;"></div>
 				  </c:forEach>
 				 </div>
 				</div>
