@@ -113,7 +113,7 @@ public class SurveyService extends PageableService {
 	}
 	
 	public Survey selectSurvey(String surveyId) {
-		return this.surveyMybatisDao.selectSurvey(surveyId);
+		return this.surveyMybatisDao.selectSurvey(Long.parseLong(surveyId));
 	}
 	
 	

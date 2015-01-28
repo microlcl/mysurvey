@@ -44,8 +44,13 @@
 		    </if>
 		</where>
 	</select>
-	<select id="selectSurvey" resultType="Survey">
-	    
+	<select id="selectSurvey" resultMap="surveyDetailMap">
+	    select * from survey s
+	    <where>
+	        <if test="_parameter != null">
+	            s.survey_id = #{_parameter}
+	        </if>
+	    </where>
 	</select>
 	<update id="updateSurvey" parameterType="Survey">
 		

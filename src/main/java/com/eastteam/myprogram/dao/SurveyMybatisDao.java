@@ -10,7 +10,7 @@ public interface SurveyMybatisDao {
 	
 	public List<Survey> search(Map<String, Object> parameters);
 	public Long getCount(Map<String, Object> parameters);
-	public Survey selectSurvey(String surveyId);
+	public Survey selectSurvey(Long surveyId);
 	public void updateSurvey(Survey survey);
 	public void save(Survey Survey);
 	

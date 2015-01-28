@@ -38,18 +38,19 @@
 						<td>${survey.groupsString}&nbsp;</td>
 						<td>${survey.deadlineTiemstamp}&nbsp;</td>
 						<td>
-							<mytag:PermssionTag functionId="F8-6"><a href="${ctx}/paper/show/${paper.id}" id="showLink-${paper.id}"><i class="icon-folder-open"></i> 查看</a>&nbsp;&nbsp;</mytag:PermssionTag>
+							<mytag:PermssionTag functionId="F8-6"><a href="${ctx}/survey/show/${survey.id}" id="showLink-${survey.id}"><i class="icon-folder-open"></i> 查看</a>&nbsp;&nbsp;</mytag:PermssionTag>
 							<c:if test="${survey.status=='R'}">	
-							<mytag:PermssionTag functionId="F8-3"><a href="${ctx}/paper/edit/${paper.id}" id="editLink-${paper.id}"><i class="icon-edit"></i> 发布</a>&nbsp;&nbsp;</mytag:PermssionTag>
+							<mytag:PermssionTag functionId="F8-3"><a href="${ctx}/survey/publishSurvey/${survey.id}" id="editLink-${survey.id}"><i class="icon-edit"></i> 发布</a>&nbsp;&nbsp;</mytag:PermssionTag>
 							</c:if>
 							<c:if test="${survey.status=='P' || survey.status=='F'}">	
-							<mytag:PermssionTag functionId="F8-4"><a href="${ctx}/paper/delete/${paper.id}" id="deleteLink-${paper.id}"><i class="icon-remove"></i> 答案统计</a></mytag:PermssionTag>
+							<mytag:PermssionTag functionId="F8-4"><a href="#" id="deleteLink-${paper.id}"><i class="icon-remove"></i> 答案统计</a></mytag:PermssionTag>
 							</c:if>
 						</td>
 					</tr>
 				</c:forEach>
 				</tbody>		
 			</table>
+		<tags:pagination page="${surveys}" paginationSize="4"/>
 		</div>
 	</div>
 	<div class="form-actions" style="min-height: 23px;margin-top: 0 !important;">

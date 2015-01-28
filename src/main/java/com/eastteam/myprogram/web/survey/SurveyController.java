@@ -86,6 +86,16 @@ public class SurveyController {
 		return "survey/myLaunch";
 	}
 	
+	@RequestMapping (value = "show/{id}", method = RequestMethod.GET)
+	public String surveyDetail(@PathVariable("id") String surveyId,Model model,HttpSession session) {
+		
+		Survey survey = surveyService.selectSurvey(surveyId);
+		if (survey == null)
+			return "error/404";
+		model.addAttribute(survey);
+		return "survey/surveyDetail";
+	}
+	
 	/**
 	 * 根据userId或者groupId分页查询survey
 	 * @param pageNumber
