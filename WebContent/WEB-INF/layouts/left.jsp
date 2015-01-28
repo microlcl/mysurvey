@@ -18,7 +18,7 @@
 			</div>
 			
 			<div class="panel" style="display: none;">
-					<a href="">我发起的调查</a>
+					<a href="${ctx}/survey/myLaunch">我发起的调查</a>
 			</div>
 
 

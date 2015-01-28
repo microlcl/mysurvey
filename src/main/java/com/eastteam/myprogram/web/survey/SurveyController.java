@@ -56,10 +56,70 @@ public class SurveyController {
   	@Qualifier("configProperties")
   	private Properties configProperties;
 	
-	
-	
 	private static Logger logger = LoggerFactory.getLogger(SurveyController.class);
 	
+	@RequestMapping (value = "myLaunch", method = RequestMethod.GET)
+	public String myLaunch(
+			@RequestParam(value = "page", defaultValue = "1") int pageNumber,
+			@RequestParam(value = "sortType", defaultValue = "paper_id") String sortType,
+			Model model, ServletRequest request, HttpSession session) {
+		
+		Map<String, Object> searchParams = Servlets.getParametersStartingWith(
+				request, "search_");
+		searchParams.put("userId", ((User) session.getAttribute("user")).getId());
+		String userId = request.getParameter("search_userId");
+		int pageSize = Integer.parseInt(configProperties.getProperty("survey.pageSize"));
+		
+		logger.info(searchParams.toString());
+		
+		Page<Survey> surveys = surveyService.getCurrentPageContent(
+				searchParams, pageNumber, pageSize, sortType);
+		logger.info("result length: " + surveys.getContent().size());
+		
+		
+		model.addAttribute("surveys", surveys);
+		model.addAttribute("sortType", sortType);
+		model.addAttribute("pageNumber", pageNumber);
+		model.addAttribute("searchParams", Servlets.encodeParameterStringWithPrefix(searchParams, "search_"));
+		
+		logger.info("searchParams=" + searchParams);
+		return "survey/myLaunch";
+	}
+	
+	/**
+	 * 根据userId或者groupId分页查询survey
+	 * @param pageNumber
+	 * @param sortType
+	 * @param model
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping (value = "/api/search", method = RequestMethod.GET)
+	public Page<Survey> mySurvey(
+			@RequestParam(value = "page", defaultValue = "1") int pageNumber,
+			@RequestParam(value = "sortType", defaultValue = "paper_id") String sortType,
+			Model model, ServletRequest request) {
+		
+		Map<String, Object> searchParams = Servlets.getParametersStartingWith(
+				request, "search_");
+		
+		String userId = request.getParameter("search_userId");
+		String groupId = request.getParameter("search_groupId");
+		int pageSize = Integer.parseInt(configProperties.getProperty("survey.pagesize"));
+		
+		if ((!userId.equals("")) && userId != null) {
+			searchParams.put("userId", userId);
+		}
+		
+		if ((!groupId.equals("")) && groupId != null) {
+			searchParams.put("groupId", groupId);
+		}
+		
+		Page<Survey> surveys = this.surveyService.getCurrentPageContent(
+				searchParams, pageNumber, pageSize, sortType);
+		
+		return surveys;
+	}
 	
 	@RequestMapping(value = "publishSurvey/{id}", method = RequestMethod.GET)
 	public String addQuestion(@PathVariable("id") String id,Model model,HttpSession session){

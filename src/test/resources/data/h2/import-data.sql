@@ -213,3 +213,7 @@ insert into paper_answers(business_id, paper_id, question_id, answer) values('V6
 insert into groups(group_id, group_name, comment, content, edit_date, trashed, user_id) values(1,'群组1','测试群组','张三^zhangsan@cn.ibm.com|李四^lisi@cn.ibm.com|王五^wangwu@cn.ibm.com',now(),'F','admin');
 insert into groups(group_id, group_name, comment, content, edit_date, trashed, user_id) values(2,'群组2','测试群组','',now(),'F','zhang3');
 insert into groups(group_id, group_name, comment, content, edit_date, trashed, user_id) values(3,'群组3','测试群组','jack^jack@cn.ibm.com|tom^tom@cn.ibm.com|stan^stan@cn.ibm.com|^xxx@cn.ibm.com',now(),'F','admin');
+
+insert into survey(survey_id, status, update_timestamp, user_id, paper_id, paper_url, subject, groups_id, sent_timestamp, deadline_tiemstamp, is_anonymous, description) values(1,'R',null,'admin',1,'ibm.com','Testing1','1,2,3',null,null,'T','just for testing');
+insert into survey(survey_id, status, update_timestamp, user_id, paper_id, paper_url, subject, groups_id, sent_timestamp, deadline_tiemstamp, is_anonymous, description) values(2,'P',null,'admin',1,'ibm.com','Testing2','1,2,3',null,null,'T','just for testing');
+insert into survey(survey_id, status, update_timestamp, user_id, paper_id, paper_url, subject, groups_id, sent_timestamp, deadline_tiemstamp, is_anonymous, description) values(3,'F',null,'admin',1,'ibm.com','Testing3','1,2,3',null,null,'T','just for testing');
