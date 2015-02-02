@@ -12,4 +12,5 @@ public interface MyGroupMybatisDao {
 	public void updateGroup(Group group);
 	public void deleteGroup(Long groupId);
 	public Group getSelectedGroup(Long groupId);
+	public List<Group> allGroupsByUser(String userId);
 }

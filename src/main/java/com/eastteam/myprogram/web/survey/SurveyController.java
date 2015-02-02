@@ -86,6 +86,19 @@ public class SurveyController {
 		return "survey/myLaunch";
 	}
 	
+	@RequestMapping (value = "myParticipation", method = RequestMethod.GET)
+	public String myParicipation(
+			@RequestParam(value = "page", defaultValue = "1") int pageNumber,
+			@RequestParam(value = "sortType", defaultValue = "paper_id") String sortType,
+			Model model, ServletRequest request, HttpSession session) {
+		
+		User user = (User) session.getAttribute("user");
+		String userId = user.getId();
+		//surveyService.getAllSurveysByUser(userId);
+		
+		return "survey/myParticipation";
+	}
+	
 	@RequestMapping (value = "show/{id}", method = RequestMethod.GET)
 	public String surveyDetail(@PathVariable("id") String surveyId,Model model,HttpSession session) {
 		

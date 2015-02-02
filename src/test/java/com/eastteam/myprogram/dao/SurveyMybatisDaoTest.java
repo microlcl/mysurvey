@@ -1,14 +1,18 @@
 package com.eastteam.myprogram.dao;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.eastteam.myprogram.entity.Group;
 import com.eastteam.myprogram.entity.Survey;
 
 public class SurveyMybatisDaoTest extends SpringTransactionalTestCase {
-	private static Logger logger = LoggerFactory.getLogger(QuestionMybatisDao.class);
+	private static Logger logger = LoggerFactory.getLogger(SurveyMybatisDaoTest.class);
 
 	
 	@Autowired
@@ -21,6 +25,20 @@ public class SurveyMybatisDaoTest extends SpringTransactionalTestCase {
 			logger.info("not found"); 
 		}
 		logger.info(survey.getSubject());
+	}
+	
+	@Test
+	public void surveyByGroups() {
+		List<Group> groups = new ArrayList<Group>();
+		Group group = new Group();
+		group.setId(Long.parseLong("1"));
+		groups.add(group);
+		group = new Group();
+		group.setId(Long.parseLong("2"));
+		groups.add(group);
+		List<Survey> surveys = surveyMybatisDao.findByGroups(groups);
+		logger.info(surveys.toString());
+		logger.info("result size: " + surveys.size());
 	}
 
 }

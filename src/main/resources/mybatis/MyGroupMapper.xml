@@ -23,7 +23,6 @@
 		  g.user_id=#{userId}
 		</where>
 		order by g.group_id
-
 	</select>
 	
 	<insert id="insertGroup" parameterType="Group" useGeneratedKeys="true" keyProperty="id" >
@@ -42,5 +41,13 @@
 	
 	<select id="getSelectedGroup" parameterType="Long" resultMap="myGroupDetailMap">
 	    select group_id , group_name, comment, content, edit_date from groups where group_id=#{id}
+	</select>
+	
+	<select id="allGroupsByUser" parameterType="String" resultMap="myGroupDetailMap">
+	    select g.group_id, g.group_name, g.comment, g.content , g.edit_date from groups g
+	     inner join group_users gu on gu.group_id=g.group_id
+	    <where>
+	        gu.user_id=#{userId}
+	    </where>
 	</select>
 </mapper>

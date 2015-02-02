@@ -69,4 +69,11 @@ public class MyGroupMybatisDaoTest extends SpringTransactionalTestCase {
 		Group group=myGroupMybatisDao.getSelectedGroup(1l);
 	}
 	
+	@Test
+	public void getGroupsByUserTest(){
+		List<Group> groups = myGroupMybatisDao.allGroupsByUser("admin");
+		logger.info(String.valueOf(groups.size()));
+		logger.info(groups.toString());
+	}
+	
 }

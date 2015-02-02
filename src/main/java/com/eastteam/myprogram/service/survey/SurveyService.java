@@ -1,6 +1,7 @@
 package com.eastteam.myprogram.service.survey;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -8,10 +9,15 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.eastteam.myprogram.dao.MyGroupMybatisDao;
 import com.eastteam.myprogram.dao.SurveyMybatisDao;
 import com.eastteam.myprogram.entity.Group;
 import com.eastteam.myprogram.entity.Survey;
@@ -26,7 +32,7 @@ public class SurveyService extends PageableService {
 	@Autowired
 	private SurveyMybatisDao surveyMybatisDao;
 	@Autowired
-	private MyGroupService myGroupService;
+	private MyGroupMybatisDao myGroupMybatisDao;
 	
 	private int pageSize;
 	
@@ -57,7 +63,7 @@ public class SurveyService extends PageableService {
 			String[] groupsid = survey.getGroupsId().trim().split(",");
 			String groupString = "";
 			for (String s : groupsid) {
-				Group g = myGroupService.getSelectedGroup(Long.parseLong(s.trim()));
+				Group g = myGroupMybatisDao.getSelectedGroup(Long.parseLong(s.trim()));
 				groupString += g.getGroupName() + ",";
 			}
 			
@@ -97,7 +103,7 @@ public class SurveyService extends PageableService {
 			String[] groupsid = survey.getGroupsId().trim().split(",");
 			String groupString = "";
 			for (String s : groupsid) {
-				Group g = myGroupService.getSelectedGroup(Long.parseLong(s.trim()));
+				Group g = myGroupMybatisDao.getSelectedGroup(Long.parseLong(s.trim()));
 				groupString += g.getGroupName() + ",";
 			}
 			
@@ -116,6 +122,19 @@ public class SurveyService extends PageableService {
 		return this.surveyMybatisDao.selectSurvey(Long.parseLong(surveyId));
 	}
 	
+	public Page<Survey> getAllParticipationByUser(String userId, int pageNumber, int pageSize, String sort) {
+		
+		Pageable pageRequest = new PageRequest(pageNumber-1, pageSize, new Sort(sort));
+		Map parameters = new HashMap<String, Object>();
+
+		List<Group> groups = myGroupMybatisDao.allGroupsByUser(userId);
+		parameters.put("groups", groups);
+		Long count = getCount(parameters);
+		List<Survey> surveys = this.search(parameters, pageRequest);
+		Page<Survey> contents = new PageImpl<Survey>(surveys, pageRequest, count);
+		
+		return contents;
+	}
 	
 	public boolean publishSurvey(Survey survey){
 		logger.info("save new survey :"+ survey.getSubject());
@@ -124,7 +143,7 @@ public class SurveyService extends PageableService {
 		String[] groupsId=survey.getSurveyGroup().split("\\,");
 		List<Group> groups=new ArrayList<Group>();
 		for(String groupId : groupsId){
-			groups.add(myGroupService.getSelectedGroup(Long.parseLong(groupId)));
+			groups.add(myGroupMybatisDao.getSelectedGroup(Long.parseLong(groupId)));
 		}
 		for(Group group : groups){
 			group.setGitems();

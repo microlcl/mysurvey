@@ -22,6 +22,11 @@
 		    <if test="userId != null">
 		        s.user_id = #{userId}
 		    </if>
+		    <if test="groups != null">
+		        <foreach collection="groups" index="index" item="group" >
+		           <if test="index != 0"> or </if> s.groups_id like '%${group.id}%' 
+		        </foreach>
+		    </if>
 		    <if test="groupId != null">
 		        and s.groups_id = #{groupId}
 		    </if>
@@ -39,6 +44,11 @@
 			<if test="userId != null">
 		        s.user_id = #{userId}
 		    </if>
+		    <if test="groups != null">
+		        <foreach collection="groups" index="index" item="group" >
+		           <if test="index != 0"> or </if> s.groups_id like '%${group.id}%' 
+		        </foreach>
+		    </if>
 		    <if test="groupId != null">
 		        and s.groups_id = #{groupId}
 		    </if>
@@ -50,6 +60,14 @@
 	        <if test="_parameter != null">
 	            s.survey_id = #{_parameter}
 	        </if>
+	    </where>
+	</select>
+	<select id="findByGroups" resultMap="surveyDetailMap">
+	    select * from survey s
+	    <where>
+	        <foreach collection="list" index="index" item="group" >
+	           <if test="index != 0"> or </if> s.groups_id like '%${group.id}%' 
+	        </foreach>
 	    </where>
 	</select>
 	<update id="updateSurvey" parameterType="Survey">
