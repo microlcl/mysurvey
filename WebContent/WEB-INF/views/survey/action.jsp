@@ -72,6 +72,8 @@
 	   <br> 发起人：${survey.userId} &nbsp&nbsp&nbsp 截止日期：<fmt:formatDate value="${survey.deadlineTimestamp}" pattern="yyyy年MM月dd日   HH:mm"/>
 	  </h1>
 	  <form id="actionForm" action="${ctx}/survey/saveAction" method="post">
+	  <input type="text" id="surveyId" name="surveyId" value="${survey.id}" style="display:none;" />
+	  <input type="text" id="paperId" name="paperId" value="${survey.paperId}" style="display:none;" />
 		<div  style="padding:20px;">
 			<c:forEach items="${questions}" var="question" varStatus="status">
 			   <c:if test="${question.trashed == 'F'}">
@@ -103,9 +105,7 @@
 							<textarea id="_answer"></textarea>
 						</c:if>
                     </div>
-                   <input type="text" id="surveyId" name="surveyId_${question.id}" value="${survey.id}" style="display:none;" />
-	               <input type="text" id="paperId" name="paperId_${question.id}" value="${survey.paperId}" style="display:none;"/>
-	               <input type="text" id="questionId" name="questionId_${question.id}" value="${question.id}" style="display:none;"/>
+	               <input type="text" id="questionId" name="questionId_${question.id}" value="${question.id}" style="display:none;" />
 	               <input type="text"  id="answer" name="answer_${question.id}" style="display:none;"/>
                    </div>
                  </c:if>

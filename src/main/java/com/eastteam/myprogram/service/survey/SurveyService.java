@@ -19,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.eastteam.myprogram.dao.MyGroupMybatisDao;
 import com.eastteam.myprogram.dao.SurveyMybatisDao;
+import com.eastteam.myprogram.entity.Answer;
 import com.eastteam.myprogram.entity.Group;
 import com.eastteam.myprogram.entity.Survey;
 import com.eastteam.myprogram.service.PageableService;
@@ -134,6 +135,11 @@ public class SurveyService extends PageableService {
 		Page<Survey> contents = new PageImpl<Survey>(surveys, pageRequest, count);
 		
 		return contents;
+	}
+	
+	public void saveAction(List<Answer> answers){
+		logger.info("sumbit action of survey ");
+		surveyMybatisDao.saveAction(answers);
 	}
 	
 	public boolean publishSurvey(Survey survey){

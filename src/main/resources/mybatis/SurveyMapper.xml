@@ -73,6 +73,13 @@
 	<update id="updateSurvey" parameterType="Survey">
 		
 	</update>
+	
+	<insert id="saveAction" parameterType="Answer" useGeneratedKeys="true" keyProperty="id" >
+	    insert into paper_answers(survey_id,paper_id,question_id,answer,anser_user_id) values
+            <foreach collection="list" item="answer" index="index" separator=",">  
+               (#{answer.surveyId},#{answer.paperId},#{answer.questionId},#{answer.answer},#{answer.userId})
+            </foreach>
+	</insert>
     
 	<insert id="save" parameterType="Survey" useGeneratedKeys="true" keyProperty="id" >
 		insert into survey (user_id, paper_id, paper_url, subject, groups_id, sent_timestamp, deadline_timestamp, is_anonymous, description,status)

@@ -1,15 +1,19 @@
 package com.eastteam.myprogram.web.survey;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
 import javax.servlet.ServletRequest;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang3.StringUtils;
+import org.eclipse.jetty.http.HttpURI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +26,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.context.support.ServletContextResource;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.eastteam.myprogram.entity.Answer;
 import com.eastteam.myprogram.entity.Group;
 import com.eastteam.myprogram.entity.Paper;
 import com.eastteam.myprogram.entity.Question;
@@ -44,6 +50,8 @@ public class SurveyController {
 	private PaperService paperService;
 	@Autowired
 	private MyGroupService myGroupService;
+	
+	private static final String ServiceAddr="http://localhost:8080";
 	
 	@Autowired
   	@Qualifier("configProperties")
@@ -147,17 +155,35 @@ public class SurveyController {
 	}
 	
 	@RequestMapping(value = "publishAndSaveSurvey/{paperid}", method = RequestMethod.POST)
-	public String publishAndSaveSurvey(@ModelAttribute Survey survey,@PathVariable("paperid") String paperid,RedirectAttributes redirectAttributes,HttpSession session){
+	public String publishAndSaveSurvey(@ModelAttribute Survey survey,@PathVariable("paperid") String paperid,RedirectAttributes redirectAttributes,HttpSession session,HttpServletRequest request){
 		survey.setCreater((User) session.getAttribute("user"));
 		survey.setPaper(paperService.selectPaper(paperid));
-//		survey.setPaperURL(request.getContextPath()+"/survey/accessSurvey/"+survey.getId());
-//		System.out.println(survey.getPaperURL());
+		survey.setPaperURL(ServiceAddr+request.getContextPath()+"/survey/accessSurvey/");
+		System.out.println(survey.getPaperURL());
 		if(surveyService.publishSurvey(survey)){
 			return "survey/publishOK";
 		}else {
 			return "survey/publishFail";
 		}
 		
+	}
+	
+	@RequestMapping(value = "saveAction", method = RequestMethod.POST)
+	public String saveAction(RedirectAttributes redirectAttributes,HttpSession session,ServletRequest request){
+		Map<String, Object> answerQuestionId = Servlets.getParametersStartingWith(request, "questionId_");
+		Map<String, Object> answerAnswer = Servlets.getParametersStartingWith(request, "answer_");
+		List<Answer> answers =new ArrayList<Answer>();
+		for(String key : answerQuestionId.keySet()){
+			Answer answer= new Answer();
+			answer.setAnswer(answerAnswer.get(key).toString());
+			answer.setQuestionId(Long.parseLong(answerQuestionId.get(key).toString()));
+			answer.setPaperId(Long.parseLong(request.getParameter("paperId")));
+			answer.setSurveyId(Long.parseLong(request.getParameter("surveyId")));
+			answer.setUserId(((User)session.getAttribute("user")).getId());
+			answers.add(answer);
+		}
+		surveyService.saveAction(answers);
+		return "survey/submitOk";
 	}
 	
 	@RequestMapping(value = "accessSurvey/{id}", method = RequestMethod.GET)
