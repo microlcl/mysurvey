@@ -14,18 +14,20 @@ import javax.mail.internet.MimeUtility;
  
  
 public class EmailSender {  
- 
-     
-    public boolean sendmail(String subject,String from, Object[] to,  
+	
+	private static final String EMAIL="18661014104@163.com";
+	private static final String EPASW="gongbinfeng123";
+	private static final String SMTP="smtp.163.com";
+	
+    public boolean sendmail(String subject, Object[] to,  
             String description, String paperURL, String mimeType) {  
         try {  
-        	 String smtp = "smtp.163.com";   
-             String servername = "easysurveytest@163.com"; 
-             String serverpaswd = "admin123";
+             String servername = EMAIL; 
+             String serverpaswd = EPASW;
              
              Properties props = new Properties();  
              props = java.lang.System.getProperties();
-             props.put("mail.smtp.host", smtp); 
+             props.put("mail.smtp.host", SMTP); 
              props.put("mail.smtp.auth", "true"); 
  
              javax.mail.Session mailSession = null; 
@@ -39,8 +41,8 @@ public class EmailSender {
             javax.mail.Transport transport = mailSession.getTransport("smtp");  
           
            mimeMsg = new javax.mail.internet.MimeMessage(mailSession);  
-           if (null != from && !"".equals(from)) {  
-               InternetAddress sentFrom = new InternetAddress(from);  
+           if (null != EMAIL && !"".equals(EMAIL)) {  
+               InternetAddress sentFrom = new InternetAddress(EMAIL);  
                mimeMsg.setFrom(sentFrom);
            }  
  

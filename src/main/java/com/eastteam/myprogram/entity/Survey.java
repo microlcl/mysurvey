@@ -1,6 +1,5 @@
 package com.eastteam.myprogram.entity;
 
-import java.sql.Timestamp;
 import java.util.Date;
 
 
@@ -11,19 +10,34 @@ public class Survey extends IdEntity{
 	private int paperId;
 	private String paperURL;
 	private String groupsId;
-	private Timestamp sentTimestamp;
-	private Timestamp deadlineTiemstamp;
+	private Date sentTimestamp;
+	private Date deadlineTimestamp;
 	private String description;
 	private String subject;
 	private String isAnonymous ;
 	private String surveyGroup;
 	private Paper paper;
-	private Timestamp updateTimestamp;
+	private Date updateTimestamp;
 	private String status;
 	private String statusString;
 	private String groupsString;
 	
 	
+	public Date getDeadlineTimestamp() {
+		return deadlineTimestamp;
+	}
+	public void setDeadlineTimestamp(Date deadlineTimestamp) {
+		this.deadlineTimestamp = deadlineTimestamp;
+	}
+	public Date getUpdateTimestamp() {
+		return updateTimestamp;
+	}
+	public void setUpdateTimestamp(Date updateTimestamp) {
+		this.updateTimestamp = updateTimestamp;
+	}
+	public void setSentTimestamp(Date sentTimestamp) {
+		this.sentTimestamp = sentTimestamp;
+	}
 	public String getUserId() {
 		return userId;
 	}
@@ -42,12 +56,7 @@ public class Survey extends IdEntity{
 	public void setGroupsId(String groupsId) {
 		this.groupsId = groupsId;
 	}
-	public Timestamp getUpdateTimestamp() {
-		return updateTimestamp;
-	}
-	public void setUpdateTimestamp(Timestamp updateTimestamp) {
-		this.updateTimestamp = updateTimestamp;
-	}
+	
 	public String getStatus() {
 		return status;
 	}
@@ -66,12 +75,7 @@ public class Survey extends IdEntity{
 	public void setGroupsString(String groupsString) {
 		this.groupsString = groupsString;
 	}
-	public void setSentTimestamp(Timestamp sentTimestamp) {
-		this.sentTimestamp = sentTimestamp;
-	}
-	public void setDeadlineTiemstamp(Timestamp deadlineTiemstamp) {
-		this.deadlineTiemstamp = deadlineTiemstamp;
-	}
+	
 	public Paper getPaper() {
 		return paper;
 	}
@@ -111,9 +115,7 @@ public class Survey extends IdEntity{
 	public Date getSentTimestamp() {
 		return sentTimestamp;
 	}
-	public Date getDeadlineTiemstamp() {
-		return deadlineTiemstamp;
-	}
+	
 	public String getSurveyGroup() {
 		return surveyGroup;
 	}
