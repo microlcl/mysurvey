@@ -1,23 +1,18 @@
 package com.eastteam.myprogram.web.survey;
 
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
-import javax.servlet.ServletContext;
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.eclipse.jetty.server.Request;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.http.HttpRequest;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -25,22 +20,16 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import sun.text.resources.FormatData;
 
 import com.eastteam.myprogram.entity.Group;
 import com.eastteam.myprogram.entity.Paper;
-import com.eastteam.myprogram.entity.Question;
 import com.eastteam.myprogram.entity.Survey;
 import com.eastteam.myprogram.entity.User;
 import com.eastteam.myprogram.service.myGroup.MyGroupService;
 import com.eastteam.myprogram.service.paper.PaperService;
-import com.eastteam.myprogram.service.questions.QuestionService;
 import com.eastteam.myprogram.service.survey.SurveyService;
 import com.eastteam.myprogram.web.Servlets;
-import com.google.common.collect.Maps;
 
 @Controller
 @RequestMapping (value = "/survey")
@@ -130,11 +119,11 @@ public class SurveyController {
 		String groupId = request.getParameter("search_groupId");
 		int pageSize = Integer.parseInt(configProperties.getProperty("survey.pagesize"));
 		
-		if ((!userId.equals("")) && userId != null) {
+		if (StringUtils.isNotBlank(userId)) {
 			searchParams.put("userId", userId);
 		}
 		
-		if ((!groupId.equals("")) && groupId != null) {
+		if (StringUtils.isNotBlank(groupId)) {
 			searchParams.put("groupId", groupId);
 		}
 		
