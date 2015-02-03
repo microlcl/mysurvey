@@ -127,7 +127,7 @@
 				<div class="control-group">
 					<label for="question" class="control-label formlabel">调查截止日期:</label>
 					<div class="controls">
-					   <input type="text" id="datetimepicker7" name="deadlineTiemstamp" readonly="true" placeholder="双击选择时间与日期" onclick="getDeadline()"  />
+					   <input type="text" id="datetimepicker7" name="deadlineTimestamp" readonly="true" placeholder="双击选择时间与日期" onclick="getDeadline()"  />
 					   <span id="ddateEmptyError" class="error" style="display:none">请设定调查截止日期！</span>
 					   <span id="ddateInvalidError" class="error" style="display:none">请设定有效的截止日期！</span>
 					</div>

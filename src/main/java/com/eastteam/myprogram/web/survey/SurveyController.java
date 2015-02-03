@@ -1,10 +1,12 @@
 package com.eastteam.myprogram.web.survey;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
 import javax.servlet.ServletRequest;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang3.StringUtils;
@@ -24,12 +26,14 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.eastteam.myprogram.entity.Group;
 import com.eastteam.myprogram.entity.Paper;
+import com.eastteam.myprogram.entity.Question;
 import com.eastteam.myprogram.entity.Survey;
 import com.eastteam.myprogram.entity.User;
 import com.eastteam.myprogram.service.myGroup.MyGroupService;
 import com.eastteam.myprogram.service.paper.PaperService;
 import com.eastteam.myprogram.service.survey.SurveyService;
 import com.eastteam.myprogram.web.Servlets;
+import com.sun.net.httpserver.HttpsServer;
 
 @Controller
 @RequestMapping (value = "/survey")
@@ -134,7 +138,7 @@ public class SurveyController {
 	}
 	
 	@RequestMapping(value = "publishSurvey/{id}", method = RequestMethod.GET)
-	public String addQuestion(@PathVariable("id") String id,Model model,HttpSession session){
+	public String publishSurvey(@PathVariable("id") String id,Model model,HttpSession session){
 		Paper paper=paperService.selectPaper(id);
 		List<Group> groups=myGroupService.search(((User)session.getAttribute("user")).getId());
 		model.addAttribute("paper",paper);
@@ -146,13 +150,29 @@ public class SurveyController {
 	public String publishAndSaveSurvey(@ModelAttribute Survey survey,@PathVariable("paperid") String paperid,RedirectAttributes redirectAttributes,HttpSession session){
 		survey.setCreater((User) session.getAttribute("user"));
 		survey.setPaper(paperService.selectPaper(paperid));
-		survey.setPaperURL("http://www.ibm.com/cn/zh/");
+//		survey.setPaperURL(request.getContextPath()+"/survey/accessSurvey/"+survey.getId());
+//		System.out.println(survey.getPaperURL());
 		if(surveyService.publishSurvey(survey)){
 			return "survey/publishOK";
 		}else {
 			return "survey/publishFail";
 		}
 		
+	}
+	
+	@RequestMapping(value = "accessSurvey/{id}", method = RequestMethod.GET)
+	public String accessSurvey(@PathVariable("id") String id,Model model,HttpSession session){
+		Survey survey=surveyService.selectSurvey(id);
+		List<Question> questions = paperService.getQuestions(String.valueOf(survey.getPaperId()));
+		Iterator<Question> it = questions.iterator();
+		while(it.hasNext()){
+			Question question = it.next();
+			String[] questionOptions = paperService.splitQuestionOptions(question.getQuestionOptions());
+			question.setSplitOptions(questionOptions);
+		}
+		model.addAttribute("questions", questions);
+		model.addAttribute("survey", survey);
+		return "survey/action";
 	}
 	
 
