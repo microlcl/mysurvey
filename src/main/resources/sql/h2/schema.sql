@@ -26,7 +26,7 @@ create table survey(
 	subject varchar(128),  -- 调查问卷的主题
 	groups_id varchar(32) not null,  -- 如果有多个group，用逗号隔开
 	sent_timestamp timestamp,  -- 调查发送时间
-	deadline_tiemstamp timestamp, -- 本次调查的最后期限
+	deadline_timestamp timestamp, -- 本次调查的最后期限
 	is_anonymous varchar(1), -- 是否是匿名调查: T - True, F - False
 	description varchar(128), -- 描述性文字，作为group的user收到的邮件内容
 	primary key (survey_id)	
