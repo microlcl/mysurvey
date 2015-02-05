@@ -1,6 +1,7 @@
 package com.eastteam.myprogram.dao;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.junit.Test;
@@ -9,7 +10,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.eastteam.myprogram.entity.Group;
+import com.eastteam.myprogram.entity.Paper;
 import com.eastteam.myprogram.entity.Survey;
+import com.eastteam.myprogram.entity.User;
 
 public class SurveyMybatisDaoTest extends SpringTransactionalTestCase {
 	private static Logger logger = LoggerFactory.getLogger(SurveyMybatisDaoTest.class);
@@ -40,5 +43,5 @@ public class SurveyMybatisDaoTest extends SpringTransactionalTestCase {
 		logger.info(surveys.toString());
 		logger.info("result size: " + surveys.size());
 	}
-
+	
 }

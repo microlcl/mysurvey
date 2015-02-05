@@ -158,7 +158,7 @@ public class SurveyService extends PageableService {
 			}
 		}
 		
-	return new EmailSender().sendmail(survey.getSubject(),_receiver.toArray(), survey.getDescription(), survey.getPaperURL(), "text/html;charset=gb2312");
+	return new EmailSender().sendmail(survey.getSubject(),_receiver.toArray(), survey.getDescription(), survey.getPaperURL()+survey.getId(), "text/html;charset=gb2312");
 	}
 	
 }

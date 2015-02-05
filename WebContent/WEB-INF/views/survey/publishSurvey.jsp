@@ -25,10 +25,13 @@
 		
 		function checkAnonymous(){
 		    var  check=document.getElementById("isAnonymousCheck");
+		    var alertInfo="<br><strong><font color='red'>*此调查为匿名调查</font></strong>";
 		    if(check.checked){
 		      $('#isAnonymous').val('T');
+		      $('#description').val($('#description').val()+alertInfo);
 		    }else{
 		      $('#isAnonymous').val('F');
+		      $('#description').val($('#description').val().replace(alertInfo,""));
 		    }
 		}
 		
@@ -78,9 +81,11 @@
 		        $("#groupError").hide();
 		        $("#surveyForm").submit();
 		        $("#action-bar").hide();
+		        $('#description').val($('#description').val()+"<br>调查截止日期： "+$("#datetimepicker7").val());
 		        $("#submitOK").show();
 		    }
 		}
+		
 		function deaddateVerification(time){
 		   var enddate=time.replace("/","").replace("/","").replace(" ","").replace(":","");
 		   var year=new Date().getFullYear();
@@ -135,7 +140,7 @@
 				<div class="control-group">
 					<label for="question" class="control-label formlabel">调查描述:</label>					
 					<div class="controls">
-					    <textarea name="description" style="width:440px" maxlength="128"></textarea>
+					    <textarea id="description" name="description" style="width:440px" maxlength="128">您收到一份调查问卷，请点击下方链接开始</textarea>
 					</div>
 				</div>	
 				<div class="control-group">
