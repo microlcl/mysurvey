@@ -2,19 +2,21 @@ package com.eastteam.myprogram.utils;
 import java.util.Date;  
 import java.util.Properties;  
  
-import javax.activation.DataHandler;  
-import javax.activation.FileDataSource;  
 import javax.mail.Authenticator;  
 import javax.mail.Multipart;  
 import javax.mail.PasswordAuthentication;  
 import javax.mail.internet.InternetAddress;  
 import javax.mail.internet.MimeBodyPart;  
 import javax.mail.internet.MimeMultipart;  
-import javax.mail.internet.MimeUtility;  
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.eastteam.myprogram.service.survey.SurveyService;
  
  
 public class EmailSender {  
-	
+	private static Logger logger = LoggerFactory.getLogger(SurveyService.class);
 	private static final String EMAIL="18661014104@163.com";
 	private static final String EPASW="gongbinfeng123";
 	private static final String SMTP="smtp.163.com";
@@ -48,7 +50,7 @@ public class EmailSender {
  
            InternetAddress[] sendTo = new InternetAddress[to.length];  
            for (int i = 0; i < to.length; i++) {  
-               System.out.println("send to:" + to[i].toString());  
+               logger.info("send email to:" + to[i].toString());  
                sendTo[i] = new InternetAddress(to[i].toString());  
            }  
  
@@ -80,7 +82,7 @@ public class EmailSender {
            mimeMsg.saveChanges();  
            transport.send(mimeMsg);  
            transport.close();  
-           System.out.println("success!!!"); 
+           logger.info("sending email task completed");
            return true;
        } catch (Exception e) {  
            e.printStackTrace();  
