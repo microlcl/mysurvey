@@ -35,7 +35,7 @@
 						<td>${survey.subject}&nbsp;</td>
 						<td>${survey.statusString}&nbsp;</td>
 						<td>${survey.updateTimestamp}&nbsp;</td>
-						<td>${survey.groupsString}&nbsp;</td>
+						<td><a href="${ctx}/myGroup/list"> ${survey.groupsString}</a>&nbsp;</td>
 						<td>${survey.deadlineTimestamp}&nbsp;</td>
 						<td>
 							<mytag:PermssionTag functionId="F8-6"><a href="${ctx}/survey/show/${survey.id}" id="showLink-${survey.id}"><i class="icon-folder-open"></i> 查看</a>&nbsp;&nbsp;</mytag:PermssionTag>
