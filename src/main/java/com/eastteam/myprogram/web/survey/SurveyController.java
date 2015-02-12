@@ -1,5 +1,6 @@
 package com.eastteam.myprogram.web.survey;
 
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -93,9 +94,20 @@ public class SurveyController {
 			@RequestParam(value = "sortType", defaultValue = "paper_id") String sortType,
 			Model model, ServletRequest request, HttpSession session) {
 		
+		Map<String, Object> searchParams = Servlets.getParametersStartingWith(
+				request, "search_");
+		int pageSize = Integer.parseInt(configProperties.getProperty("survey.pageSize"));
+		
 		User user = (User) session.getAttribute("user");
 		String userId = user.getId();
-		//surveyService.getAllSurveysByUser(userId);
+		Page<Survey> surveys = surveyService.getAllParticipationByUser(userId, pageNumber, pageSize, sortType);
+		
+		logger.info("result length: " + surveys.getContent().size());
+		
+		model.addAttribute("surveys", surveys);
+		model.addAttribute("sortType", sortType);
+		model.addAttribute("pageNumber", pageNumber);
+		model.addAttribute("searchParams", Servlets.encodeParameterStringWithPrefix(searchParams, "search_"));
 		
 		return "survey/myParticipation";
 	}

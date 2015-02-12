@@ -2,7 +2,9 @@ package com.eastteam.myprogram.dao;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -42,6 +44,21 @@ public class SurveyMybatisDaoTest extends SpringTransactionalTestCase {
 		List<Survey> surveys = surveyMybatisDao.findByGroups(groups);
 		logger.info(surveys.toString());
 		logger.info("result size: " + surveys.size());
+	}
+	
+	@Test
+	public void getCountTest() {
+		List<Group> groups = new ArrayList<Group>();
+		Group group = new Group();
+		group.setId(Long.parseLong("1"));
+		groups.add(group);
+		group = new Group();
+		group.setId(Long.parseLong("2"));
+		groups.add(group);
+		Map parameters = new HashMap<String, Object>();
+		parameters.put("groups", groups);
+		Long count = surveyMybatisDao.getCount(parameters);
+		logger.info("count: " + count);
 	}
 	
 }
