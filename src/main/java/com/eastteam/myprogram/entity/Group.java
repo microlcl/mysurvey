@@ -15,7 +15,14 @@ public class Group extends IdEntity{
 	private Date editDate;
 	private User creater;
 	private List<String []> gitems;
+	private String flagString = "none";
 	
+	public String getFlagString() {
+		return flagString;
+	}
+	public void setFlagString(String flagString) {
+		this.flagString = flagString;
+	}
 	public String getGroupName() {
 		return groupName;
 	}

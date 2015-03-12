@@ -1,7 +1,6 @@
 package com.eastteam.myprogram.entity;
 
 public class Answer extends BaseEntity{
-	private Long paperId;
 	private Long surveyId;
 	private Long questionId;
 	private String userId;
@@ -18,12 +17,6 @@ public class Answer extends BaseEntity{
 	}
 	public void setAnswer(String answer) {
 		this.answer = answer;
-	}
-	public Long getPaperId() {
-		return paperId;
-	}
-	public void setPaperId(Long paperId) {
-		this.paperId = paperId;
 	}
 	public Long getSurveyId() {
 		return surveyId;

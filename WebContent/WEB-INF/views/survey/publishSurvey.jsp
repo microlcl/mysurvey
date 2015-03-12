@@ -114,25 +114,32 @@
 	  	   <strong>注意: </strong>请选择业务类型和表单类型。
 		</div>
 		<div style="padding:20px;">
-			<form id="surveyForm" action="${ctx}/survey/publishAndSaveSurvey/${paper.id}" method="post" class="form-horizontal">
+			
+			<c:set var="toId" value="${paper.id }"/>
+			<c:if test="${isPublish }">
+				<c:set var="toId" value="${survey.id }"/>
+			</c:if>
+			
+			<form id="surveyForm" action="${ctx}/survey/surveyAction/${toId}" method="post" class="form-horizontal">
+				<c:if test="${isPublish} "><input type="hidden" id="surveyId" name="surveyId" value="${survey.id }"></c:if>
 				<div class="control-group">
 					<label for="question" class="control-label formlabel">问卷主题:</label>
 					<div class="controls">						
-						<input type="text" id="surveySubject" name="subject"  maxlength="128" class="input-large required" placeholder="0~128个字符" />
+						<input type="text" id="surveySubject" name="subject"  maxlength="128" class="input-large required" placeholder="0~128个字符" <c:if test="${survey.status=='P' || survey.status=='F'}">disabled="disabled"</c:if> <c:if test="${survey.subject!=null }">value="${survey.subject }"</c:if> />
 						 <span id="subjectError" class="error" style="display:none">请输入调查主题</span>
 					</div>
 				</div>
 				<div class="control-group">
 					<label for="question" class="control-label formlabel">是否匿名调查:</label>
 					<div class="controls">
-					   <input type="checkbox" id="isAnonymousCheck" onclick="checkAnonymous()" >
-					   <input type="text" id="isAnonymous" value="F" name="isAnonymous" style="display:none;">
+					   <input type="checkbox" <c:if test="${survey.status=='P' || survey.status=='F'}">disabled="disabled"</c:if> <c:if test="${survey.isAnonymous=='T' }">checked="checked"</c:if> id="isAnonymousCheck" onclick="checkAnonymous()" >
+					   <input type="text" id="isAnonymous" <c:if test="${survey.isAnonymous=='T' }">value="T"</c:if><c:if test="${survey.isAnonymous=='F' }">value="F"</c:if> name="isAnonymous" style="display:none;">
 					</div>
 				</div>
 				<div class="control-group">
 					<label for="question" class="control-label formlabel">调查截止日期:</label>
 					<div class="controls">
-					   <input type="text" id="datetimepicker7" name="deadlineTimestamp" readonly="true" placeholder="双击选择时间与日期" onclick="getDeadline()"  />
+					   <input type="text" <c:if test="${survey.status=='P' || survey.status=='F'}">disabled="disabled"</c:if> id="datetimepicker7" <c:if test="${survey.deadlineTimestamp!=null }">value="${survey.deadlineTimestamp }"</c:if> name="deadlineTimestamp" readonly="true" placeholder="双击选择时间与日期" onclick="getDeadline()"  />
 					   <span id="ddateEmptyError" class="error" style="display:none">请设定调查截止日期！</span>
 					   <span id="ddateInvalidError" class="error" style="display:none">请设定有效的截止日期！</span>
 					</div>
@@ -140,27 +147,30 @@
 				<div class="control-group">
 					<label for="question" class="control-label formlabel">调查描述:</label>					
 					<div class="controls">
-					    <textarea id="description" name="description" style="width:440px" maxlength="128">您收到一份调查问卷，请点击下方链接开始</textarea>
+					    <textarea id="description" <c:if test="${survey.status=='P' || survey.status=='F'}">disabled="disabled"</c:if> name="description" style="width:440px" maxlength="128"><c:if test="${survey.description!=null }">${survey.description }</c:if><c:if test="${survey.description==null }">您收到一份调查问卷，请点击下方链接开始</c:if></textarea>
 					</div>
 				</div>	
 				<div class="control-group">
-				<label for="question" class="control-label formlabel">请选择调查的群组:</label>		
-				 <div class="controls" style="width:550px">
-				  <c:forEach items="${groups}"  var="group" varStatus="status">
-				    <div class="btn" onclick="markGroup(this)" style="margin-top:5px" >${group.groupName}<i class="icon-ok" style="width:20px;display :none;"></i><input type="text" value="${group.id }" id="groupid" name="groupid" style="display:none;"></div>
-				  </c:forEach>
-				 </div>
-				 <span id="groupError" class="error" style="display:none">请勾选需要调查的群组</span>
+				<label for="question" class="control-label formlabel">调查的群组:</label>		
+				<c:if test="${survey.status=='P' || survey.status=='F'}"><div class="controls"><input type="text" disabled="disabled" value="${survey.groupsString }"></div></c:if>
+				 <c:if test="${survey.status!='P' && survey.status!='F'}">
+					 <div class="controls" style="width:550px">
+					  <c:forEach items="${groups}"  var="group" varStatus="status">
+					    <div class="btn" onclick="markGroup(this)" style="margin-top:5px" id="group_${group.id }">${group.groupName}<i class="icon-ok" style="width:20px;display:${group.flagString};"></i><input type="text" value="${group.id }" id="groupid" name="groupid" style="display:none;"></div>
+					  </c:forEach>
+					 </div>
+					 <span id="groupError" class="error" style="display:none">请勾选需要调查的群组</span>
+					 </c:if>
 				</div>
 				<input type="text" name="surveyGroup" id="surveyGroup" style="display:none;">
+				<input type="hidden" name="isPublish" id="isPublish" value="${isPublish }">
 			</form>
 		</div>
 		<div id="action-bar" class="form-actions" style="min-height: 23px;margin-top: 0 !important;">
-			<input id="submit_btn" class="btn btn-warning"  type="button" value="提交" onclick="formatAndCheck();" />&nbsp;	
+			<c:if test="${survey.status!='P' && survey.status!='F'}"><input id="submit_btn" class="btn btn-warning"  type="button" value="提交" onclick="formatAndCheck();" />&nbsp;	</c:if>
 			<input id="cancel_btn" class="btn" type="button" value="返回" onclick="history.back()"/>
 		</div>
 		<center><span id="submitOK" style="display:none;"><h3>请稍等...</h3></span></center>
 	</div>
-
 </body>
 </html>

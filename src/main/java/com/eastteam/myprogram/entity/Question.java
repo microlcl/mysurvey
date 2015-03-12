@@ -28,7 +28,14 @@ public class Question extends IdEntity {
 	private boolean paperAnswered = false;
 	private boolean paperUsed = false;
 	private Option[] options;
+	private String openAnswer;	//开放性问题的答案
 
+	public String getOpenAnswer() {
+		return openAnswer;
+	}
+	public void setOpenAnswer(String openAnswer) {
+		this.openAnswer = openAnswer;
+	}
 	@Deprecated
 	private String[] splitOptions;
 	

@@ -74,6 +74,7 @@
 	  <form id="actionForm" action="${ctx}/survey/saveAction" method="post">
 	  <input type="text" id="surveyId" name="surveyId" value="${survey.id}" style="display:none;" />
 	  <input type="text" id="paperId" name="paperId" value="${survey.paperId}" style="display:none;" />
+	  <input type="hidden" id="isUpdate" name="isUpdate" value="${isUpdate}"/>
 		<div  style="padding:20px;">
 			<c:forEach items="${questions}" var="question" varStatus="status">
 			   <c:if test="${question.trashed == 'F'}">
@@ -86,23 +87,23 @@
                    <input type="text" value="${question.questionType}" name="type" style="display:none;"/>
                     <div class="accordion-inner" style="padding-left:55px">
 						<c:if test="${question.questionType == '1'}">
-							<c:forEach items="${question.splitOptions}" var="splitOption" varStatus="as">
+							<c:forEach items="${question.options}" var="option" varStatus="as">
 								<label class="radio">
-									<input type="radio" name="questionOption_${question.id}" value="${as.index+1}" >
-										${splitOption}
+									<input type="radio" <c:if test="${expired}">disabled="disabled"</c:if> <c:if test="${option.checked}">checked="checked"</c:if> name="questionOption_${question.id}" value="${as.index}" >
+										${option.content}
 								</label>
 							</c:forEach>
 						</c:if>
 						<c:if test="${question.questionType == '2'}">
-							<c:forEach items="${question.splitOptions}" var="splitOption" varStatus="as">
+							<c:forEach items="${question.options}" var="option" varStatus="as">
 								<label class="checkbox">
-									<input type="checkbox" name="questionOption" value="${as.index+1}">
-										${splitOption}
+									<input type="checkbox" <c:if test="${expired}">disabled="disabled"</c:if> <c:if test="${option.checked}">checked="checked"</c:if> name="questionOption_${question.id}" value="${as.index}">
+										${option.content}
 								</label>
 							</c:forEach>
 						</c:if>
 						<c:if test="${question.questionType == '3'}">
-							<textarea id="_answer"></textarea>
+							<textarea id="_answer">${question.openAnswer}</textarea>
 						</c:if>
                     </div>
 	               <input type="text" id="questionId" name="questionId_${question.id}" value="${question.id}" style="display:none;" />
@@ -113,7 +114,10 @@
 		</div>
       </form>
 	<div class="form-actions" style="min-height: 23px;margin-top: 0 !important;">
-		<input id="submit_btn" style="height: 40px !important;width: 130px !important;" class="btn" type="button" value="提交" onclick="sumbitForm()"/>
+		<c:if test="${!expired}">
+			<input id="submit_btn" style="height: 40px !important;width: 130px !important;" class="btn" type="button" value="提交" onclick="sumbitForm()"/>
+		</c:if>
+		<input id="cancel_btn" style="height: 40px !important;width: 130px !important;" class="btn" type="button" value="返回" onclick="history.back()"/>
 	</div>
 	</div>	
 </body>

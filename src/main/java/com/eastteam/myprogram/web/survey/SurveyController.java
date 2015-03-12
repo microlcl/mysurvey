@@ -1,6 +1,8 @@
 package com.eastteam.myprogram.web.survey;
 
+import java.util.Date;
 import java.sql.ResultSet;
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -13,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpSession;
 
+import org.apache.catalina.connector.Request;
 import org.apache.commons.lang3.StringUtils;
 import org.eclipse.jetty.http.HttpURI;
 import org.slf4j.Logger;
@@ -27,7 +30,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.context.support.ServletContextResource;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.eastteam.myprogram.entity.Answer;
@@ -36,11 +38,11 @@ import com.eastteam.myprogram.entity.Paper;
 import com.eastteam.myprogram.entity.Question;
 import com.eastteam.myprogram.entity.Survey;
 import com.eastteam.myprogram.entity.User;
+import com.eastteam.myprogram.service.answer.AnswerService;
 import com.eastteam.myprogram.service.myGroup.MyGroupService;
 import com.eastteam.myprogram.service.paper.PaperService;
 import com.eastteam.myprogram.service.survey.SurveyService;
 import com.eastteam.myprogram.web.Servlets;
-import com.sun.net.httpserver.HttpsServer;
 
 @Controller
 @RequestMapping (value = "/survey")
@@ -51,6 +53,8 @@ public class SurveyController {
 	private PaperService paperService;
 	@Autowired
 	private MyGroupService myGroupService;
+	@Autowired
+	private AnswerService answerService;
 	
 	private static final String ServiceAddr="http://localhost:8080";
 	
@@ -157,61 +161,129 @@ public class SurveyController {
 		return surveys;
 	}
 	
-	@RequestMapping(value = "publishSurvey/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "surveyDetail/{id}", method = RequestMethod.GET)
 	public String publishSurvey(@PathVariable("id") String id,Model model,HttpSession session){
+		Survey survey = surveyService.selectSurvey(id);
+		Paper paper=paperService.selectPaper(String.valueOf(survey.getPaperId()));
+		logger.info(survey.getIsAnonymous());
+		List<Group> groups=myGroupService.search(((User)session.getAttribute("user")).getId());
+		for (Group group : groups) {
+			for (String gid : survey.getGroupIds())
+				if (gid.equals(String.valueOf(group.getId())))
+					group.setFlagString("");
+		}
+		model.addAttribute("survey", survey);
+		model.addAttribute("paper",paper);
+		model.addAttribute("groups",groups);
+		model.addAttribute("isPublish", true);
+		return "survey/publishSurvey";
+	}
+	
+	@RequestMapping(value = "createSurvey/{id}", method = RequestMethod.GET)
+	public String createSurvey(@PathVariable("id") String id,Model model,HttpSession session){
 		Paper paper=paperService.selectPaper(id);
 		List<Group> groups=myGroupService.search(((User)session.getAttribute("user")).getId());
 		model.addAttribute("paper",paper);
 		model.addAttribute("groups",groups);
+		model.addAttribute("isPublish", false);
 		return "survey/publishSurvey";
 	}
 	
-	@RequestMapping(value = "publishAndSaveSurvey/{paperid}", method = RequestMethod.POST)
-	public String publishAndSaveSurvey(@ModelAttribute Survey survey,@PathVariable("paperid") String paperid,RedirectAttributes redirectAttributes,HttpSession session,HttpServletRequest request){
+	@RequestMapping(value = "surveyAction/{id}", method = RequestMethod.POST)
+	public String publishAndSaveSurvey(@ModelAttribute Survey survey,@PathVariable("id") String id,RedirectAttributes redirectAttributes,HttpSession session,HttpServletRequest request){
+		
+		String isPublish = request.getParameter("isPublish");
+		if (isPublish.equals("true")) {
+			if (survey.getId() == null)
+				survey.setId(Long.parseLong(id));
+			survey.setStatus("P");
+			surveyService.updateSurvey(survey);
+			return "survey/publishOK";
+		} else {
+			survey.setCreater((User) session.getAttribute("user"));
+			survey.setPaper(paperService.selectPaper(id));
+			survey.setPaperURL(ServiceAddr+request.getContextPath()+"/survey/accessSurvey/");
+			System.out.println(survey.getPaperURL());
+			if(surveyService.createSurvey(survey)){
+				return "survey/publishOK";
+			} else {
+				return "survey/publishFail";
+			}
+		}
+	}
+	
+	/*@RequestMapping(value = "createAndSaveSurvey/{paperid}", method = RequestMethod.POST)
+	public String createAndSaveSurvey(@ModelAttribute Survey survey,@PathVariable("paperid") String paperid,RedirectAttributes redirectAttributes,HttpSession session,HttpServletRequest request){
 		survey.setCreater((User) session.getAttribute("user"));
 		survey.setPaper(paperService.selectPaper(paperid));
 		survey.setPaperURL(ServiceAddr+request.getContextPath()+"/survey/accessSurvey/");
 		System.out.println(survey.getPaperURL());
-		if(surveyService.publishSurvey(survey)){
+		if(surveyService.createSurvey(survey)){
 			return "survey/publishOK";
-		}else {
+		} else {
 			return "survey/publishFail";
 		}
 		
 	}
-	
+	*/
 	@RequestMapping(value = "saveAction", method = RequestMethod.POST)
 	public String saveAction(RedirectAttributes redirectAttributes,HttpSession session,ServletRequest request){
+		
 		Map<String, Object> answerQuestionId = Servlets.getParametersStartingWith(request, "questionId_");
 		Map<String, Object> answerAnswer = Servlets.getParametersStartingWith(request, "answer_");
+		String isUpdate = request.getParameter("isUpdate");
+		logger.info("current operation is update : " + isUpdate);
 		List<Answer> answers =new ArrayList<Answer>();
 		for(String key : answerQuestionId.keySet()){
 			Answer answer= new Answer();
 			answer.setAnswer(answerAnswer.get(key).toString());
 			answer.setQuestionId(Long.parseLong(answerQuestionId.get(key).toString()));
-			answer.setPaperId(Long.parseLong(request.getParameter("paperId")));
 			answer.setSurveyId(Long.parseLong(request.getParameter("surveyId")));
 			answer.setUserId(((User)session.getAttribute("user")).getId());
 			answers.add(answer);
 		}
-		surveyService.saveAction(answers);
+		if (isUpdate.equals("true"))
+			surveyService.updateAction(answers);
+		else 
+			surveyService.saveAction(answers);
 		return "survey/submitOk";
 	}
 	
 	@RequestMapping(value = "accessSurvey/{id}", method = RequestMethod.GET)
-	public String accessSurvey(@PathVariable("id") String id,Model model,HttpSession session){
-		Survey survey=surveyService.selectSurvey(id);
+	public String accessSurvey(@PathVariable("id") String surveyId,Model model,HttpSession session){
+		/*Survey survey=surveyService.selectSurvey(id);
 		List<Question> questions = paperService.getQuestions(String.valueOf(survey.getPaperId()));
 		Iterator<Question> it = questions.iterator();
 		while(it.hasNext()){
 			Question question = it.next();
 			String[] questionOptions = paperService.splitQuestionOptions(question.getQuestionOptions());
 			question.setSplitOptions(questionOptions);
+		}*/
+		
+		String userId = ((User) session.getAttribute("user")).getId();
+		Survey survey = surveyService.selectSurvey(surveyId);
+		Paper surveyPaper = paperService.selectPaper(String.valueOf(survey.getPaperId()));
+		List<Question> surveyQuestions = paperService.getQuestions(String.valueOf(surveyPaper.getId()));
+		List<Answer> surveyAnswers = answerService.getAnswerForSurveyByUser(surveyId, userId);
+		for (Question question : surveyQuestions) {
+			for (Answer answer : surveyAnswers) {
+				if (question.getId().equals(answer.getQuestionId())){
+					if (question.getQuestionType().equals(Question.OPEN_QUESTION))	//如果是开放性问题
+						question.setOpenAnswer(answer.getAnswer());
+					else {	//如果是非开放性问题
+						String[] answerIndex = answer.getAnswer().trim().split(",");
+						for (String index : answerIndex) {
+							question.getOptions()[Integer.parseInt(index)].setChecked(true);
+						}
+					}
+				}
+			}
 		}
-		model.addAttribute("questions", questions);
+		model.addAttribute("isUpdate", surveyAnswers.size() != 0);
+		model.addAttribute("expired", survey.getDeadlineTimestamp().before(new Date()));
+		model.addAttribute("questions", surveyQuestions);
 		model.addAttribute("survey", survey);
+		
 		return "survey/action";
 	}
-	
-
 }

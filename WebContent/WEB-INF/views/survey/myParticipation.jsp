@@ -40,10 +40,12 @@
 						<td>${survey.userId}&nbsp;</td>
 						<td>${survey.deadlineTimestamp}&nbsp;</td>
 						<td>
-							<mytag:PermssionTag functionId="F8-6"><a href="${ctx}/survey/show/${survey.id}" id="showLink-${survey.id}"><i class="icon-folder-open"></i> 查看</a>&nbsp;&nbsp;</mytag:PermssionTag>
-							<c:if test="${survey.deadlineTimestamp > nowDate}">	
-							<mytag:PermssionTag functionId="F8-3"><a href="#"><i class="icon-edit"></i> 修改</a>&nbsp;&nbsp;</mytag:PermssionTag>
-							</c:if>
+							<mytag:PermssionTag functionId="F8-6">
+								<a href="${ctx}/survey/accessSurvey/${survey.id}" id="showLink-${survey.id}"><i class="icon-folder-open"></i>查看
+								<c:if test="${survey.deadlineTimestamp > nowDate}">(可修改)</c:if>
+								<c:if test="${survey.deadlineTimestamp <= nowDate}">(已截止)</c:if>
+								</a>&nbsp;&nbsp;
+							</mytag:PermssionTag>
 						</td>
 					</tr>
 				</c:forEach>

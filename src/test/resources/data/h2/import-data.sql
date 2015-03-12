@@ -199,16 +199,16 @@ insert into paper_questions (paper_id, question_id, position) values (16, 5, 50)
 insert into paper_questions (paper_id, question_id, position) values (17, 6, 60);
 
 
-insert into paper_answers(business_id, paper_id, question_id, answer) values('C1',1,4,'1');
-insert into paper_answers(business_id, paper_id, question_id, answer) values('C1',1,5,'2');
-insert into paper_answers(business_id, paper_id, question_id, answer) values('C1',1,6,'3');
-insert into paper_answers(business_id, paper_id, question_id, answer) values('C1',1,7,'2');
-insert into paper_answers(business_id, paper_id, question_id, answer) values('C1',1,8,'2');
-insert into paper_answers(business_id, paper_id, question_id, answer) values('C1',1,9,'2,3');
+--insert into paper_answers(business_id, paper_id, question_id, answer) values('C1',1,4,'1');
+--insert into paper_answers(business_id, paper_id, question_id, answer) values('C1',1,5,'2');
+--insert into paper_answers(business_id, paper_id, question_id, answer) values('C1',1,6,'3');
+--insert into paper_answers(business_id, paper_id, question_id, answer) values('C1',1,7,'2');
+--insert into paper_answers(business_id, paper_id, question_id, answer) values('C1',1,8,'2');
+--insert into paper_answers(business_id, paper_id, question_id, answer) values('C1',1,9,'2,3');
 
-insert into paper_answers(business_id, paper_id, question_id, answer) values('C2',6,1,'2');
-insert into paper_answers(business_id, paper_id, question_id, answer) values('C2',6,3,'abcde');
-insert into paper_answers(business_id, paper_id, question_id, answer) values('V6',7,3,'abcde');
+--insert into paper_answers(business_id, paper_id, question_id, answer) values('C2',6,1,'2');
+--insert into paper_answers(business_id, paper_id, question_id, answer) values('C2',6,3,'abcde');
+--insert into paper_answers(business_id, paper_id, question_id, answer) values('V6',7,3,'abcde');
 
 insert into groups(group_id, group_name, comment, content, edit_date, trashed, user_id) values(1,'群组1','测试群组','张三^zhangsan@cn.ibm.com|李四^lisi@cn.ibm.com|王五^wangwu@cn.ibm.com',now(),'F','admin');
 insert into groups(group_id, group_name, comment, content, edit_date, trashed, user_id) values(2,'群组2','测试群组','',now(),'F','zhang3');
@@ -237,3 +237,13 @@ insert into survey(survey_id, status, update_timestamp, user_id, paper_id, paper
 
 insert into group_users(group_id, user_id) values (1, 'admin');
 insert into group_users(group_id, user_id) values (2, 'admin');
+
+insert into paper_answers(survey_id, question_id, answer_user_id, answer) values(1, 1, 'admin', 1);
+insert into paper_answers(survey_id, question_id, answer_user_id, answer) values(1, 2, 'admin', 1);
+insert into paper_answers(survey_id, question_id, answer_user_id, answer) values(1, 3, 'admin', 1);
+insert into paper_answers(survey_id, question_id, answer_user_id, answer) values(1, 4, 'admin', 1);
+insert into paper_answers(survey_id, question_id, answer_user_id, answer) values(1, 5, 'admin', 1);
+insert into paper_answers(survey_id, question_id, answer_user_id, answer) values(1, 6, 'admin', 1);
+insert into paper_answers(survey_id, question_id, answer_user_id, answer) values(1, 7, 'admin', 1);
+insert into paper_answers(survey_id, question_id, answer_user_id, answer) values(1, 8, 'admin', 1);
+insert into paper_answers(survey_id, question_id, answer_user_id, answer) values(1, 9, 'admin', '1,2,3');

@@ -16,6 +16,4 @@ public interface SurveyMybatisDao {
 	public void updateSurvey(Survey survey);
 	public void save(Survey Survey);
 	public List<Survey> findByGroups(List<Group> groups);
-	public void saveAction(List<Answer> Answers);
-	
 }

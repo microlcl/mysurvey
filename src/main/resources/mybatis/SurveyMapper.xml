@@ -14,6 +14,7 @@
 		<result property="description" column="description"/>
 		<result property="subject" column="subject"/> 
 		<result property="updateTimestamp" column="update_timestamp"/> 
+		<result property="isAnonymous" column="is_anonymous"/> 
 	</resultMap>
 	<select id="search" parameterType="map" resultMap="surveyDetailMap">
 		select s.survey_id, s.user_id, s.paper_url, s.groups_id, s.sent_timestamp, s.deadline_timestamp, 
@@ -71,19 +72,37 @@
 	    </where>
 	</select>
 	<update id="updateSurvey" parameterType="Survey">
-		
+		update survey
+        	<set>
+        	    <if test="subject != null">
+        	        subject=#{subject},
+        	    </if>
+            	<if test="isAnonymous != null">
+        	        is_anonymous=#{isAnonymous},
+        	    </if>
+        	    <if test="description != null">
+        	        description=#{description},
+        	    </if>
+        	    <if test="deadlineTimestamp != null">
+        	        deadline_timestamp=#{deadlineTimestamp},
+        	    </if>
+            	<if test="surveyGroup != null">
+        	        groups_id=#{surveyGroup},
+        	    </if>
+        	    <if test="status != null">
+        	        status=#{status},
+        	    </if>
+        	    <if test="paperURL != null">
+        	        paper_url=#{paperURL},
+        	    </if>
+            	update_timestamp=now()
+        	</set>
+        	where survey_id=#{id}
 	</update>
 	
-	<insert id="saveAction" parameterType="Answer" useGeneratedKeys="true" keyProperty="id" >
-	    insert into paper_answers(survey_id,paper_id,question_id,answer,anser_user_id) values
-            <foreach collection="list" item="answer" index="index" separator=",">  
-               (#{answer.surveyId},#{answer.paperId},#{answer.questionId},#{answer.answer},#{answer.userId})
-            </foreach>
-	</insert>
-    
 	<insert id="save" parameterType="Survey" useGeneratedKeys="true" keyProperty="id" >
 		insert into survey (user_id, paper_id, paper_url, subject, groups_id, sent_timestamp, deadline_timestamp, is_anonymous, description,status)
-		values (#{creater.id},#{paper.id},#{paperURL},#{subject},#{surveyGroup},now(),#{deadlineTimestamp},#{isAnonymous},#{description},'P');
+		values (#{creater.id},#{paper.id},#{paperURL},#{subject},#{surveyGroup},now(),#{deadlineTimestamp},#{isAnonymous},#{description},'N');
 	</insert>
 	
 </mapper>

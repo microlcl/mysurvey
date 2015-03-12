@@ -21,8 +21,14 @@ public class Survey extends IdEntity{
 	private String status;
 	private String statusString;
 	private String groupsString;
+	private String[] groupIds;
 	
-	
+	public String[] getGroupIds() {
+		return groupIds;
+	}
+	public void setGroupIds(String[] groupIds) {
+		this.groupIds = groupIds;
+	}
 	public Date getDeadlineTimestamp() {
 		return deadlineTimestamp;
 	}

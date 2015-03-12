@@ -143,11 +143,10 @@ create table question_type (
 
 create table paper_answers (
 	survey_id bigint not null, -- 与survery table关联，表明是哪一次调查
-	paper_id bigint not null,
 	question_id bigint not null,
 	answer varchar(256), -- 多选项的答案应该是用逗号隔开的所选答案的index
-	anser_user_id varchar(64),  -- 答题者
-	primary key (survey_id,paper_id,question_id,anser_user_id)
+	answer_user_id varchar(64) not null,  -- 答题者
+	primary key (survey_id,question_id,answer_user_id)
 );
 
 -- 用户组，给特定人群发调查问卷用的，类似于邮件组

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.eastteam.myprogram.dao.AnswerMybatisDao">
+    
+    <resultMap id="answerDetailMap" type="Answer">
+		<result property="surveyId" column="survey_id"/>
+		<result property="questionId" column="question_id"/>
+		<result property="answer" column="answer"/>
+		<result property="userId" column="answer_user_id"/>
+	</resultMap>
+	
+	<select id="search" parameterType="map" resultMap="answerDetailMap">
+		select a.survey_id, a.question_id, a.answer_user_id, a.answer from paper_answers a
+		<where>
+		    <if test="userId != null">
+		        a.answer_user_id = #{userId}
+		    </if>
+		    <if test="surveyId != null">
+		        and a.survey_id = #{surveyId}
+		    </if>
+		    <if test="questionId != null">
+		        and a.question_id = #{questionId}
+		    </if>
+		    <if test="sort != null">
+				order by ${sort}
+			</if>
+			<if test="offset != null">
+				limit #{offset}, #{pageSize}
+			</if>
+		</where> 
+	</select>
+	
+	<insert id="saveAction" parameterType="Answer" useGeneratedKeys="true" keyProperty="id" >
+	    insert into paper_answers(survey_id,question_id,answer,answer_user_id) values
+            <foreach collection="list" item="answer" index="index" separator=",">  
+               (#{answer.surveyId},#{answer.questionId},#{answer.answer},#{answer.userId})
+            </foreach>
+	</insert>
+	
+	<!-- <update id="updateAction" parameterType="Answer">
+    	<foreach collection="list" item="answer" index="index" open="" close="" separator=";">
+        	update paper_answers
+        	<set>
+            	answer=#{answer.answer}
+        	</set>
+        	where survey_id=#{answer.surveyId} and question_id=#{answer.questionId} and answer_user_id=#{answer.userId}
+    	</foreach>      
+	</update> -->
+	
+	<update id="update" parameterType="Answer">
+	    update paper_answers
+        	<set>
+            	answer=#{answer}
+        	</set>
+        	where survey_id=#{surveyId} and question_id=#{questionId} and answer_user_id=#{userId}
+	</update>
+	
+	<insert id="save" parameterType="Answer">
+	    insert into paper_answers(survey_id,question_id,answer,anser_user_id) 
+	    values (#{surveyId},#{questionId},#{answer},#{userId})
+	</insert>
+</mapper>

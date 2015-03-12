@@ -17,10 +17,13 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.eastteam.myprogram.dao.AnswerMybatisDao;
 import com.eastteam.myprogram.dao.MyGroupMybatisDao;
 import com.eastteam.myprogram.dao.SurveyMybatisDao;
 import com.eastteam.myprogram.entity.Answer;
 import com.eastteam.myprogram.entity.Group;
+import com.eastteam.myprogram.entity.Paper;
+import com.eastteam.myprogram.entity.Question;
 import com.eastteam.myprogram.entity.Survey;
 import com.eastteam.myprogram.service.PageableService;
 import com.eastteam.myprogram.service.myGroup.MyGroupService;
@@ -34,6 +37,8 @@ public class SurveyService extends PageableService {
 	private SurveyMybatisDao surveyMybatisDao;
 	@Autowired
 	private MyGroupMybatisDao myGroupMybatisDao;
+	@Autowired
+	private AnswerMybatisDao answerMybatisDao;
 	
 	private int pageSize;
 	
@@ -120,7 +125,18 @@ public class SurveyService extends PageableService {
 	}
 	
 	public Survey selectSurvey(String surveyId) {
-		return this.surveyMybatisDao.selectSurvey(Long.parseLong(surveyId));
+		Survey survey = this.surveyMybatisDao.selectSurvey(Long.parseLong(surveyId));
+		String[] groupsid = survey.getGroupsId().trim().split(",");
+		String groupString = "";
+		for (String s : groupsid) {
+			Group g = myGroupMybatisDao.getSelectedGroup(Long.parseLong(s.trim()));
+			groupString += g.getGroupName() + ",";
+		}
+		
+		groupString = groupString.substring(0, groupString.length() - 1);
+		survey.setGroupsString(groupString);
+		survey.setGroupIds(survey.getGroupsId().trim().split(","));
+		return survey;
 	}
 	
 	public Page<Survey> getAllParticipationByUser(String userId, int pageNumber, int pageSize, String sort) {
@@ -138,11 +154,24 @@ public class SurveyService extends PageableService {
 	}
 	
 	public void saveAction(List<Answer> answers){
-		logger.info("sumbit action of survey ");
-		surveyMybatisDao.saveAction(answers);
+		logger.info("save action of survey ");
+		answerMybatisDao.saveAction(answers);
 	}
 	
-	public boolean publishSurvey(Survey survey){
+	public void updateAction(List<Answer> answers){
+		logger.info("update action of survey ");
+		for (Answer answer : answers) {
+			answerMybatisDao.update(answer);
+		}
+	}
+	
+	public void updateSurvey(Survey survey){
+		logger.info("updating survey :"+ survey.getSubject());
+		logger.info("groups:"+survey.getGroupsId());
+		surveyMybatisDao.updateSurvey(survey);
+	}
+	
+	public boolean createSurvey(Survey survey){
 		logger.info("save new survey :"+ survey.getSubject());
 		surveyMybatisDao.save(survey);
 		HashSet<String> _receiver=new HashSet<String>();
@@ -160,5 +189,5 @@ public class SurveyService extends PageableService {
 		
 	return new EmailSender().sendmail(survey.getSubject(),_receiver.toArray(), survey.getDescription(), survey.getPaperURL()+survey.getId(), "text/html;charset=gb2312");
 	}
-	
 }
+ 
