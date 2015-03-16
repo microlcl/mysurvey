@@ -41,7 +41,6 @@
 	<select id="getCount" parameterType="map" resultType="Long">
 		select count(0) from (select distinct p.paper_id from papers p 
 		left join category cb on p.business_type=cb.id 
-		left join category cf on p.form_type=cf.id
 		left join category cs on p.status=cs.id
 		left join paper_questions pq on p.paper_id=pq.paper_id
 		left join questions q on pq.question_id=q.question_id 
@@ -71,10 +70,9 @@
 		values (#{paperId}, #{questionId}, #{position});
 	</insert>
 	<select id="selectPaper" parameterType="map" resultMap="paperDetailMap">
-		select p.paper_id, p.paper_name, cb.id as cb_id, cb.name as cb_name,cf.id as cf_id, cf.name as cf_name, cs.id as cs_id, cs.name as cs_name
+		select p.paper_id, p.paper_name, cb.id as cb_id, cb.name as cb_name, cs.id as cs_id, cs.name as cs_name
 		from papers p
 		left join category cb on p.business_type=cb.id
-		left join category cf on p.form_type=cf.id
 		left join category cs on p.status=cs.id
 		where p.paper_id=#{paperId};
 	</select>
