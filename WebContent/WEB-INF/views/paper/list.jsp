@@ -95,7 +95,6 @@
 				<tr>
 					<th>问卷名称</th>
 					<th>问卷类型</th>
-					<th>应用表单</th>
 					<th>问卷状态</th>
 					<th>操作</th>
 				</tr>
@@ -104,8 +103,7 @@
 				<c:forEach items="${papers}" var="paper">
 					<tr>
 						<td>${paper.paperName}&nbsp;</td>
-						<td>${paper.businessType.name}&nbsp;</td>
-						<td>${paper.formType.name}&nbsp;</td>
+						<td>${paper.businessType.name}&nbsp;</td>						
 						<td>${paper.status.name}&nbsp;</td>
 						<td>
 							<mytag:PermssionTag functionId="F8-6"><a href="${ctx}/paper/show/${paper.id}" id="showLink-${paper.id}"><i class="icon-folder-open"></i> 查看</a>&nbsp;&nbsp;</mytag:PermssionTag>

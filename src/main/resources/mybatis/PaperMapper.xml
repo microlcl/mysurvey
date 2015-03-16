@@ -9,10 +9,6 @@
 			<id property="id" column="cb_id" />
 			<result property="name" column="cb_name" />
 		</association>
-		<association property="formType" javaType="Category">
-			<id property="id" column="cf_id" />
-			<result property="name" column="cf_name" />
-		</association>		
 		<association property="status" javaType="Category">
 			<id property="id" column="cs_id" />
 			<result property="name" column="cs_name" />
@@ -21,10 +17,9 @@
 		</collection>
 	</resultMap>
 	<select id="search" parameterType="map" resultMap="paperDetailMap">
-		select p.paper_id, p.paper_name, cb.id as cb_id, cb.name as cb_name,cf.id as cf_id, cf.name as cf_name, cs.id as cs_id, cs.name as cs_name
+		select p.paper_id, p.paper_name, cb.id as cb_id, cb.name as cb_name, cs.id as cs_id, cs.name as cs_name
 		from papers p
-		left join category cb on p.business_type=cb.id
-		left join category cf on p.form_type=cf.id
+		left join category cb on p.business_type=cb.id		
 		left join category cs on p.status=cs.id
 		left join paper_questions pq on p.paper_id=pq.paper_id
 		left join questions q on pq.question_id=q.question_id 
@@ -34,10 +29,7 @@
 			</if>
 			<if test="businessType != null">
 		        and p.business_type = #{businessType}
-			</if>
-			<if test="formType != null">
-		        and p.form_type = #{formType}
-			</if>			
+			</if>	
 			<if test="keyword != null">
 				and (p.paper_name like '%${keyword}%' or q.question like '%${keyword}%')
 			</if>
@@ -59,10 +51,7 @@
 			</if>
 			<if test="businessType != null">
 		        and cb.id = #{businessType}
-			</if>
-			<if test="formType != null">
-		        and cf.id = #{formType}
-			</if>				
+			</if>			
 			<if test="keyword != null">
 				and (p.paper_name like '%${keyword}%' or q.question like '%${keyword}%')
 			</if>
@@ -74,8 +63,8 @@
 	    where q.question_id=pq.question_id and pq.paper_id=#{paper_id} order by pq.position
 	</select>
 	<insert id="insertPaper" parameterType="Paper" useGeneratedKeys="true" keyProperty="id">
-		insert into papers (paper_name, creat_timestamp, business_type, form_type,status) 
-		values(#{paperName}, now(), #{businessType.id},#{formType.id}, '1-0-1-0');
+		insert into papers (paper_name, creat_timestamp, business_type, status) 
+		values(#{paperName}, now(), #{businessType.id}, '1-0-1-0');
 	</insert>
 	<insert id="insertQuestions" parameterType="map">
 		insert into paper_questions (paper_id, question_id, position) 
@@ -100,7 +89,7 @@
 		where paper_id=#{id}
 	</update>
 	<update id="updatePaper" parameterType="Paper">
-		update papers set paper_name = #{paperName}, business_type = #{businessType.id},form_type = #{formType.id}, status = '1-0-1-0'
+		update papers set paper_name = #{paperName}, business_type = #{businessType.id}, status = '1-0-1-0'
 		where paper_id=#{id}
 	</update>
 	<update id="discardPaper" parameterType="Long">

@@ -111,7 +111,7 @@
 		}
 		
 		function submitForm(){
-			if ($('#businessType').combobox('getValue') && $('#formType').combobox('getValue')) {
+			if ($('#businessType').combobox('getValue')) {
 				$("#warning-block").hide();
 				$('#questionsForm').submit();
 			}else {
@@ -142,13 +142,7 @@
 						<input id="businessType" class="easyui-combobox" name="businessType.id" data-options="url:'${ctx}/category/api/getChildren/getBusinessType',method:'get',valueField:'id',textField:'text'" value="${selectpaper.businessType.id}"/>
 					</div>
 				</div>				
-	
-				<div class="control-group">
-					<label for="formType" class="control-label">应用表单:</label>					
-					<div class="controls">	
-						<input id="formType" class="easyui-combobox" name="formType.id" data-options="url:'${ctx}/category/api/getChildren/getFormType',method:'get',valueField:'id',textField:'text'" value="${selectpaper.formType.id}"/>
-					</div>
-				</div>	
+
 				<button id="select_questions_button" style="height: 40px !important;width: 180px !important; margin-top: 10px;" type="button" class="btn btn-warning" id="search_btn" onclick="questionPopupWindow({callback:addQuestions})">请点击此处选择问题</button>
 				<button id="delete_questions_button" style="height: 40px !important;width: 180px !important; margin-top: 10px; margin-left:40px; display:none;" type="button" class="btn btn-danger" id="delete_btn" onclick="removeAllQuestions();">删除所有所选问题</button>
 				<div id="selected_questions" style="display: none;">

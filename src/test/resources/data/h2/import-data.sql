@@ -114,25 +114,25 @@ insert into questions (question_id,question, question_type, question_options, bu
 insert into questions (question_id,question, question_type, question_options, business_type, trashed, user_id) values(8,'你是通过什么途径知道我们的产品的8？','1','网上搜索^朋友分享^无意间了解','1-0-2-2','F','admin');
 insert into questions (question_id,question, question_type, question_options, business_type, trashed, user_id) values(9,'你喜欢的灯具材质是9？','2','木质^金属^水晶^其他','1-0-2-0','F','admin');
 
-insert into papers (paper_id, paper_name, business_type, form_type, creat_timestamp, status) values (1, '问卷1', '1-0-2-0', '1-0-12-3',now(), '1-0-1-1');
-insert into papers (paper_id, paper_name, business_type, form_type, creat_timestamp, status) values (2, '问卷2', '1-0-2-0', '1-0-12-3',now(), '1-0-1-1');
-insert into papers (paper_id, paper_name, business_type, form_type, creat_timestamp, status) values (3, '问卷3', '1-0-2-0', '1-0-12-3',now(), '1-0-1-0');
-insert into papers (paper_id, paper_name, business_type, form_type, creat_timestamp, status) values (4, '问卷4', '1-0-2-2', '1-0-12-3',now(), '1-0-1-2');
-insert into papers (paper_id, paper_name, business_type, form_type, creat_timestamp, status) values (5, '问卷5', '1-0-2-2', '1-0-12-3',now(), '1-0-1-1');
-insert into papers (paper_id, paper_name, business_type, form_type, creat_timestamp, status) values (6, '问卷6', '1-0-2-1', '1-0-12-3',now(), '1-0-1-1');
+insert into papers (paper_id, paper_name, business_type, creat_timestamp, status) values (1, '问卷1', '1-0-2-0', now(), '1-0-1-1');
+insert into papers (paper_id, paper_name, business_type, creat_timestamp, status) values (2, '问卷2', '1-0-2-0', now(), '1-0-1-1');
+insert into papers (paper_id, paper_name, business_type, creat_timestamp, status) values (3, '问卷3', '1-0-2-0', now(), '1-0-1-0');
+insert into papers (paper_id, paper_name, business_type, creat_timestamp, status) values (4, '问卷4', '1-0-2-2', now(), '1-0-1-2');
+insert into papers (paper_id, paper_name, business_type, creat_timestamp, status) values (5, '问卷5', '1-0-2-2', now(), '1-0-1-1');
+insert into papers (paper_id, paper_name, business_type, creat_timestamp, status) values (6, '问卷6', '1-0-2-1', now(), '1-0-1-1');
 
 
-insert into papers (paper_id, paper_name, business_type, form_type, creat_timestamp, status) values (7, '问卷7', '1-0-2-1', '1-0-12-2',now(), '1-0-1-1');
-insert into papers (paper_id, paper_name, business_type, form_type, creat_timestamp, status) values (8, '问卷8', '1-0-2-0', '1-0-12-2',now(), '1-0-1-1');
-insert into papers (paper_id, paper_name, business_type, form_type, creat_timestamp, status) values (9, '问卷9', '1-0-2-0', '1-0-12-2',now(), '1-0-1-0');
-insert into papers (paper_id, paper_name, business_type, form_type, creat_timestamp, status) values (10, '问卷10', '1-0-2-2', '1-0-12-2',now(), '1-0-1-2');
-insert into papers (paper_id, paper_name, business_type, form_type, creat_timestamp, status) values (11, '问卷11', '1-0-2-2', '1-0-12-2',now(), '1-0-1-1');
+insert into papers (paper_id, paper_name, business_type, creat_timestamp, status) values (7, '问卷7', '1-0-2-1', now(), '1-0-1-1');
+insert into papers (paper_id, paper_name, business_type, creat_timestamp, status) values (8, '问卷8', '1-0-2-0', now(), '1-0-1-1');
+insert into papers (paper_id, paper_name, business_type, creat_timestamp, status) values (9, '问卷9', '1-0-2-0', now(), '1-0-1-0');
+insert into papers (paper_id, paper_name, business_type, creat_timestamp, status) values (10, '问卷10', '1-0-2-2', now(), '1-0-1-2');
+insert into papers (paper_id, paper_name, business_type, creat_timestamp, status) values (11, '问卷11', '1-0-2-2', now(), '1-0-1-1');
 
-insert into papers (paper_id, paper_name, business_type, form_type, creat_timestamp, status) values (12, '问卷12', '1-0-2-1', '1-0-12-1',now(), '1-0-1-1');
-insert into papers (paper_id, paper_name, business_type, form_type, creat_timestamp, status) values (13, '问卷13', '1-0-2-0', '1-0-12-1',now(), '1-0-1-1');
-insert into papers (paper_id, paper_name, business_type, form_type, creat_timestamp, status) values (14, '问卷14', '1-0-2-0', '1-0-12-1',now(), '1-0-1-0');
-insert into papers (paper_id, paper_name, business_type, form_type, creat_timestamp, status) values (15, '问卷15', '1-0-2-2', '1-0-12-1',now(), '1-0-1-2');
-insert into papers (paper_id, paper_name, business_type, form_type, creat_timestamp, status) values (16, '问卷16', '1-0-2-2', '1-0-12-1',now(), '1-0-1-1');
+insert into papers (paper_id, paper_name, business_type, creat_timestamp, status) values (12, '问卷12', '1-0-2-1', now(), '1-0-1-1');
+insert into papers (paper_id, paper_name, business_type, creat_timestamp, status) values (13, '问卷13', '1-0-2-0', now(), '1-0-1-1');
+insert into papers (paper_id, paper_name, business_type, creat_timestamp, status) values (14, '问卷14', '1-0-2-0', now(), '1-0-1-0');
+insert into papers (paper_id, paper_name, business_type, creat_timestamp, status) values (15, '问卷15', '1-0-2-2', now(), '1-0-1-2');
+insert into papers (paper_id, paper_name, business_type, creat_timestamp, status) values (16, '问卷16', '1-0-2-2', now(), '1-0-1-1');
 
 insert into paper_questions (paper_id, question_id, position) values (1, 9, 10);
 insert into paper_questions (paper_id, question_id, position) values (1, 8, 20);

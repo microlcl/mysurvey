@@ -145,13 +145,10 @@ public class PaperController {
 	 */
 	@RequestMapping(method = RequestMethod.GET, value = "/api/search", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public List<User> search(@RequestParam(value = "businessType")String businessType, @RequestParam(value = "formType")String formType) {
+	public List<User> search(@RequestParam(value = "businessType")String businessType) {
 		Map parameters = new HashMap();
 		if (!StringUtils.isBlank(businessType)) {
 			parameters.put("businessType", businessType);
-		}
-		if (!StringUtils.isBlank(formType)) {
-			parameters.put("formType", formType);
 		}
 		return this.paperService.search(parameters);
 	}

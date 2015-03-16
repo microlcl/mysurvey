@@ -111,7 +111,6 @@ create table papers (
 	status varchar(64) not null, -- 调查问卷的状态： draft, publish, trashed,只有publish状态的才能使用。此status在category的系统参数节点下配置，此处保存的是category id.
 	default_paper varchar(1), -- 是否是某类型问卷的默认paper: T = Ture, F = False 
 	business_type varchar(64) not null, -- 问卷业务类型，可以在category table配置
-	form_type varchar(64), -- 单据类型：回访表单，需求表单，等
 	primary key (paper_id)	
 );
 

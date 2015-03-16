@@ -155,12 +155,6 @@
 				</div>				
 	
 				<div class="control-group">
-					<label for="formType" class="control-label">应用表单:</label>					
-					<div class="controls">	
-						<input id="formType" class="easyui-combobox" name="formType.id" data-options="url:'${ctx}/category/api/getChildren/getFormType',method:'get',valueField:'id',textField:'text'" value="${selectpaper.formType.id}"/>
-					</div>
-				</div>		
-				<div class="control-group">
 				<div class="controls">
 				<button id="select_questions_button"  type="button" class="btn btn-warning" onclick="questionPopupWindow({callback:addQuestions})">选择问题</button>
 				<button id="delete_questions_button"  type="button" class="btn btn-danger" onclick="removeAllQuestions();">删除所有问题</button>

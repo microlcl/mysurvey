@@ -14,7 +14,6 @@ public class Paper extends IdEntity {
 	
 	private String paperName;
 	private Category businessType;
-	private Category formType;
 	private Category status;
 	private List<Question> questions;
 	
@@ -43,11 +42,5 @@ public class Paper extends IdEntity {
 	public void setQuestions(List<Question> questions) {
 		this.questions = questions;
 	}
-	public Category getFormType() {
-		return formType;
-	}
-	public void setFormType(Category formType) {
-		this.formType = formType;
-	}	
-	
+
 }
