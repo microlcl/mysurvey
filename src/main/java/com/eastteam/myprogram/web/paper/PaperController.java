@@ -61,6 +61,7 @@ public class PaperController {
 		if (request.getParameter("search_categoryId2") != "" && (request.getParameter("search_categoryId2") != null) ) {
 			searchParams.put("businessType", request.getParameter("search_categoryId2"));
 		}
+		searchParams.put("sort", sortType);
 		List<Paper> papers = this.paperService.search(searchParams);
 		model.addAttribute("papers", papers);
 		model.addAttribute("sortType", sortType);
