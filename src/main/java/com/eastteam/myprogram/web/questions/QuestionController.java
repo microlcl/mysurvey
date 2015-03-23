@@ -52,10 +52,11 @@ public class QuestionController {
 	@RequestMapping (value = "list", method = RequestMethod.GET)
 	public String list(@RequestParam(value = "page", defaultValue = "1") int pageNumber,
 			@RequestParam(value = "sortType", defaultValue = "question_id") String sortType,
-			Model model, ServletRequest request){
+			Model model, ServletRequest request, HttpSession session){
 		Map<String, Object> searchParams = Servlets.getParametersStartingWith(
 				request, "search_");
 		searchParams.put("trashed", "F");
+		searchParams.put("userId", ((User) session.getAttribute("user")).getId());
 		logger.info(searchParams.toString());
 		Page<Question> questions = questionService.getCurrentPageContent(
 				searchParams, pageNumber, Integer.parseInt(configProperties.getProperty("question.pagesize")), sortType);
