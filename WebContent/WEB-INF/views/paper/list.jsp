@@ -77,6 +77,9 @@
 					<input id="cc1" class="easyui-combotree" data-options="url:'${ctx}/category/api/getAll/paperStatus',method:'get',required:false" style="width:200px;" name="search_categoryId1" value="${param.search_categoryId}" />
 					&nbsp;&nbsp;&nbsp;&nbsp;问卷类型：
 					<input id="cc2" class="easyui-combotree" data-options="url:'${ctx}/category/api/getAll/getBusinessType',method:'get',required:false" style="width:200px;" name="search_categoryId2" value="${param.search_categoryId}"/>
+					<label class="checkbox inline" style="margin-left:20px">									
+		   			我的问卷<input value="${user.id}" type="checkbox" <c:if test="${!empty param.search_userId}">checked</c:if> name="search_userId"/>
+		   			</label>
 					<mytag:PermssionTag functionId="F8-2"><button type="button" class="btn btn-success" onclick="location.href='${ctx}/paper/add/'" style="margin-left: 20px;"><i class="icon-plus" style="margin-right: 5px;"></i>新建问卷</button></mytag:PermssionTag>
 					<!-- 
 					&nbsp;&nbsp;&nbsp;&nbsp;
