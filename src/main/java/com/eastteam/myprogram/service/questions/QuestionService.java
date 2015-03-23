@@ -30,11 +30,13 @@ public class QuestionService extends PageableService {
 	@Override
 	public List search(Map parameters, Pageable pageRequest) {
 		logger.info("in service, pagesize = " + pageSize);
-		Map param = Maps.newHashMap(parameters);
+		
+		Map<String,Object>param = Maps.newHashMap();
 		param.put("offset", pageRequest.getOffset());
 		param.put("pageSize", pageRequest.getPageSize());
 		param.put("sort", this.getOrderValue(pageRequest.getSort()));
-		List<Question> questions = questionMybatisDao.search(null);
+		param.put("userId", parameters.get("userId"));
+		List<Question> questions = questionMybatisDao.search(param);
 		
 		Iterator<Question> it = questions.iterator();
 		while(it.hasNext()){
