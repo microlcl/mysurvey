@@ -24,6 +24,10 @@
 			<div class="panel" style="display: none;">
 					<a href="${ctx}/survey/myParticipation">我参与的调查</a>
 			</div>
+			
+			<div class="panel" style="display: none;">
+					<a href="${ctx}/paper/list?page=1&sortType=creat_timestamp">我的问卷</a>
+			</div>
 
 			<mytag:PermssionTag functionId="F7-1">
 				<a id="question-tab" href="${ctx}/question/list">问题管理</a>
