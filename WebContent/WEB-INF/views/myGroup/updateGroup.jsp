@@ -14,7 +14,12 @@
 	
 	<script src="${ctx}/static/easyui/jquery.easyui.min.js" type="text/javascript"></script>
 	<script type="text/javascript">
-    
+	$(document).ready(function() {
+		var message = "${errorMessage}";
+		if(message != "") {
+			alert(message);	
+		}		
+	})
 	function addOption(){
 		var optionDiv = '<span class="control-group" ><label for="question" class="control-label formlabel">联系人昵称:</label><input type="text" name="nickName">  &nbsp; &nbsp; id：<input type="text" placeholder="联系人id不能为空" name="userId">'
 						+' <a href="javascript:void(0);" onclick="deleteOption(this)" title="删除"><span style="margin:0px 0px -11px 5px" class="iconImg iconImg_delete"></span></a></div></div></span>';
@@ -26,7 +31,28 @@
 		$(_this).parent().remove();
 	}
 	
-		
+	function importCSV() {
+		var fileName=document.getElementById("CSVfile").value;
+		var type=fileName.substring(fileName.lastIndexOf(".")+1);
+		if(type!="csv"){
+			alert("文件格式不对，请重新选择CSV文件");
+		}else{
+			var _content="";
+			var i=0;
+			var form = document.forms['inputForm'];
+			form.action = '${ctx}/myGroup/importGroup';
+			$("input[name='userId']").each(function(){
+				_content+=$("input[name='nickName']").get(i).value+"^"+$(this).val()+"|";
+				i++;
+			});
+			if(!_content=="") {
+				$("input[name='content']").val(_content);
+			}
+			form.submit();
+		}		
+	}
+	
+	
       function sub(){
 	   var i=0;
 	   var _content="";
@@ -63,10 +89,12 @@
 		return true;
 	};
 	
+	
+	
 	</script>
 </head>
 <body>
-	<form  id="inputForm" onsubmit="return sub()" action="${ctx}/myGroup/updateGroup" method="post" class="form-horizontal" >
+	<form  id="inputForm" onsubmit="return sub()" action="${ctx}/myGroup/updateGroup" method="post" class="form-horizontal" enctype="multipart/form-data">
 
 	<div class="form">
 	<h1>编辑用户组</h1>
@@ -100,10 +128,10 @@
 			<div class="control-group">
 			     <label for="option" class="control-label formlabel">添加新联系人</label>  <a title="创建" onclick="addOption()" href="javascript:void(0);"><span class="iconImg iconImg_create" style="margin:0px 0px -11px" ></span></a>
 			     <span id="groupContent_error" class="error" style="display:none">小组名单不能为空！</span>
-			     <span id="groupId_error" class="error" style="display:none">请输入正确的联系人id！</span>
+			     <span id="groupId_error" class="error" style="display:none">请输入正确的联系人id！</span><br>
 			</div>   
 		    <input style="display:none;" name="content">
-		
+			<input type="file" id="CSVfile" name="CSVfile" onchange="importCSV()"style="padding-left:70px;width:60px" />
 		<div id="option_error" style="padding-left:170px;display:none"></div>
 		</td>
 	  </tr>	

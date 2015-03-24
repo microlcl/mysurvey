@@ -3,6 +3,8 @@
  */
 package com.eastteam.myprogram.web.myGroup;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -17,12 +19,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.poi.util.TempFile;
 import org.hibernate.mapping.Array;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpRequest;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,6 +36,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springside.modules.web.Servlets;
 
@@ -89,6 +94,15 @@ public class MyGroupController {
 		return "redirect:/myGroup/list";
 	}
 	
+	
+	@RequestMapping(value = "importGroup", method = RequestMethod.POST)
+	public String importGroup(@ModelAttribute Group group,MultipartFile CSVfile, ServletRequest request) {	
+		Boolean importFlag = myGroupService.importGroup(CSVfile,group);	
+		if (importFlag == false) {
+			request.setAttribute("errorMessage", "CSV文件内容不符合规范,请从新选择");
+		}		
+		return "myGroup/updateGroup";
+	}
 	
 	@RequestMapping(value = "deleteGroup/group_{id}", method = RequestMethod.GET)
 	public String deleteQuestion(@PathVariable("id") String id,  RedirectAttributes redirectAttributes){
