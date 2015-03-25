@@ -111,6 +111,31 @@
 		   $("#sendbtn").attr("disabled","disabled");
 		   $("#SendNotification").submit();
 		}
+		
+		function groupBy(obj){
+		
+		   $(".accordion-inner").each(function(){
+		       var id=$(this).attr('id');
+		       if(id){
+		        var jud=id.split("_");
+		        if(obj.value==3){
+		        if(jud[0]==0){
+ 		          $(this).hide();
+ 		       }else{
+ 		          $(this).show();
+ 		       }
+ 		       }else if(obj.value==2){
+ 		         if(jud[0]==1){
+ 		          $(this).hide();
+ 		       }else{
+ 		          $(this).show();
+ 		       }
+ 		       }else{
+ 		           $(this).show();
+ 		       }
+		       }
+		   });
+		}
 	</script>
 </head>
 <body>
@@ -194,8 +219,15 @@
 
 								</div>
 								<div class="accordion-body collapse" id="collapse">
-								 <c:forEach items="${ gitems}" var="gitem" varStatus="">
-									<div class="accordion-inner" style="padding-left: 40px">
+								<div class="accordion-inner" style="padding-left: 260px">
+									<select onchange="groupBy(this)" >
+										<option value="1">显示全部</option>
+										<option value="2">未完成</option>
+										<option value="3">已完成</option>
+									</select>
+								</div>
+									<c:forEach items="${ gitems}" var="gitem" varStatus="status">
+									<div id="${gitem[2]}_${status.count}" class="accordion-inner" style="padding-left: 40px">
 									 <c:choose>
 									   <c:when test="${gitem[0]=='' }">
 									      ${gitem[1]}
@@ -212,7 +244,6 @@
 									      <span style="float:right;padding-right:10px"><i class="icon-ok"></i><font color="green" style="font-weight:bold;">已完成于</font>-- ${gitem[3]}</span>
 									   </c:otherwise>
 									   </c:choose>
-									   
 									</div>
 								</c:forEach>
 									<c:if test="${(survey.status=='P' || survey.status=='N')&& receivers!=''}">
@@ -220,7 +251,7 @@
 				                    <input type="text" name="subject" value="来自${survey.userId}的问卷调查：${survey.subject}的提醒" style="display:none;"> 
 				                    <input type="text" name="receivers" value="${receivers }" style="display:none;">
 				                    <input type="text" name="URL" value="${survey.paperURL }" style="display:none;">
-									<div class="accordion-inner">
+									<div class="accordion-inner" id="0_sender">
 									   <textarea name="desctription" style="width:340px;height:80px">Hi Dear<br>    请尽快完成调查，点击下方链接或将地址复制到浏览器地址栏中打开。<br>调查截止日期：   <fmt:formatDate value="${survey.deadlineTimestamp}" pattern="yyyy年MM月dd日   HH:mm"/></textarea>
 									   <input type="button" id="sendbtn" value="点击发送提醒" class="btn btn-warning" onclick="sendNoti()" style="height:80px">
 									</div>
