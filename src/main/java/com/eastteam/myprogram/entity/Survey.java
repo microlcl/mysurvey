@@ -22,6 +22,7 @@ public class Survey extends IdEntity{
 	private String statusString;
 	private String groupsString;
 	private String[] groupIds;
+	private String receivers;
 	
 	public String[] getGroupIds() {
 		return groupIds;
@@ -127,6 +128,12 @@ public class Survey extends IdEntity{
 	}
 	public void setSurveyGroup(String surveyGroup) {
 		this.surveyGroup = surveyGroup;
+	}
+	public String getReceivers() {
+		return receivers;
+	}
+	public void setReceivers(String receivers) {
+		this.receivers = receivers;
 	}
 	
 	

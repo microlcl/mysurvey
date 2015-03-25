@@ -1,5 +1,7 @@
 package com.eastteam.myprogram.web.survey;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.sql.ResultSet;
 import java.sql.Time;
@@ -23,6 +25,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
+import org.springframework.format.datetime.DateFormatter;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -43,6 +46,7 @@ import com.eastteam.myprogram.service.myGroup.MyGroupService;
 import com.eastteam.myprogram.service.paper.PaperService;
 import com.eastteam.myprogram.service.survey.SurveyService;
 import com.eastteam.myprogram.web.Servlets;
+import com.sun.org.apache.bcel.internal.generic.NEW;
 
 @Controller
 @RequestMapping (value = "/survey")
@@ -172,6 +176,20 @@ public class SurveyController {
 				if (gid.equals(String.valueOf(group.getId())))
 					group.setFlagString("");
 		}
+		String receivers=survey.getReceivers();
+		String _receivers="";
+		Group receiversGroup =new Group();
+		receiversGroup.setContent(receivers);
+		System.out.println("==>receivers:"+receivers);
+		receiversGroup.setGitems();
+		List<String[]> gitems = receiversGroup.getGitems();
+		for(String gitem[] : gitems){
+			if(gitem[2].equals("0")){
+				_receivers += gitem[1]+",";
+			}
+		}
+		model.addAttribute("receivers",_receivers);
+		model.addAttribute("gitems",gitems);
 		model.addAttribute("survey", survey);
 		model.addAttribute("paper",paper);
 		model.addAttribute("groups",groups);
@@ -203,7 +221,6 @@ public class SurveyController {
 			survey.setCreater((User) session.getAttribute("user"));
 			survey.setPaper(paperService.selectPaper(id));
 			survey.setPaperURL(ServiceAddr+request.getContextPath()+"/survey/accessSurvey/");
-			System.out.println(survey.getPaperURL());
 			if(surveyService.createSurvey(survey)){
 				return "survey/publishOK";
 			} else {
@@ -244,8 +261,28 @@ public class SurveyController {
 		}
 		if (isUpdate.equals("true"))
 			surveyService.updateAction(answers);
-		else 
+		else {
+			Survey survey=surveyService.selectSurvey(request.getParameter("surveyId"));
+			String receivers=survey.getReceivers();
+			String updatedReceivers="";
+			Group receiversGroup= new Group();
+			receiversGroup.setContent(receivers);
+			receiversGroup.setGitems();
+			List<String []> receiversGitem =receiversGroup.getGitems();
+			for(String [] gitem : receiversGitem){
+				if(gitem[1].equals(((User)session.getAttribute("user")).getEmail())){
+					gitem[2]="1";
+					gitem[3]=new SimpleDateFormat("yyyy/MM/dd HH:mm").format(new Date());
+				}
+				System.out.println("date:"+gitem[3]);
+				updatedReceivers+=gitem[0]+"^"+gitem[1]+"^"+gitem[2]+"^"+gitem[3]+"|";
+			}
+			survey.setReceivers(updatedReceivers);
+			surveyService.updateSurvey(survey);
 			surveyService.saveAction(answers);
+			logger.info("user:"+((User)session.getAttribute("user")).getId()+" sumbitted an answer of survey:"+request.getParameter("surveyId")+",updatedreceivers:"+updatedReceivers);
+		}
+			
 		return "survey/submitOk";
 	}
 	
@@ -285,5 +322,14 @@ public class SurveyController {
 		model.addAttribute("survey", survey);
 		
 		return "survey/action";
+	}
+	
+	@RequestMapping(value = "sendNoti", method = RequestMethod.POST)
+	public String sendNoti(RedirectAttributes redirectAttributes,HttpSession session,ServletRequest request){
+		if(surveyService.sendNotification(request.getParameter("receivers"),request.getParameter("subject"),request.getParameter("surveyId") ,request.getParameter("desctription")  ,request.getParameter("URL")))
+		  return "survey/publishOK";
+		else {
+		  return "survey/publishFail";
+		}
 	}
 }

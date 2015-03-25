@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="tags" tagdir="/WEB-INF/tags" %>
 <%@ taglib uri="http://com.eastteam.myprogram/mytaglib" prefix="mytag" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
 <html>
 <head>
@@ -81,7 +82,6 @@
 		        $("#groupError").hide();
 		        $("#surveyForm").submit();
 		        $("#action-bar").hide();
-		        $('#description').val($('#description').val()+"<br>调查截止日期： "+$("#datetimepicker7").val());
 		        $("#submitOK").show();
 		    }
 		}
@@ -104,6 +104,12 @@
 		       return arg;
 		    }
 		    else return arg;
+		}
+		
+		function sendNoti(){
+		   $("#sendbtn").val("请稍等...");
+		   $("#sendbtn").attr("disabled","disabled");
+		   $("#SendNotification").submit();
 		}
 	</script>
 </head>
@@ -130,6 +136,12 @@
 					</div>
 				</div>
 				<div class="control-group">
+					<label for="question" class="control-label formlabel">问卷详情:</label>
+					<div class="controls">						
+						<a href="${ctx}/paper/show/${paper.id}" id="showLink-${paper.id}"><i class="icon-folder-open"></i> 点击查看查看问卷</a>
+					</div>
+				</div>
+				<div class="control-group">
 					<label for="question" class="control-label formlabel">是否匿名调查:</label>
 					<div class="controls">
 					   <input type="checkbox" <c:if test="${survey.status=='P' || survey.status=='F'}">disabled="disabled"</c:if> <c:if test="${survey.isAnonymous=='T' }">checked="checked"</c:if> id="isAnonymousCheck" onclick="checkAnonymous()" >
@@ -139,7 +151,7 @@
 				<div class="control-group">
 					<label for="question" class="control-label formlabel">调查截止日期:</label>
 					<div class="controls">
-					   <input type="text" <c:if test="${survey.status=='P' || survey.status=='F'}">disabled="disabled"</c:if> id="datetimepicker7" <c:if test="${survey.deadlineTimestamp!=null }">value="${survey.deadlineTimestamp }"</c:if> name="deadlineTimestamp" readonly="true" placeholder="双击选择时间与日期" onclick="getDeadline()"  />
+					   <input type="text" <c:if test="${survey.status=='P' || survey.status=='F'}">disabled="disabled"</c:if> id="datetimepicker7" <c:if test="${survey.deadlineTimestamp!=null }">value=<fmt:formatDate value="${survey.deadlineTimestamp}" pattern="yyyy年MM月dd日   HH:mm"/></c:if> name="deadlineTimestamp" readonly="true" placeholder="双击选择时间与日期" onclick="getDeadline()"  />
 					   <span id="ddateEmptyError" class="error" style="display:none">请设定调查截止日期！</span>
 					   <span id="ddateInvalidError" class="error" style="display:none">请设定有效的截止日期！</span>
 					</div>
@@ -147,7 +159,7 @@
 				<div class="control-group">
 					<label for="question" class="control-label formlabel">调查描述:</label>					
 					<div class="controls">
-					    <textarea id="description" <c:if test="${survey.status=='P' || survey.status=='F'}">disabled="disabled"</c:if> name="description" style="width:440px" maxlength="128"><c:if test="${survey.description!=null }">${survey.description }</c:if><c:if test="${survey.description==null }">您收到一份调查问卷，请点击下方链接开始</c:if></textarea>
+					    <textarea id="description" <c:if test="${survey.status=='P' || survey.status=='F'}">disabled="disabled"</c:if> name="description" style="width:440px" maxlength="128"><c:if test="${survey.description!=null }">${survey.description }</c:if><c:if test="${survey.description==null }">Hi Dear:<br>    您收到一份调查问卷，请点击下方链接或复制地址到浏览器中开始</c:if></textarea>
 					</div>
 				</div>	
 				<div class="control-group">
@@ -165,6 +177,61 @@
 				<input type="text" name="surveyGroup" id="surveyGroup" style="display:none;">
 				<input type="hidden" name="isPublish" id="isPublish" value="${isPublish }">
 			</form>
+
+			<c:if test="${survey.status=='P' || survey.status=='F' || survey.status=='N' }">
+				<form id="SendNotification" action="${ctx}/survey/sendNoti" method="post" class="form-horizontal">
+					<div class="control-group">
+						<label for="question" class="control-label formlabel">问卷完成状况:</label>
+						<div class="controls">
+							<div class="accordion-group" style="width: 500px;">
+								<div class="accordion-heading">
+									<center>
+										<a href="#collapse" data-toggle="collapse"
+											class="accordion-toggle"
+											style="display: inline-block; word-wrap: break-word; text-decoration: none;">
+											点击查看问卷完成状况 </a>
+									</center>
+
+								</div>
+								<div class="accordion-body collapse" id="collapse">
+								 <c:forEach items="${ gitems}" var="gitem" varStatus="">
+									<div class="accordion-inner" style="padding-left: 40px">
+									 <c:choose>
+									   <c:when test="${gitem[0]=='' }">
+									      ${gitem[1]}
+									   </c:when>
+									   <c:otherwise>
+									      ${gitem[0]}
+									   </c:otherwise>
+									 </c:choose>
+									 <c:choose>
+									   <c:when test="${gitem[2]==0}">
+									      <span  class="error" style="float:right;margin-right:140px">未完成</span>
+									   </c:when >
+									   <c:otherwise>
+									      <span style="float:right;padding-right:10px"><i class="icon-ok"></i><font color="green" style="font-weight:bold;">已完成于</font>-- ${gitem[3]}</span>
+									   </c:otherwise>
+									   </c:choose>
+									   
+									</div>
+								</c:forEach>
+									<c:if test="${(survey.status=='P' || survey.status=='N')&& receivers!=''}">
+									<input type="text" name="surveyId" value="${survey.id }" style="display:none;">
+				                    <input type="text" name="subject" value="来自${survey.userId}的问卷调查：${survey.subject}的提醒" style="display:none;"> 
+				                    <input type="text" name="receivers" value="${receivers }" style="display:none;">
+				                    <input type="text" name="URL" value="${survey.paperURL }" style="display:none;">
+									<div class="accordion-inner">
+									   <textarea name="desctription" style="width:340px;height:80px">Hi Dear<br>    请尽快完成调查，点击下方链接或将地址复制到浏览器地址栏中打开。<br>调查截止日期：   <fmt:formatDate value="${survey.deadlineTimestamp}" pattern="yyyy年MM月dd日   HH:mm"/></textarea>
+									   <input type="button" id="sendbtn" value="点击发送提醒" class="btn btn-warning" onclick="sendNoti()" style="height:80px">
+									</div>
+									</c:if>
+								</div>
+								
+							</div>
+						</div>
+					</div>
+				</form>
+			</c:if>
 		</div>
 		<div id="action-bar" class="form-actions" style="min-height: 23px;margin-top: 0 !important;">
 			<c:if test="${survey.status!='P' && survey.status!='F'}"><input id="submit_btn" class="btn btn-warning"  type="button" value="提交" onclick="formatAndCheck();" />&nbsp;	</c:if>

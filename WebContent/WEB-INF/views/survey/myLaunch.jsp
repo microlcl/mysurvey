@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="tags" tagdir="/WEB-INF/tags" %>
 <%@ taglib uri="http://com.eastteam.myprogram/mytaglib" prefix="mytag" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %> 
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
 <html>
 <head>
@@ -34,9 +35,9 @@
 					<tr>
 						<td>${survey.subject}&nbsp;</td>
 						<td>${survey.statusString}&nbsp;</td>
-						<td>${survey.updateTimestamp}&nbsp;</td>
+						<td><fmt:formatDate value="${survey.updateTimestamp}" pattern="yyyy年MM月dd日   HH:mm"/>&nbsp;</td>
 						<td><a href="${ctx}/myGroup/list"> ${survey.groupsString}</a>&nbsp;</td>
-						<td>${survey.deadlineTimestamp}&nbsp;</td>
+						<td><fmt:formatDate value="${survey.deadlineTimestamp}" pattern="yyyy年MM月dd日   HH:mm"/>&nbsp;</td>
 						<td>
 							<c:if test="${survey.status!='R'}">	
 							<mytag:PermssionTag functionId="F8-6"><a href="${ctx}/survey/surveyDetail/${survey.id}" id="showLink-${survey.id}"><i class="icon-folder-open"></i> 查看</a>&nbsp;&nbsp;</mytag:PermssionTag>
