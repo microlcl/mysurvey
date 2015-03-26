@@ -28,6 +28,7 @@ public class Question extends IdEntity {
 	private boolean paperAnswered = false;
 	private boolean paperUsed = false;
 	private Option[] options;
+	private int allAnswerCounting;	//用于答案统计时记录该问题的总回答次数
 	private String openAnswer;	//开放性问题的答案
 
 	public String getOpenAnswer() {
@@ -35,6 +36,12 @@ public class Question extends IdEntity {
 	}
 	public void setOpenAnswer(String openAnswer) {
 		this.openAnswer = openAnswer;
+	}
+	public int getAllAnswerCounting() {
+		return allAnswerCounting;
+	}
+	public void setAllAnswerCounting(int allAnswerCounting) {
+		this.allAnswerCounting = allAnswerCounting;
 	}
 	@Deprecated
 	private String[] splitOptions;
@@ -109,6 +116,9 @@ public class Question extends IdEntity {
 	}
 	public void setOptions(Option[] options) {
 		this.options = options;
+	}
+	public void counting() {
+		allAnswerCounting ++;
 	}
 	
 }

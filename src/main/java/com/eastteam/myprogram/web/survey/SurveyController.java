@@ -332,4 +332,14 @@ public class SurveyController {
 		  return "survey/publishFail";
 		}
 	}
+	
+	
+	public String answerStatistics(@PathVariable("id") String surveyId,Model model,HttpSession session) {
+		
+		Survey survey = surveyService.selectSurvey(surveyId);
+		List<Question> questions = answerService.answerStatisticsBySurvey(survey);
+		model.addAttribute("quesions", questions);
+		
+		return "survey/answerStatistics";
+	}
 }

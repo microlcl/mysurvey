@@ -11,8 +11,10 @@ import com.eastteam.myprogram.dao.SpringTransactionalTestCase;
 import com.eastteam.myprogram.entity.Answer;
 import com.eastteam.myprogram.entity.Option;
 import com.eastteam.myprogram.entity.Question;
+import com.eastteam.myprogram.entity.Survey;
 import com.eastteam.myprogram.service.answer.AnswerService;
 import com.eastteam.myprogram.service.paper.PaperService;
+import com.eastteam.myprogram.service.survey.SurveyService;
 
 public class AnswerServiceTest extends SpringTransactionalTestCase {
 	private static Logger logger = LoggerFactory.getLogger(AnswerServiceTest.class);
@@ -21,6 +23,8 @@ public class AnswerServiceTest extends SpringTransactionalTestCase {
 	private PaperService paperService;
 	@Autowired
 	private AnswerService answerService;
+	@Autowired
+	private SurveyService surveyService;
 	
 	@Test
 	public void setAnswerTest() {
@@ -50,5 +54,27 @@ public class AnswerServiceTest extends SpringTransactionalTestCase {
 			logger.info(option.getValue() + " : " +option.getContent() + " : " + option.isChecked());
 		}
 	}
+	
+	@Test
+	public void answerStatisticsBySurveyTest() {
+		
+		Survey survey = surveyService.selectSurvey("1");
+		
+		List<Question> questions = answerService.answerStatisticsBySurvey(survey);
+		for (Question question : questions) {
+			logger.info("===============================================");
+			logger.info("current question id:"+question.getId());
+			logger.info("current question:"+question.getQuestion());
+			logger.info("current question counting:"+question.getAllAnswerCounting());
+			for (Option option : question.getOptions()) {
+				logger.info("--------------------------");
+				logger.info("current option:"+option.getContent());
+				logger.info("current option counting:"+option.getCount());
+				logger.info("current option percent:"+option.getPercent());
+				logger.info("--------------------------");
+			}
+		}
+	}
+	
 
 }
