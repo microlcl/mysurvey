@@ -180,7 +180,6 @@ public class SurveyController {
 		String _receivers="";
 		Group receiversGroup =new Group();
 		receiversGroup.setContent(receivers);
-		System.out.println("==>receivers:"+receivers);
 		receiversGroup.setGitems();
 		List<String[]> gitems = receiversGroup.getGitems();
 		for(String gitem[] : gitems){
@@ -274,7 +273,6 @@ public class SurveyController {
 					gitem[2]="1";
 					gitem[3]=new SimpleDateFormat("yyyy/MM/dd HH:mm").format(new Date());
 				}
-				System.out.println("date:"+gitem[3]);
 				updatedReceivers+=gitem[0]+"^"+gitem[1]+"^"+gitem[2]+"^"+gitem[3]+"|";
 			}
 			survey.setReceivers(updatedReceivers);
