@@ -173,7 +173,9 @@ public class SurveyService extends PageableService {
 	
 	public boolean createSurvey(Survey survey){
 		HashSet<String> _receiver=new HashSet<String>();
-		String receivers="";
+		HashSet<String> _receiversInfo=new HashSet<String>();
+		String receiversInfo="";
+		//String receivers="";
 		String[] groupsId=survey.getSurveyGroup().split("\\,");
 		List<Group> groups=new ArrayList<Group>();
 		for(String groupId : groupsId){
@@ -183,10 +185,16 @@ public class SurveyService extends PageableService {
 			group.setGitems();
 			for(String[] gitems : group.getGitems()){
 				_receiver.add(gitems[1]);
-				receivers+=gitems[0]+"^"+gitems[1]+"^"+"0"+"^"+"0"+"|";
+				//receivers+=gitems[0]+"^"+gitems[1]+"^"+"0"+"^"+"0"+"|";
+				_receiversInfo.add(gitems[0]+"^"+gitems[1]+"^"+"0"+"^"+"0"+"|");
 			}
 		}
-		survey.setReceivers(receivers);
+		for(Object recInfoItem : _receiversInfo.toArray()){
+			receiversInfo += recInfoItem.toString();
+		}
+		
+		//survey.setReceivers(receivers);
+		survey.setReceivers(receiversInfo);
 		surveyMybatisDao.save(survey);
 		logger.info("save new survey :"+ survey.getSubject()+" by user:"+survey.getCreater().getEmail()+" receivers content:"+survey.getReceivers());
 	    return new EmailSender().sendmail(survey.getSubject(),_receiver.toArray(), survey.getDescription(), survey.getPaperURL()+survey.getId(), "text/html;charset=gb2312");
