@@ -8,8 +8,26 @@ package com.eastteam.myprogram.entity;
 public class Option extends BaseEntity{
 	private String content;
 	private String value;
-	boolean checked = false;
+	private boolean checked = false;
+	private int count;	//用于答案统计时记录该选项被选择的次数
+	private float percent;	//用于答案统计时记录该选项所占总共答案百分比
 	
+	public int getCount() {
+		return count;
+	}
+
+	public void setCount(int count) {
+		this.count = count;
+	}
+
+	public float getPercent() {
+		return percent;
+	}
+
+	public void setPercent(float percent) {
+		this.percent = percent;
+	}
+
 	public Option() {
 		
 	}
@@ -37,6 +55,10 @@ public class Option extends BaseEntity{
 
 	public void setValue(String value) {
 		this.value = value;
+	}
+	
+	public void counting() {
+		this.count++;
 	}
 	
 

@@ -30,7 +30,4 @@ public class Answer extends BaseEntity{
 	public void setUserId(String userId) {
 		this.userId = userId;
 	}
-	
-	
-
 }

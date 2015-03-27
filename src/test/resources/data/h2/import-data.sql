@@ -240,12 +240,21 @@ insert into survey(survey_id, status, update_timestamp, user_id, paper_id, paper
 insert into group_users(group_id, user_id) values (1, 'admin');
 insert into group_users(group_id, user_id) values (2, 'admin');
 
-insert into paper_answers(survey_id, question_id, answer_user_id, answer) values(1, 1, 'admin', 1);
-insert into paper_answers(survey_id, question_id, answer_user_id, answer) values(1, 2, 'admin', 1);
-insert into paper_answers(survey_id, question_id, answer_user_id, answer) values(1, 3, 'admin', 1);
 insert into paper_answers(survey_id, question_id, answer_user_id, answer) values(1, 4, 'admin', 1);
 insert into paper_answers(survey_id, question_id, answer_user_id, answer) values(1, 5, 'admin', 1);
 insert into paper_answers(survey_id, question_id, answer_user_id, answer) values(1, 6, 'admin', 1);
 insert into paper_answers(survey_id, question_id, answer_user_id, answer) values(1, 7, 'admin', 1);
 insert into paper_answers(survey_id, question_id, answer_user_id, answer) values(1, 8, 'admin', 1);
 insert into paper_answers(survey_id, question_id, answer_user_id, answer) values(1, 9, 'admin', '1,2,3');
+insert into paper_answers(survey_id, question_id, answer_user_id, answer) values(1, 4, 'zhang3', 2);
+insert into paper_answers(survey_id, question_id, answer_user_id, answer) values(1, 5, 'zhang3', 1);
+insert into paper_answers(survey_id, question_id, answer_user_id, answer) values(1, 6, 'zhang3', 1);
+insert into paper_answers(survey_id, question_id, answer_user_id, answer) values(1, 7, 'zhang3', 1);
+insert into paper_answers(survey_id, question_id, answer_user_id, answer) values(1, 8, 'zhang3', 1);
+insert into paper_answers(survey_id, question_id, answer_user_id, answer) values(1, 9, 'zhang3', '1,3');
+insert into paper_answers(survey_id, question_id, answer_user_id, answer) values(1, 4, '18661014104', 2);
+insert into paper_answers(survey_id, question_id, answer_user_id, answer) values(1, 5, '18661014104', 1);
+insert into paper_answers(survey_id, question_id, answer_user_id, answer) values(1, 6, '18661014104', 1);
+insert into paper_answers(survey_id, question_id, answer_user_id, answer) values(1, 7, '18661014104', 1);
+insert into paper_answers(survey_id, question_id, answer_user_id, answer) values(1, 8, '18661014104', 1);
+insert into paper_answers(survey_id, question_id, answer_user_id, answer) values(1, 9, '18661014104', '1,2');

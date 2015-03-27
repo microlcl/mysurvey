@@ -1,5 +1,6 @@
 package com.eastteam.myprogram.service.answer;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,7 +12,14 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.eastteam.myprogram.dao.AnswerMybatisDao;
+import com.eastteam.myprogram.dao.QuestionMybatisDao;
 import com.eastteam.myprogram.entity.Answer;
+import com.eastteam.myprogram.entity.Option;
+import com.eastteam.myprogram.entity.Paper;
+import com.eastteam.myprogram.entity.Question;
+import com.eastteam.myprogram.entity.Survey;
+import com.eastteam.myprogram.service.paper.PaperService;
+import com.eastteam.myprogram.service.survey.SurveyService;
 
 
 @Component
@@ -19,6 +27,13 @@ import com.eastteam.myprogram.entity.Answer;
 public class AnswerService {
 	@Autowired
 	private AnswerMybatisDao answerMybatisDao;
+	@Autowired
+	private QuestionMybatisDao questionMybatisDao;
+	@Autowired
+	private SurveyService surveyService;
+	@Autowired
+	private PaperService paperService;
+	
 	
 	private static Logger logger = LoggerFactory.getLogger(AnswerService.class);
 	
@@ -28,5 +43,31 @@ public class AnswerService {
 		parameters.put("surveyId", surveyId);
 		parameters.put("userId", userId);
 		return answerMybatisDao.search(parameters);
+	}
+	
+	public List<Question> answerStatisticsBySurvey(Survey survey) {
+	
+		logger.info("getting answer statisics by question");
+		Paper surveyPaper = paperService.selectPaper(String.valueOf(survey.getPaperId()));
+		List<Question> questions = paperService.getQuestions(String.valueOf(surveyPaper.getId()));
+		
+		for (Question question : questions) {
+			Map<String, Object> parameters = new HashMap<String, Object>();
+			parameters.put("surveyId", survey.getId());
+			parameters.put("questionId", question.getId());
+			List<Answer> allAnswers = answerMybatisDao.search(parameters);
+			for (Answer answer : allAnswers) {
+				String[] answerIndex = answer.getAnswer().trim().split(",");
+				for (String index : answerIndex) {
+					question.getOptions()[Integer.parseInt(index)].counting();
+					question.counting();
+				}
+			}
+			
+			for (Option option : question.getOptions())
+				option.setPercent((float)option.getCount()/question.getAllAnswerCounting());
+		}
+		
+		return questions;
 	}
 }
