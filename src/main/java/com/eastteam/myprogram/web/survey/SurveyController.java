@@ -10,6 +10,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.Set;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServlet;
@@ -26,6 +27,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.format.datetime.DateFormatter;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -287,7 +289,7 @@ public class SurveyController {
 	}
 	
 	@RequestMapping(value = "accessSurvey/{id}", method = RequestMethod.GET)
-	public String accessSurvey(@PathVariable("id") String surveyId,Model model,HttpSession session){
+	public String accessSurvey(@PathVariable("id") String surveyId,Model model,HttpSession session,ServletRequest request){
 		/*Survey survey=surveyService.selectSurvey(id);
 		List<Question> questions = paperService.getQuestions(String.valueOf(survey.getPaperId()));
 		Iterator<Question> it = questions.iterator();
@@ -297,7 +299,9 @@ public class SurveyController {
 			question.setSplitOptions(questionOptions);
 		}*/
 		
-		String userId = ((User) session.getAttribute("user")).getId();
+		String userId = request.getParameter("userId");	//如果是查看别人的的问卷有可能传入userId
+		if (userId==null || userId.equals(""))
+			userId = ((User) session.getAttribute("user")).getId();
 		Survey survey = surveyService.selectSurvey(surveyId);
 		Paper surveyPaper = paperService.selectPaper(String.valueOf(survey.getPaperId()));
 		List<Question> surveyQuestions = paperService.getQuestions(String.valueOf(surveyPaper.getId()));
@@ -333,13 +337,15 @@ public class SurveyController {
 		}
 	}
 	
-	
+	@RequestMapping(value = "statistic/{id}", method = RequestMethod.GET)
 	public String answerStatistics(@PathVariable("id") String surveyId,Model model,HttpSession session) {
 		
 		Survey survey = surveyService.selectSurvey(surveyId);
 		List<Question> questions = answerService.answerStatisticsBySurvey(survey);
-		model.addAttribute("quesions", questions);
-		
-		return "survey/answerStatistics";
+		Set<String> answerIds = answerService.allAnswererIdsBySurvey(surveyId);
+		model.addAttribute("questions", questions);
+		model.addAttribute("survey", survey);
+		model.addAttribute("answerIds", answerIds);
+		return "survey/statistic";
 	}
 }

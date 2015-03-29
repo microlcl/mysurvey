@@ -2,8 +2,10 @@ package com.eastteam.myprogram.service.answer;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,7 +49,7 @@ public class AnswerService {
 	
 	public List<Question> answerStatisticsBySurvey(Survey survey) {
 	
-		logger.info("getting answer statisics by question");
+		logger.info("getting answer statistics by question");
 		Paper surveyPaper = paperService.selectPaper(String.valueOf(survey.getPaperId()));
 		List<Question> questions = paperService.getQuestions(String.valueOf(surveyPaper.getId()));
 		
@@ -67,7 +69,24 @@ public class AnswerService {
 			for (Option option : question.getOptions())
 				option.setPercent((float)option.getCount()/question.getAllAnswerCounting());
 		}
-		
+		logger.info("questions of statistics:"+questions.size());
 		return questions;
+	}
+	
+	public Set<String> allAnswererIdsBySurvey(String surveyId) {
+		
+		logger.info("getting all answerer ids by survey");
+		Map<String, Object> parameters = new HashMap<String, Object>();
+		parameters.put("surveyId", surveyId);
+		List<Answer> answers = answerMybatisDao.search(parameters);
+		List<String> idList = new ArrayList<String>();
+		Set<String> idSet = new HashSet<String>();
+		
+		for (Answer answer : answers) 
+			idList.add(answer.getUserId());
+		
+		idSet.addAll(idList);
+		
+		return idSet;
 	}
 }
