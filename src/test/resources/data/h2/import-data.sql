@@ -39,16 +39,16 @@ insert into functions(function_id, module_id, name, description, path) values('F
 insert into users(id, name, password, email, register_date, department_id) values('admin','admin','a94d5cd0079cfc8db030e1107de1addd1903a01b','530460414@qq.com','2012-06-04 01:00:00','D1-1');
 insert into users(id, name, password, email, register_date, department_id) values('18661014104','18661014104','a94d5cd0079cfc8db030e1107de1addd1903a01b','18661014104@163.com','2012-06-04 01:00:00','D1-1');
 insert into users(id, name, password, email, register_date, department_id) values('zhang3','user','a94d5cd0079cfc8db030e1107de1addd1903a01b','z2@gmail.com','2012-06-04 02:00:00','D1-1');
+insert into users(id, name, password, email, register_date, department_id) values('maoyeye@qq.com','LiChunlei','a94d5cd0079cfc8db030e1107de1addd1903a01b','maoyeye@qq.com','2012-06-04 02:00:00','D1-1');
 
 insert into roles(role_id, name, description) values('R0', '管理员','超级用户');
 insert into roles(role_id, name, description) values('R1', '问题管理员','问题管理员');
 insert into roles(role_id, name, description) values('R2', '问卷管理员','问卷管理员');
 
-
 insert into user_role(user_id, role_id) values('zhang3','R1');
 insert into user_role(user_id, role_id) values('admin','R0');
 insert into user_role(user_id, role_id) values('18661014104','R0');
-
+insert into user_role(user_id, role_id) values('maoyeye@qq.com','R0');
 
 insert into role_function(role_id, function_id, description) values('R0','F0','');
 insert into role_function(role_id, function_id, description) values('R0','F7-1','');
@@ -135,6 +135,7 @@ insert into papers (paper_id, paper_name, business_type, creat_timestamp, status
 insert into papers (paper_id, paper_name, business_type, creat_timestamp, status) values (14, '问卷14', '1-0-2-0', now(), '1-0-1-0');
 insert into papers (paper_id, paper_name, business_type, creat_timestamp, status) values (15, '问卷15', '1-0-2-2', now(), '1-0-1-2');
 insert into papers (paper_id, paper_name, business_type, creat_timestamp, status) values (16, '问卷16', '1-0-2-2', now(), '1-0-1-1');
+insert into papers (paper_id, paper_name, business_type, creat_timestamp, status) values (16, '问卷16', '1-0-2-2', now(), '1-0-1-1');
 
 insert into paper_questions (paper_id, question_id, position) values (1, 9, 10);
 insert into paper_questions (paper_id, question_id, position) values (1, 8, 20);
@@ -198,7 +199,6 @@ insert into paper_questions (paper_id, question_id, position) values (13, 2, 20)
 insert into paper_questions (paper_id, question_id, position) values (14, 3, 30);
 insert into paper_questions (paper_id, question_id, position) values (15, 4, 40);
 insert into paper_questions (paper_id, question_id, position) values (16, 5, 50);
-insert into paper_questions (paper_id, question_id, position) values (17, 6, 60);
 
 
 --insert into paper_answers(business_id, paper_id, question_id, answer) values('C1',1,4,'1');
