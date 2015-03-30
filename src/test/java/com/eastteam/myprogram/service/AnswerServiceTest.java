@@ -1,6 +1,7 @@
 package com.eastteam.myprogram.service;
 
 import java.util.List;
+import java.util.Set;
 
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -76,5 +77,13 @@ public class AnswerServiceTest extends SpringTransactionalTestCase {
 		}
 	}
 	
-
+	@Test
+	public void allAnswersIdsBySurveyTest() {
+		
+		Set<String> ids = answerService.allAnswererIdsBySurvey("1");
+		logger.info("total id:"+ids.size());
+		for (String s : ids) {
+			logger.info(s);
+		}
+	}
 }
