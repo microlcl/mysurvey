@@ -36,18 +36,24 @@ insert into functions(function_id, module_id, name, description, path) values('F
 insert into functions(function_id, module_id, name, description, path) values('F8-5','M1-8','调查问卷：发布','有权限发布调查问卷','/paper/publish');
 insert into functions(function_id, module_id, name, description, path) values('F8-6','M1-8','调查问卷：查看','有权限查看','/paper/show');
 
-insert into users(id, name, password, email, register_date, department_id) values('admin','admin','a94d5cd0079cfc8db030e1107de1addd1903a01b','530460414@qq.com','2012-06-04 01:00:00','D1-1');
-insert into users(id, name, password, email, register_date, department_id) values('18661014104','18661014104','a94d5cd0079cfc8db030e1107de1addd1903a01b','18661014104@163.com','2012-06-04 01:00:00','D1-1');
-insert into users(id, name, password, email, register_date, department_id) values('zhang3','user','a94d5cd0079cfc8db030e1107de1addd1903a01b','z2@gmail.com','2012-06-04 02:00:00','D1-1');
+insert into users(id, name, password, email, register_date, department_id) values('lichlei@cn.ibm.com','lichlei@cn.ibm.com','a94d5cd0079cfc8db030e1107de1addd1903a01b','lichlei@cn.ibm.com','2012-06-04 01:00:00','D1-1');
+insert into users(id, name, password, email, register_date, department_id) values('wangxhdl@cn.ibm.com','wangxhdl@cn.ibm.com','a94d5cd0079cfc8db030e1107de1addd1903a01b','wangxhdl@cn.ibm.com','2012-06-04 01:00:00','D1-1');
+insert into users(id, name, password, email, register_date, department_id) values('gongbf@cn.ibm.com','gongbf@cn.ibm.com','a94d5cd0079cfc8db030e1107de1addd1903a01b','gongbf@cn.ibm.com','2012-06-04 02:00:00','D1-1');
+insert into users(id, name, password, email, register_date, department_id) values('zhangfd@cn.ibm.com','zhangfd@cn.ibm.com','a94d5cd0079cfc8db030e1107de1addd1903a01b','zhangfd@cn.ibm.com','2012-06-04 02:00:00','D1-1');
+insert into users(id, name, password, email, register_date, department_id) values('liush@cn.ibm.com','liush@cn.ibm.com','a94d5cd0079cfc8db030e1107de1addd1903a01b','liush@cn.ibm.com','2012-06-04 02:00:00','D1-1');
+insert into users(id, name, password, email, register_date, department_id) values('ldlxiao@cn.ibm.com','ldlxiao@cn.ibm.com','a94d5cd0079cfc8db030e1107de1addd1903a01b','ldlxiao@cn.ibm.com','2012-06-04 02:00:00','D1-1');
 insert into users(id, name, password, email, register_date, department_id) values('maoyeye@qq.com','LiChunlei','a94d5cd0079cfc8db030e1107de1addd1903a01b','maoyeye@qq.com','2012-06-04 02:00:00','D1-1');
 
 insert into roles(role_id, name, description) values('R0', '管理员','超级用户');
 insert into roles(role_id, name, description) values('R1', '问题管理员','问题管理员');
 insert into roles(role_id, name, description) values('R2', '问卷管理员','问卷管理员');
 
-insert into user_role(user_id, role_id) values('zhang3','R1');
-insert into user_role(user_id, role_id) values('admin','R0');
-insert into user_role(user_id, role_id) values('18661014104','R0');
+insert into user_role(user_id, role_id) values('lichlei@cn.ibm.com','R0');
+insert into user_role(user_id, role_id) values('wangxhdl@cn.ibm.com','R0');
+insert into user_role(user_id, role_id) values('gongbf@cn.ibm.com','R0');
+insert into user_role(user_id, role_id) values('zhangfd@cn.ibm.com','R0');
+insert into user_role(user_id, role_id) values('liush@cn.ibm.com','R0');
+insert into user_role(user_id, role_id) values('ldlxiao@cn.ibm.com','R0');
 insert into user_role(user_id, role_id) values('maoyeye@qq.com','R0');
 
 insert into role_function(role_id, function_id, description) values('R0','F0','');
@@ -212,9 +218,10 @@ insert into paper_questions (paper_id, question_id, position) values (16, 5, 50)
 --insert into paper_answers(business_id, paper_id, question_id, answer) values('C2',6,3,'abcde');
 --insert into paper_answers(business_id, paper_id, question_id, answer) values('V6',7,3,'abcde');
 
-insert into groups(group_id, group_name, comment, content, edit_date, trashed, user_id) values(1,'群组1','测试群组','张三^zhangsan@111.com|李四^lisi@111.com|王五^wangwu@111.com|',now(),'F','admin');
-insert into groups(group_id, group_name, comment, content, edit_date, trashed, user_id) values(2,'群组2','测试群组','系统测试邮箱^18661014104@163.com|gongbinfeng^530460414@qq.com|',now(),'F','admin');
-insert into groups(group_id, group_name, comment, content, edit_date, trashed, user_id) values(3,'群组3','测试群组','jack^jack@111.com|tom^tom@111.com|stan^stan@111.com|^xxx@111.com|',now(),'F','admin');
+insert into groups(group_id, group_name, comment, content, edit_date, trashed, user_id) values(1,'群组1','测试群组','张三^zhangsan@111.com|李四^lisi@111.com|王五^wangwu@111.com|',now(),'F','lichlei@cn.ibm.com');
+insert into groups(group_id, group_name, comment, content, edit_date, trashed, user_id) values(2,'群组2','测试群组','系统测试邮箱^18661014104@163.com|gongbinfeng^530460414@qq.com|',now(),'F','lichlei@cn.ibm.com');
+insert into groups(group_id, group_name, comment, content, edit_date, trashed, user_id) values(3,'群组3','测试群组','jack^jack@111.com|tom^tom@111.com|stan^stan@111.com|^xxx@111.com|',now(),'F','lichlei@cn.ibm.com');
+insert into groups(group_id, group_name, comment, content, edit_date, trashed, user_id) values(4,'群组4','开发群组','gongbinfeng^gongbf@cn.ibm.com|zhangfeidi^zhangfd@cn.ibm.com|wangxiaohui^wangxhdl@cn.ibm.com|liusiheng^liush@cn.ibm.com|liuxiao^ldlxiao@cn.ibm.com|',now(),'F','lichlei@cn.ibm.com');
 
 insert into survey(survey_id, status, update_timestamp, user_id, paper_id, paper_url, subject, groups_id, sent_timestamp, deadline_timestamp, is_anonymous, description,receivers) values(1,'R',null,'admin',1,'ibm.com','Testing1','2,3',null,now(),'T','just for testing','stan^stan@111.com^0^0|李四^lisi@111.com^0^0|系统测试邮箱^18661014104@163.com^0^0|王五^wangwu@111.com^0^0|张三^zhangsan@111.com^0^0|jack^jack@111.com^0^0|gongbinfeng^530460414@qq.com^0^0|^xxx@111.com^0^0|tom^tom@111.com^0^0|');
 insert into survey(survey_id, status, update_timestamp, user_id, paper_id, paper_url, subject, groups_id, sent_timestamp, deadline_timestamp, is_anonymous, description,receivers) values(2,'P',null,'admin',1,'ibm.com','Testing2','1,3',null,now() + 123,'T','just for testing','stan^stan@111.com^0^0|李四^lisi@111.com^0^0|系统测试邮箱^18661014104@163.com^0^0|王五^wangwu@111.com^0^0|张三^zhangsan@111.com^0^0|jack^jack@111.com^0^0|gongbinfeng^530460414@qq.com^0^0|^xxx@111.com^0^0|tom^tom@111.com^0^0|');
