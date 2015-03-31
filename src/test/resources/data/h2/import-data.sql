@@ -221,7 +221,7 @@ insert into paper_questions (paper_id, question_id, position) values (16, 5, 50)
 insert into groups(group_id, group_name, comment, content, edit_date, trashed, user_id) values(1,'群组1','测试群组','张三^zhangsan@111.com|李四^lisi@111.com|王五^wangwu@111.com|',now(),'F','lichlei@cn.ibm.com');
 insert into groups(group_id, group_name, comment, content, edit_date, trashed, user_id) values(2,'群组2','测试群组','系统测试邮箱^18661014104@163.com|gongbinfeng^530460414@qq.com|',now(),'F','lichlei@cn.ibm.com');
 insert into groups(group_id, group_name, comment, content, edit_date, trashed, user_id) values(3,'群组3','测试群组','jack^jack@111.com|tom^tom@111.com|stan^stan@111.com|^xxx@111.com|',now(),'F','lichlei@cn.ibm.com');
-insert into groups(group_id, group_name, comment, content, edit_date, trashed, user_id) values(4,'群组4','开发群组','gongbinfeng^gongbf@cn.ibm.com|zhangfeidi^zhangfd@cn.ibm.com|wangxiaohui^wangxhdl@cn.ibm.com|liusiheng^liush@cn.ibm.com|liuxiao^ldlxiao@cn.ibm.com|',now(),'F','lichlei@cn.ibm.com');
+insert into groups(group_id, group_name, comment, content, edit_date, trashed, user_id) values(4,'开发群组','开发群组','lichunlei^lichlei@cn.ibm.com|gongbinfeng^gongbf@cn.ibm.com|zhangfeidi^zhangfd@cn.ibm.com|wangxiaohui^wangxhdl@cn.ibm.com|liusiheng^liush@cn.ibm.com|liuxiao^ldlxiao@cn.ibm.com|',now(),'F','lichlei@cn.ibm.com');
 
 insert into survey(survey_id, status, update_timestamp, user_id, paper_id, paper_url, subject, groups_id, sent_timestamp, deadline_timestamp, is_anonymous, description,receivers) values(1,'R',null,'lichlei@cn.ibm.com',1,'ibm.com','Testing1','2,3',null,now(),'T','just for testing','stan^stan@111.com^0^0|李四^lisi@111.com^0^0|系统测试邮箱^18661014104@163.com^0^0|王五^wangwu@111.com^0^0|张三^zhangsan@111.com^0^0|jack^jack@111.com^0^0|gongbinfeng^530460414@qq.com^0^0|^xxx@111.com^0^0|tom^tom@111.com^0^0|');
 insert into survey(survey_id, status, update_timestamp, user_id, paper_id, paper_url, subject, groups_id, sent_timestamp, deadline_timestamp, is_anonymous, description,receivers) values(2,'P',null,'lichlei@cn.ibm.com',1,'ibm.com','Testing2','1,3',null,now() + 123,'T','just for testing','stan^stan@111.com^0^0|李四^lisi@111.com^0^0|系统测试邮箱^18661014104@163.com^0^0|王五^wangwu@111.com^0^0|张三^zhangsan@111.com^0^0|jack^jack@111.com^0^0|gongbinfeng^530460414@qq.com^0^0|^xxx@111.com^0^0|tom^tom@111.com^0^0|');
@@ -265,3 +265,8 @@ insert into paper_answers(survey_id, question_id, answer_user_id, answer) values
 insert into paper_answers(survey_id, question_id, answer_user_id, answer) values(1, 7, '18661014104', 1);
 insert into paper_answers(survey_id, question_id, answer_user_id, answer) values(1, 8, '18661014104', 1);
 insert into paper_answers(survey_id, question_id, answer_user_id, answer) values(1, 9, '18661014104', '1,2');
+
+insert into survey_receivers (survey_id,user_id,nickName,status,update_timestamp)values(14,'123@111.com','','0',null);
+insert into survey_receivers (survey_id,user_id,nickName,status,update_timestamp)values(14,'1234@111.com','','1',now());
+insert into survey_receivers (survey_id,user_id,nickName,status,update_timestamp)values(14,'1235@111.com','','0',null);
+insert into survey_receivers (survey_id,user_id,nickName,status,update_timestamp)values(14,'1236@111.com','','0',null);

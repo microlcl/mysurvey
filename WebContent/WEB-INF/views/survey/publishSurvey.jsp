@@ -226,22 +226,22 @@
 										<option value="3">已完成</option>
 									</select>
 								</div>
-									<c:forEach items="${ gitems}" var="gitem" varStatus="status">
-									<div id="${gitem[2]}_${status.count}" class="accordion-inner" style="padding-left: 40px">
+									<c:forEach items="${surveyReceivers}" var="surveyReceiver" varStatus="status">
+									<div id="${surveyReceiver.status}_${status.count}" class="accordion-inner" style="padding-left: 40px">
 									 <c:choose>
-									   <c:when test="${gitem[0]=='' }">
-									      ${gitem[1]}
+									   <c:when test="${surveyReceiver.nickName=='' || surveyReceiver.nickName==null}">
+									      ${surveyReceiver.userId}
 									   </c:when>
 									   <c:otherwise>
-									      ${gitem[0]}
+									      ${surveyReceiver.nickName}
 									   </c:otherwise>
 									 </c:choose>
 									 <c:choose>
-									   <c:when test="${gitem[2]==0}">
+									   <c:when test="${surveyReceiver.status==0}">
 									      <span  class="error" style="float:right;margin-right:140px">未完成</span>
 									   </c:when >
 									   <c:otherwise>
-									      <span style="float:right;padding-right:10px"><i class="icon-ok"></i><font color="green" style="font-weight:bold;">已完成于</font>-- ${gitem[3]}</span>
+									      <span style="float:right;padding-right:10px"><i class="icon-ok"></i><font color="green" style="font-weight:bold;">已操作于</font>-- <fmt:formatDate value="${surveyReceiver.update_timeStamp}" pattern="yyyy/MM/dd  HH:mm"/></span>
 									   </c:otherwise>
 									   </c:choose>
 									</div>

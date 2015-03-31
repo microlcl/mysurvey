@@ -20,11 +20,13 @@ import org.springframework.transaction.annotation.Transactional;
 import com.eastteam.myprogram.dao.AnswerMybatisDao;
 import com.eastteam.myprogram.dao.MyGroupMybatisDao;
 import com.eastteam.myprogram.dao.SurveyMybatisDao;
+import com.eastteam.myprogram.dao.SurveyReceiverMybatisDao;
 import com.eastteam.myprogram.entity.Answer;
 import com.eastteam.myprogram.entity.Group;
 import com.eastteam.myprogram.entity.Paper;
 import com.eastteam.myprogram.entity.Question;
 import com.eastteam.myprogram.entity.Survey;
+import com.eastteam.myprogram.entity.SurveyReceiver;
 import com.eastteam.myprogram.service.PageableService;
 import com.eastteam.myprogram.service.myGroup.MyGroupService;
 import com.eastteam.myprogram.utils.EmailSender;
@@ -39,6 +41,8 @@ public class SurveyService extends PageableService {
 	private MyGroupMybatisDao myGroupMybatisDao;
 	@Autowired
 	private AnswerMybatisDao answerMybatisDao;
+	@Autowired
+	private SurveyReceiverMybatisDao surveyReceiverMybatisDao;
 	
 	private int pageSize;
 	
@@ -173,10 +177,9 @@ public class SurveyService extends PageableService {
 	
 	public boolean createSurvey(Survey survey){
 		HashSet<String> _receiver=new HashSet<String>();
-		HashSet<String> _receiversInfo=new HashSet<String>();
-		String receiversInfo="";
-		//String receivers="";
+		HashSet<String[]> _receiversInfo=new HashSet<String[]>();
 		String[] groupsId=survey.getSurveyGroup().split("\\,");
+		List<SurveyReceiver> surveyReceivers=new ArrayList<SurveyReceiver>();
 		List<Group> groups=new ArrayList<Group>();
 		for(String groupId : groupsId){
 			groups.add(myGroupMybatisDao.getSelectedGroup(Long.parseLong(groupId)));
@@ -185,18 +188,29 @@ public class SurveyService extends PageableService {
 			group.setGitems();
 			for(String[] gitems : group.getGitems()){
 				_receiver.add(gitems[1]);
-				//receivers+=gitems[0]+"^"+gitems[1]+"^"+"0"+"^"+"0"+"|";
-				_receiversInfo.add(gitems[0]+"^"+gitems[1]+"^"+"0"+"^"+"0"+"|");
+				_receiversInfo.add(gitems);
 			}
 		}
-		for(Object recInfoItem : _receiversInfo.toArray()){
-			receiversInfo += recInfoItem.toString();
-		}
 		
-		//survey.setReceivers(receivers);
-		survey.setReceivers(receiversInfo);
 		surveyMybatisDao.save(survey);
-		logger.info("save new survey :"+ survey.getSubject()+" by user:"+survey.getCreater().getEmail()+" receivers content:"+survey.getReceivers());
+		
+		for(String[] recInfoItem : _receiversInfo){
+			SurveyReceiver surveyReceiver=new SurveyReceiver();
+			surveyReceiver.setNickName(recInfoItem[0]);
+			surveyReceiver.setUserId(recInfoItem[1]);
+			surveyReceiver.setStatus("0");
+			surveyReceiver.setUpdate_timeStamp(null);
+			surveyReceiver.setSurveyId(survey.getId());
+			surveyReceivers.add(surveyReceiver);
+		}
+		Map<String, Object> map=new HashMap<String, Object>();
+		map.put("surveyReceivers", surveyReceivers);
+		surveyReceiverMybatisDao.save(map);
+		logger.info("save new survey :"+ survey.getSubject()+" by user:"+survey.getCreater().getEmail()+",asscoiated survey receivers:");
+		for(SurveyReceiver _surveyReceiver : surveyReceivers){
+			logger.info(_surveyReceiver.getUserId());
+		}
+		logger.info("===>receiver list over");
 	    return new EmailSender().sendmail(survey.getSubject(),_receiver.toArray(), survey.getDescription(), survey.getPaperURL()+survey.getId(), "text/html;charset=gb2312");
 		//return true;
 	}
@@ -207,6 +221,18 @@ public class SurveyService extends PageableService {
 		logger.info("send notification");
 	    return new EmailSender().sendmail(subject,_receiver, desctription, URL+surveyId, "text/html;charset=gb2312");
 		//return true;
+	}
+	
+	public List<SurveyReceiver> getAssociatedReceivers(Map<String, Object> map){
+		return surveyReceiverMybatisDao.search(map);
+	}
+	
+	public void upDateAssociatedReceivers(SurveyReceiver surveyReceiver){
+		surveyReceiverMybatisDao.update(surveyReceiver);
+	}
+	
+	public SurveyReceiver getPointedSurveyReceiver(Map<String, Object> map){
+		return surveyReceiverMybatisDao.getPointedSurveyReceiver(map);
 	}
 }
  

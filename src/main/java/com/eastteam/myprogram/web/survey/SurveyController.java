@@ -1,33 +1,24 @@
 package com.eastteam.myprogram.web.survey;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.sql.ResultSet;
-import java.sql.Time;
 import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
 import javax.servlet.ServletRequest;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpSession;
 
-import org.apache.catalina.connector.Request;
 import org.apache.commons.lang3.StringUtils;
-import org.eclipse.jetty.http.HttpURI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
-import org.springframework.format.datetime.DateFormatter;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -42,13 +33,13 @@ import com.eastteam.myprogram.entity.Group;
 import com.eastteam.myprogram.entity.Paper;
 import com.eastteam.myprogram.entity.Question;
 import com.eastteam.myprogram.entity.Survey;
+import com.eastteam.myprogram.entity.SurveyReceiver;
 import com.eastteam.myprogram.entity.User;
 import com.eastteam.myprogram.service.answer.AnswerService;
 import com.eastteam.myprogram.service.myGroup.MyGroupService;
 import com.eastteam.myprogram.service.paper.PaperService;
 import com.eastteam.myprogram.service.survey.SurveyService;
 import com.eastteam.myprogram.web.Servlets;
-import com.sun.org.apache.bcel.internal.generic.NEW;
 
 @Controller
 @RequestMapping (value = "/survey")
@@ -61,6 +52,7 @@ public class SurveyController {
 	private MyGroupService myGroupService;
 	@Autowired
 	private AnswerService answerService;
+	
 	
 	private static final String ServiceAddr="http://localhost:8080";
 	
@@ -178,19 +170,31 @@ public class SurveyController {
 				if (gid.equals(String.valueOf(group.getId())))
 					group.setFlagString("");
 		}
-		String receivers=survey.getReceivers();
-		String _receivers="";
-		Group receiversGroup =new Group();
-		receiversGroup.setContent(receivers);
-		receiversGroup.setGitems();
-		List<String[]> gitems = receiversGroup.getGitems();
-		for(String gitem[] : gitems){
-			if(gitem[2].equals("0")){
-				_receivers += gitem[1]+",";
+//		String receivers=survey.getReceivers();
+//		String _receivers="";
+//		Group receiversGroup =new Group();
+//		receiversGroup.setContent(receivers);
+//		receiversGroup.setGitems();
+//		List<String[]> gitems = receiversGroup.getGitems();
+//		for(String gitem[] : gitems){
+//			if(gitem[2].equals("0")){
+//				_receivers += gitem[1]+",";
+//			}
+//		}
+//		model.addAttribute("gitems",gitems);
+		
+		List<SurveyReceiver> surveyReceivers=new ArrayList<SurveyReceiver>();
+		String receivers="";
+		Map<String, Object> map=new HashMap<String, Object>();
+		map.put("surveyId", survey.getId());
+		surveyReceivers=surveyService.getAssociatedReceivers(map);
+		for(SurveyReceiver surveyReceiver : surveyReceivers){
+			if(surveyReceiver.getStatus().equals("0")){
+				receivers += surveyReceiver.getUserId()+",";
 			}
 		}
-		model.addAttribute("receivers",_receivers);
-		model.addAttribute("gitems",gitems);
+		model.addAttribute("surveyReceivers",surveyReceivers);
+		model.addAttribute("receivers",receivers);
 		model.addAttribute("survey", survey);
 		model.addAttribute("paper",paper);
 		model.addAttribute("groups",groups);
@@ -263,24 +267,15 @@ public class SurveyController {
 		if (isUpdate.equals("true"))
 			surveyService.updateAction(answers);
 		else {
-			Survey survey=surveyService.selectSurvey(request.getParameter("surveyId"));
-			String receivers=survey.getReceivers();
-			String updatedReceivers="";
-			Group receiversGroup= new Group();
-			receiversGroup.setContent(receivers);
-			receiversGroup.setGitems();
-			List<String []> receiversGitem =receiversGroup.getGitems();
-			for(String [] gitem : receiversGitem){
-				if(gitem[1].equals(((User)session.getAttribute("user")).getEmail())){
-					gitem[2]="1";
-					gitem[3]=new SimpleDateFormat("yyyy/MM/dd HH:mm").format(new Date());
-				}
-				updatedReceivers+=gitem[0]+"^"+gitem[1]+"^"+gitem[2]+"^"+gitem[3]+"|";
-			}
-			survey.setReceivers(updatedReceivers);
-			surveyService.updateSurvey(survey);
+			Map<String , Object> map=new HashMap<String, Object>();
+			map.put("userId", ((User)session.getAttribute("user")).getId());
+			map.put("surveyId", Long.parseLong(request.getParameter("surveyId")));
+			SurveyReceiver surveyReceiver=surveyService.getPointedSurveyReceiver(map);
+			surveyReceiver.setStatus("1");
+			surveyReceiver.setUpdate_timeStamp(new Date());
+			surveyService.upDateAssociatedReceivers(surveyReceiver);
 			surveyService.saveAction(answers);
-			logger.info("user:"+((User)session.getAttribute("user")).getId()+" sumbitted an answer of survey:"+request.getParameter("surveyId")+",updatedreceivers:"+updatedReceivers);
+			logger.info("user:"+((User)session.getAttribute("user")).getId()+" sumbitted an answer of survey:"+request.getParameter("surveyId"));
 		}
 			
 		return "survey/submitOk";
