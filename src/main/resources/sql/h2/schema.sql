@@ -33,6 +33,15 @@ create table survey(
 	primary key (survey_id)	
 );
 
+-- survey和参与调查者(receiver)的一对多映射表， survey表中的receivers字段作废
+create table survey_receivers(
+	survey_id bigint not null,
+	user_id varchar(64), -- 被调查者user id(intranet id)
+	status varchar(1), -- 标识此人是否完成了此次调查 0： 未完成， 1： 已完成
+	update_timestamp timestamp, -- 被调查者答题或修改时间
+	primary key (survey_id，user_id)	
+);
+
 create table users (
 	id varchar(64) not null unique,
 	name varchar(32) not null,
