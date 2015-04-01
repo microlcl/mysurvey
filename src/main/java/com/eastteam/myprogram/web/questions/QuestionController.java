@@ -56,7 +56,10 @@ public class QuestionController {
 		Map<String, Object> searchParams = Servlets.getParametersStartingWith(
 				request, "search_");
 		searchParams.put("trashed", "F");
-		searchParams.put("userId", ((User) session.getAttribute("user")).getId());
+		String[] checkboxValues = request.getParameterValues("search_userId");
+		if(checkboxValues != null && checkboxValues.length != 0){
+			searchParams.put("userId", ((User) session.getAttribute("user")).getId());
+		}
 		logger.info(searchParams.toString());
 		Page<Question> questions = questionService.getCurrentPageContent(
 				searchParams, pageNumber, Integer.parseInt(configProperties.getProperty("question.pagesize")), sortType);
