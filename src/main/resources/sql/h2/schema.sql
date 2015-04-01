@@ -133,6 +133,7 @@ create table questions (
 	question_type varchar(64) not null, -- 问题种类：单选，多选，开放式问题等 ,不用在category table里面配置
 	question_options varchar(512), -- 问题答案选项，用特殊字符^分隔， 如果是开放式问题， 此字段为空
 	business_type varchar(64), -- 问题类别，可以在category table配置
+	creat_timestamp timestamp,
 	trashed varchar(1),
 	primary key (question_id)
 );
