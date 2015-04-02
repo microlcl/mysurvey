@@ -19,6 +19,9 @@
 		select a.survey_id, a.user_id, a.nickName, a.status ,a.update_timestamp from survey_receivers a where a.survey_id = #{surveyId} and a.user_id=#{userId}
 	</select>
 	
+	<select id="allSurveysByUser" parameterType="String" resultMap="surveyReceiverDetailMap">
+		select a.survey_id, a.user_id, a.nickName, a.status, a.update_timestamp from survey_receivers a where a.user_id = #{userId}
+	</select>
 	
 	<insert id="save" parameterType="java.util.Map" >
 	    insert into survey_receivers(survey_id,user_id,nickName,status,update_timestamp) values
