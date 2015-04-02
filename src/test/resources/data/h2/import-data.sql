@@ -112,15 +112,20 @@ insert into function_category(function_id,category_id) values('paperStatus','1-0
 insert into function_category(function_id,category_id) values('getFormType', '1-0-12');
 
 		
-insert into questions (question_id,question, question_type, question_options, business_type, trashed, user_id) values(1,'你是通过什么途径知道我们的产品的1？','1','网上搜索^朋友分享^无意间了解','1-0-2-0','F','ydq');
-insert into questions (question_id,question, question_type, question_options, business_type, trashed, user_id) values(2,'你喜欢的灯具材质是2？','2','木质^金属^水晶^其他','1-0-2-0','F','ydq');
-insert into questions (question_id,question, question_type, question_options, business_type, trashed, user_id) values(3,'你对本产品有什么建议3？','3','','1-0-2-0','F','ydq');
-insert into questions (question_id,question, question_type, question_options, business_type, trashed, user_id) values(4,'你是通过什么途径知道我们的产品的4？','1','网上搜索^朋友分享^无意间了解','1-0-2-1','F','ydq');
-insert into questions (question_id,question, question_type, question_options, business_type, trashed, user_id) values(5,'你喜欢的灯具材质是5？','2','木质^金属^水晶^其他','1-0-2-0','F','lichlei@cn.ibm.com');
-insert into questions (question_id,question, question_type, question_options, business_type, trashed, user_id) values(6,'你是通过什么途径知道我们的产品的6？','1','网上搜索^朋友分享^无意间了解','1-0-2-0','F','lichlei@cn.ibm.com');
-insert into questions (question_id,question, question_type, question_options, business_type, trashed, user_id) values(7,'你喜欢的灯具材质是7？','2','木质^金属^水晶^其他','1-0-2-0','F','lichlei@cn.ibm.com');
-insert into questions (question_id,question, question_type, question_options, business_type, trashed, user_id) values(8,'你是通过什么途径知道我们的产品的8？','1','网上搜索^朋友分享^无意间了解','1-0-2-2','F','lichlei@cn.ibm.com');
-insert into questions (question_id,question, question_type, question_options, business_type, trashed, user_id) values(9,'你喜欢的灯具材质是9？','2','木质^金属^水晶^其他','1-0-2-0','F','lichlei@cn.ibm.com');
+insert into questions (question_id,question, question_type, question_options, business_type, trashed, user_id, creat_timestamp) values(1,'你是通过什么途径知道我们的产品的1？','1','网上搜索^朋友分享^无意间了解','1-0-2-0','F','ydq',now());
+insert into questions (question_id,question, question_type, question_options, business_type, trashed, user_id, creat_timestamp) values(2,'你喜欢的灯具材质是2？','2','木质^金属^水晶^其他','1-0-2-0','F','ydq',now());
+insert into questions (question_id,question, question_type, question_options, business_type, trashed, user_id, creat_timestamp) values(3,'你对本产品有什么建议3？','3','','1-0-2-0','F','ydq',now());
+insert into questions (question_id,question, question_type, question_options, business_type, trashed, user_id, creat_timestamp) values(4,'你是通过什么途径知道我们的产品的4？','1','网上搜索^朋友分享^无意间了解','1-0-2-1','F','ydq',now());
+insert into questions (question_id,question, question_type, question_options, business_type, trashed, user_id, creat_timestamp) values(5,'你喜欢的灯具材质是5？','2','木质^金属^水晶^其他','1-0-2-0','F','lichlei@cn.ibm.com',now());
+insert into questions (question_id,question, question_type, question_options, business_type, trashed, user_id, creat_timestamp) values(6,'你是通过什么途径知道我们的产品的6？','1','网上搜索^朋友分享^无意间了解','1-0-2-0','F','lichlei@cn.ibm.com',now());
+insert into questions (question_id,question, question_type, question_options, business_type, trashed, user_id, creat_timestamp) values(7,'你喜欢的灯具材质是7？','2','木质^金属^水晶^其他','1-0-2-0','F','lichlei@cn.ibm.com');
+insert into questions (question_id,question, question_type, question_options, business_type, trashed, user_id, creat_timestamp) values(8,'你是通过什么途径知道我们的产品的8？','1','网上搜索^朋友分享^无意间了解','1-0-2-2','F','lichlei@cn.ibm.com',now());
+insert into questions (question_id,question, question_type, question_options, business_type, trashed, user_id, creat_timestamp values(9,'你喜欢的灯具材质是9？','2','木质^金属^水晶^其他','1-0-2-0','F','lichlei@cn.ibm.com',now());
+insert into questions (question_id,question, question_type, question_options, business_type, trashed, user_id, creat_timestamp) values(10,'你喜欢的灯具材质是10？','2','木质^金属^水晶^其他','1-0-2-0','F','admin', '2014-07-04 02:00:00');
+insert into questions (question_id,question, question_type, question_options, business_type, trashed, user_id, creat_timestamp) values(11,'你是通过什么途径知道我们的产品的11？','1','网上搜索^朋友分享^无意间了解','1-0-2-0','F','admin', '2014-08-04 02:00:00');
+insert into questions (question_id,question, question_type, question_options, business_type, trashed, user_id, creat_timestamp) values(12,'你喜欢的灯具材质是12？','2','木质^金属^水晶^其他','1-0-2-0','F','admin', '2014-06-04 02:00:00');
+insert into questions (question_id,question, question_type, question_options, business_type, trashed, user_id, creat_timestamp) values(13,'你是通过什么途径知道我们的产品的13？','1','网上搜索^朋友分享^无意间了解','1-0-2-2','F','admin', '2013-06-04 02:00:00');
+insert into questions (question_id,question, question_type, question_options, business_type, trashed, user_id, creat_timestamp) values(14,'你喜欢的灯具材质是14？','2','木质^金属^水晶^其他','1-0-2-0','F','admin', '2012-06-04 02:00:00');
 
 insert into papers (paper_id, paper_name, business_type, creat_timestamp, status) values (1, '问卷1', '1-0-2-0', now(), '1-0-1-1');
 insert into papers (paper_id, paper_name, business_type, creat_timestamp, status) values (2, '问卷2', '1-0-2-0', now(), '1-0-1-1');
