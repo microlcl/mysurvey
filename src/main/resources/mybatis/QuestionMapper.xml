@@ -4,14 +4,14 @@
 <mapper namespace="com.eastteam.myprogram.dao.QuestionMybatisDao">
 	<!-- 插入问题-->
 	<insert id="save" parameterType="Question" useGeneratedKeys="true" keyProperty="id" >
-		insert into questions (question, question_type, trashed, question_options, business_type, user_id)
-		values (#{question},#{questionType},'F',#{questionOptions},#{businessType},#{creater.id});
+		insert into questions (question, question_type, trashed, question_options, business_type, user_id, creat_timestamp)
+		values (#{question},#{questionType},'F',#{questionOptions},#{businessType},#{creater.id},now());
 	</insert>
 	
 	<!-- 更新问题 -->
 	<update id="update" parameterType="Question">
-		update questions set question=#{question}, question_type=#{questionType}, question_options=#{questionOptions}, business_type=#{business_type}
-		where question_id=#{id}
+		update questions set question=#{question}, question_type=#{questionType}, question_options=#{questionOptions}, business_type=#{business_type},
+		creat_timestamp=now() where question_id=#{id}
 	</update>
 	
 	<!-- 删除问题 -->
