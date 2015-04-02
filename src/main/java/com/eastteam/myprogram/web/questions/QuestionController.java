@@ -45,17 +45,19 @@ public class QuestionController {
 	static {
 		sortTypes.put("question", "问题名称");
 		sortTypes.put("question_id", "默认顺序");
+		sortTypes.put("creat_timestamp DESC","创建时间");
 	}
 	
 	private static Logger logger = LoggerFactory.getLogger(QuestionController.class);
 	
 	@RequestMapping (value = "list", method = RequestMethod.GET)
 	public String list(@RequestParam(value = "page", defaultValue = "1") int pageNumber,
-			@RequestParam(value = "sortType", defaultValue = "question_id") String sortType,
+			@RequestParam(value = "sortType", defaultValue = "creat_timestamp DESC") String sortType,
 			Model model, ServletRequest request, HttpSession session){
 		Map<String, Object> searchParams = Servlets.getParametersStartingWith(
 				request, "search_");
 		searchParams.put("trashed", "F");
+		searchParams.put("sort", sortType);
 		String[] checkboxValues = request.getParameterValues("search_userId");
 		if(checkboxValues != null && checkboxValues.length != 0){
 			searchParams.put("userId", ((User) session.getAttribute("user")).getId());
