@@ -16,6 +16,7 @@ public class Paper extends IdEntity {
 	private Category businessType;
 	private Category status;
 	private List<Question> questions;
+	private User creater;
 	
 	
 	public String getPaperName() {
@@ -41,6 +42,12 @@ public class Paper extends IdEntity {
 	}
 	public void setQuestions(List<Question> questions) {
 		this.questions = questions;
+	}
+	public User getCreater() {
+		return creater;
+	}
+	public void setCreater(User creater) {
+		this.creater = creater;
 	}
 
 }
