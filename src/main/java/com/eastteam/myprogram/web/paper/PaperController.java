@@ -11,6 +11,7 @@ import java.util.Properties;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -51,8 +52,8 @@ public class PaperController {
 	
 	@RequestMapping (value = "list", method = RequestMethod.GET)
 	public String list(@RequestParam(value = "page", defaultValue = "1") int pageNumber,
-			@RequestParam(value = "sortType", defaultValue = "paper_id") String sortType,
-			Model model, ServletRequest request){
+			@RequestParam(value = "sortType", defaultValue = "creat_timestamp DESC") String sortType,
+			Model model, ServletRequest request, HttpSession session){
 		Map<String, Object> searchParams = Servlets.getParametersStartingWith(
 				request, "search_");
 		if ((request.getParameter("search_categoryId1") != "") && (request.getParameter("search_categoryId1") != null)) {
@@ -62,6 +63,10 @@ public class PaperController {
 			searchParams.put("businessType", request.getParameter("search_categoryId2"));
 		}
 		searchParams.put("sort", sortType);
+		String[] checkboxValues = request.getParameterValues("search_userId");
+		if(checkboxValues != null && checkboxValues.length != 0){
+			searchParams.put("userId", ((User) session.getAttribute("user")).getId());
+		}
 		List<Paper> papers = this.paperService.search(searchParams);
 		model.addAttribute("papers", papers);
 		model.addAttribute("sortType", sortType);
