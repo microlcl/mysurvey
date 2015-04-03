@@ -36,6 +36,7 @@ insert into functions(function_id, module_id, name, description, path) values('F
 insert into functions(function_id, module_id, name, description, path) values('F8-5','M1-8','调查问卷：发布','有权限发布调查问卷','/paper/publish');
 insert into functions(function_id, module_id, name, description, path) values('F8-6','M1-8','调查问卷：查看','有权限查看','/paper/show');
 
+insert into users(id, name, password, email, register_date, department_id) values('admin','admin','a94d5cd0079cfc8db030e1107de1addd1903a01b','530460414@qq.com','2012-06-04 01:00:00','D1-1');
 insert into users(id, name, password, email, register_date, department_id) values('lichlei@cn.ibm.com','lichlei@cn.ibm.com','a94d5cd0079cfc8db030e1107de1addd1903a01b','lichlei@cn.ibm.com','2012-06-04 01:00:00','D1-1');
 insert into users(id, name, password, email, register_date, department_id) values('wangxhdl@cn.ibm.com','wangxhdl@cn.ibm.com','a94d5cd0079cfc8db030e1107de1addd1903a01b','wangxhdl@cn.ibm.com','2012-06-04 01:00:00','D1-1');
 insert into users(id, name, password, email, register_date, department_id) values('gongbf@cn.ibm.com','gongbf@cn.ibm.com','a94d5cd0079cfc8db030e1107de1addd1903a01b','gongbf@cn.ibm.com','2012-06-04 02:00:00','D1-1');
@@ -48,6 +49,7 @@ insert into roles(role_id, name, description) values('R0', '管理员','超级�
 insert into roles(role_id, name, description) values('R1', '问题管理员','问题管理员');
 insert into roles(role_id, name, description) values('R2', '问卷管理员','问卷管理员');
 
+insert into user_role(user_id, role_id) values('admin','R0');
 insert into user_role(user_id, role_id) values('lichlei@cn.ibm.com','R0');
 insert into user_role(user_id, role_id) values('wangxhdl@cn.ibm.com','R0');
 insert into user_role(user_id, role_id) values('gongbf@cn.ibm.com','R0');
@@ -127,26 +129,22 @@ insert into questions (question_id,question, question_type, question_options, bu
 insert into questions (question_id,question, question_type, question_options, business_type, trashed, user_id, creat_timestamp) values(13,'你是通过什么途径知道我们的产品的13？','1','网上搜索^朋友分享^无意间了解','1-0-2-2','F','admin', '2013-06-04 02:00:00');
 insert into questions (question_id,question, question_type, question_options, business_type, trashed, user_id, creat_timestamp) values(14,'你喜欢的灯具材质是14？','2','木质^金属^水晶^其他','1-0-2-0','F','admin', '2012-06-04 02:00:00');
 
-insert into papers (paper_id, paper_name, business_type, creat_timestamp, status) values (1, '问卷1', '1-0-2-0', now(), '1-0-1-1');
-insert into papers (paper_id, paper_name, business_type, creat_timestamp, status) values (2, '问卷2', '1-0-2-0', now(), '1-0-1-1');
-insert into papers (paper_id, paper_name, business_type, creat_timestamp, status) values (3, '问卷3', '1-0-2-0', now(), '1-0-1-0');
-insert into papers (paper_id, paper_name, business_type, creat_timestamp, status) values (4, '问卷4', '1-0-2-2', now(), '1-0-1-2');
-insert into papers (paper_id, paper_name, business_type, creat_timestamp, status) values (5, '问卷5', '1-0-2-2', now(), '1-0-1-1');
-insert into papers (paper_id, paper_name, business_type, creat_timestamp, status) values (6, '问卷6', '1-0-2-1', now(), '1-0-1-1');
-
-
-insert into papers (paper_id, paper_name, business_type, creat_timestamp, status) values (7, '问卷7', '1-0-2-1', now(), '1-0-1-1');
-insert into papers (paper_id, paper_name, business_type, creat_timestamp, status) values (8, '问卷8', '1-0-2-0', now(), '1-0-1-1');
-insert into papers (paper_id, paper_name, business_type, creat_timestamp, status) values (9, '问卷9', '1-0-2-0', now(), '1-0-1-0');
-insert into papers (paper_id, paper_name, business_type, creat_timestamp, status) values (10, '问卷10', '1-0-2-2', now(), '1-0-1-2');
-insert into papers (paper_id, paper_name, business_type, creat_timestamp, status) values (11, '问卷11', '1-0-2-2', now(), '1-0-1-1');
-
-insert into papers (paper_id, paper_name, business_type, creat_timestamp, status) values (12, '问卷12', '1-0-2-1', now(), '1-0-1-1');
-insert into papers (paper_id, paper_name, business_type, creat_timestamp, status) values (13, '问卷13', '1-0-2-0', now(), '1-0-1-1');
-insert into papers (paper_id, paper_name, business_type, creat_timestamp, status) values (14, '问卷14', '1-0-2-0', now(), '1-0-1-0');
-insert into papers (paper_id, paper_name, business_type, creat_timestamp, status) values (15, '问卷15', '1-0-2-2', now(), '1-0-1-2');
-insert into papers (paper_id, paper_name, business_type, creat_timestamp, status) values (16, '问卷16', '1-0-2-2', now(), '1-0-1-1');
-insert into papers (paper_id, paper_name, business_type, creat_timestamp, status) values (16, '问卷16', '1-0-2-2', now(), '1-0-1-1');
+insert into papers (paper_id, paper_name, user_id, business_type, creat_timestamp, status) values (1, '问卷1', 'admin', '1-0-2-0', '2012-06-04 02:00:00', '1-0-1-1');
+insert into papers (paper_id, paper_name, user_id, business_type, creat_timestamp, status) values (2, '问卷2', 'admin', '1-0-2-0', '2013-06-04 02:00:00', '1-0-1-1');
+insert into papers (paper_id, paper_name, user_id, business_type, creat_timestamp, status) values (3, '问卷3', 'admin', '1-0-2-0',  now(), '1-0-1-0');
+insert into papers (paper_id, paper_name, user_id, business_type, creat_timestamp, status) values (4, '问卷4', 'ldlxiao@cn.ibm.com', '1-0-2-2', now(), '1-0-1-2');
+insert into papers (paper_id, paper_name, user_id, business_type, creat_timestamp, status) values (5, '问卷5', 'ldlxiao@cn.ibm.com', '1-0-2-2', now(), '1-0-1-1');
+insert into papers (paper_id, paper_name, user_id, business_type, creat_timestamp, status) values (6, '问卷6', 'ldlxiao@cn.ibm.com', '1-0-2-1', now(), '1-0-1-1');
+insert into papers (paper_id, paper_name, user_id, business_type, creat_timestamp, status) values (7, '问卷7', 'lichlei@cn.ibm.com', '1-0-2-1', now(), '1-0-1-1');
+insert into papers (paper_id, paper_name, user_id, business_type, creat_timestamp, status) values (8, '问卷8', 'lichlei@cn.ibm.com', '1-0-2-0', now(), '1-0-1-1');
+insert into papers (paper_id, paper_name, user_id, business_type, creat_timestamp, status) values (9, '问卷9', 'lichlei@cn.ibm.com', '1-0-2-0', now(), '1-0-1-0');
+insert into papers (paper_id, paper_name, user_id, business_type, creat_timestamp, status) values (10, '问卷10', 'wangxhdl@cn.ibm.com', '1-0-2-2', now(), '1-0-1-2');
+insert into papers (paper_id, paper_name, user_id, business_type, creat_timestamp, status) values (11, '问卷11', 'wangxhdl@cn.ibm.com', '1-0-2-2', now(), '1-0-1-1');
+insert into papers (paper_id, paper_name, user_id, business_type, creat_timestamp, status) values (12, '问卷12', 'wangxhdl@cn.ibm.com', '1-0-2-1', now(), '1-0-1-1');
+insert into papers (paper_id, paper_name, user_id, business_type, creat_timestamp, status) values (13, '问卷13', 'gongbf@cn.ibm.com', '1-0-2-0', now(), '1-0-1-1');
+insert into papers (paper_id, paper_name, user_id, business_type, creat_timestamp, status) values (14, '问卷14', 'gongbf@cn.ibm.com', '1-0-2-0', now(), '1-0-1-0');
+insert into papers (paper_id, paper_name, user_id, business_type, creat_timestamp, status) values (15, '问卷15', 'gongbf@cn.ibm.com', '1-0-2-2', now(), '1-0-1-2');
+insert into papers (paper_id, paper_name, user_id, business_type, creat_timestamp, status) values (16, '问卷16', 'zhangfd@cn.ibm.com', '1-0-2-2', now(), '1-0-1-1');
 
 insert into paper_questions (paper_id, question_id, position) values (1, 9, 10);
 insert into paper_questions (paper_id, question_id, position) values (1, 8, 20);
