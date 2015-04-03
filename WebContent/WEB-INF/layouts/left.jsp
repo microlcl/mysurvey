@@ -26,7 +26,7 @@
 			</div>
 			
 			<div class="panel" style="display: none;">
-					<a href="${ctx}/paper/list?search_userId=${user.id}&sortType=creat_timestamp DESC">我的问卷</a>
+					<a href="${ctx}/paper/list?search_userId=${user.id}">我的问卷</a>
 			</div>
 			<div class="panel" style="display: none;">
 					<a href="${ctx}/question/list?search_userId=${user.id}">我的问题</a>
