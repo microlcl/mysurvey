@@ -23,9 +23,13 @@
 		left join category cs on p.status=cs.id
 		left join paper_questions pq on p.paper_id=pq.paper_id
 		left join questions q on pq.question_id=q.question_id 
+		left join users u on p.user_id=u.id 
 		<where>
 			<if test="status != null">
 		        cs.id = #{status}
+			</if>
+			<if test="userId != null">
+		        p.user_id = #{userId}
 			</if>
 			<if test="businessType != null">
 		        and p.business_type = #{businessType}
@@ -35,7 +39,7 @@
 			</if>
 		</where>
 		<if test="sort != null">
-			order by ${sort}
+			order by p.${sort}
 		</if>
 	</select>
 	<select id="getCount" parameterType="map" resultType="Long">
