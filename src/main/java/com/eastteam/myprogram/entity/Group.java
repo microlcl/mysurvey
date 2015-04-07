@@ -16,6 +16,7 @@ public class Group extends IdEntity{
 	private User creater;
 	private List<String []> gitems;
 	private String flagString = "none";
+	private List<GroupMember> groupMembers;
 	
 	public String getFlagString() {
 		return flagString;
@@ -60,7 +61,16 @@ public class Group extends IdEntity{
 		this.gitems = parseContent();
 	}
 	
+	public List<GroupMember> getGroupMembers() {
+		return groupMembers;
+	}
+	public void setGroupMembers(List<GroupMember> groupMembers) {
+		this.groupMembers = groupMembers;
+	}
 	
+	public void setGitems(List<String[]> gitems) {
+		this.gitems = gitems;
+	}
 	private List<String[]> parseContent(){
 		String[] contentArray=null;
 		List<String []> gitems=new ArrayList<String[]>();

@@ -3,6 +3,7 @@
 <%@ taglib prefix="tags" tagdir="/WEB-INF/tags" %>
 <%@ taglib uri="http://com.eastteam.myprogram/mytaglib" prefix="mytag" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %> 
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%> 
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
 <html>
 <head>
@@ -95,7 +96,6 @@
 </head>
 <body>
 	<form  id="inputForm" onsubmit="return sub()" action="${ctx}/myGroup/updateGroup" method="post" class="form-horizontal" enctype="multipart/form-data">
-
 	<div class="form">
 	<h1>编辑用户组</h1>
 	<table>
@@ -107,6 +107,7 @@
 				<label for="question" class="control-label formlabel">群组名:</label>
 				<div class="controls">
 					<input type="hidden" name="id" value="${group.id}">
+					<input type="hidden" name="state" value="${fn:length(group.groupMembers)}">
 					<input type="text" id="groupName" name="groupName"  value="${group.groupName}" style="width:200px"  maxlength="32"/>
 					<span id="groupName_error" class="error" style="display:none">请填写群组名!</span>
 				</div>
@@ -116,9 +117,9 @@
                     <textarea name="comment" style="width:440px" maxlength="128">${group.comment }</textarea>
 			</div>
 <%-- 			<c:if test="${group.content != ''}"> --%>
-			   <c:forEach items="${group.gitems}" var="gitem" varStatus="status">
+			   <c:forEach items="${group.groupMembers}" var="member" varStatus="status">
 				<span class="control-group" >
-                       <label for="question" class="control-label formlabel">联系人昵称:</label><input type="text" value="${gitem[0]}" name="nickName"> &nbsp; &nbsp;  id：<input type="text" value="${gitem[1]}" name="userId">
+                       <label for="question" class="control-label formlabel">联系人昵称:</label><input type="text" value="${member.nickName}" name="nickName"> &nbsp; &nbsp;  id：<input type="text" value="${member.userId}" name="userId">
 						<a href="javascript:void(0);" onclick="deleteOption(this)" title="删除"><span style="margin:0px 0px -11px 5px" class="iconImg iconImg_delete"></span></a>
 				</span>
 			   </c:forEach>
