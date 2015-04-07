@@ -15,6 +15,12 @@
 		</association>
 	</resultMap>
 	
+	<resultMap id="groupMemberDetailMap" type="GroupMember">
+		<result property="groupId" column="group_id"/>
+		<result property="userId" column="user_id"/>
+		<result property="nickName" column="nickname"/>
+	</resultMap>
+	
 	
 	<select id="search" parameterType="String" resultMap="myGroupDetailMap">
 	   select g.group_id, g.group_name, g.comment, g.content , g.edit_date,u.name as creater_name from groups g
@@ -49,5 +55,12 @@
 	    <where>
 	        gu.user_id=#{userId}
 	    </where>
+	</select>
+	
+	<select id="getRelatedMembers" parameterType="Long" resultMap="groupMemberDetailMap">
+	   select group_id,user_id,nickname from group_users
+		<where>
+		 group_id =#{id}
+		</where>
 	</select>
 </mapper>

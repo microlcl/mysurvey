@@ -51,7 +51,7 @@
                      <a  href="#collapse_${status.index+1}"  data-toggle="collapse" class="accordion-toggle" style="display: inline-block; word-wrap: break-word; width: 800px;text-decoration: none;">
                   	    <span style="padding-left:8px">Group: 
                   	    <strong>
-                  	    &nbsp ${group.groupName} <c:if test="${fn:length(group.groupMenbers) == null }">(空用户组，请编辑用户组)</c:if>
+                  	    &nbsp ${group.groupName} <c:if test="${fn:length(group.groupMembers) == null }">(空用户组，请编辑用户组)</c:if>
                   	    </strong>
                   	     &nbsp&nbsp  ${group.comment} 
                   	    <br>
@@ -64,7 +64,7 @@
                     </span>
                   </div>
                   <div class="accordion-body collapse" id="collapse_${status.index+1}">
-                    <c:forEach items="${group.groupMenbers}" var="member" varStatus="item_status">
+                    <c:forEach items="${group.groupMembers}" var="member" varStatus="item_status">
                        <div class="accordion-inner" style="padding-left:55px">
 						 ${member.nickName}&nbsp&nbsp&nbsp ${member.userId}
                        </div>
