@@ -293,8 +293,14 @@ public class SurveyController {
 		}*/
 		
 		String userId = request.getParameter("userId");	//如果是查看别人的的问卷有可能传入userId
-		if (userId==null || userId.equals(""))
-			userId = ((User) session.getAttribute("user")).getId();
+		boolean canMod = false;							//如果是查看别人的问卷则不能修改
+		boolean expired = true;
+		if (userId==null || userId.equals("")) {
+		
+			userId = ((User) session.getAttribute("user")).getId(); 
+			canMod = true;
+		}
+			
 		Survey survey = surveyService.selectSurvey(surveyId);
 		Paper surveyPaper = paperService.selectPaper(String.valueOf(survey.getPaperId()));
 		List<Question> surveyQuestions = paperService.getQuestions(String.valueOf(surveyPaper.getId()));
@@ -313,8 +319,12 @@ public class SurveyController {
 				}
 			}
 		}
+		
+		if (canMod)
+			expired = survey.getDeadlineTimestamp().before(new Date());	//如果可以修改则根据是否过期来决定问卷状态
+		
 		model.addAttribute("isUpdate", surveyAnswers.size() != 0);
-		model.addAttribute("expired", survey.getDeadlineTimestamp().before(new Date()));
+		model.addAttribute("expired", expired);
 		model.addAttribute("questions", surveyQuestions);
 		model.addAttribute("survey", survey);
 		
