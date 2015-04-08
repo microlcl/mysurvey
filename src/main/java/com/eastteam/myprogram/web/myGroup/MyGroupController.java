@@ -64,6 +64,9 @@ public class MyGroupController {
 	public String list(Model model, ServletRequest request,HttpSession session){
 		User user=(User) session.getAttribute("user");
 		List<Group> groups = myGroupService.search(user.getId());
+		for(Group group : groups){
+			group.setGitems();
+		}
 		model.addAttribute("groups", groups);
 		return "myGroup/list";
 	}
@@ -80,6 +83,7 @@ public class MyGroupController {
 	@RequestMapping(value = "toUpdateGroup/{id}", method = RequestMethod.GET)
 	public String toUpdateGroup(@PathVariable("id") String id, Model model) {
 		Group selectedGroup=myGroupService.getSelectedGroup(Long.parseLong(id));
+		selectedGroup.setGitems();
 		model.addAttribute("group", selectedGroup);
 		return "myGroup/updateGroup";
 	}
@@ -87,24 +91,24 @@ public class MyGroupController {
 	
 	@RequestMapping(value = "updateGroup", method = RequestMethod.POST)
 	public String updateGroup(@ModelAttribute Group group, RedirectAttributes redirectAttributes,HttpSession session,ServletRequest request) {
-		group.setGitems();
-		List<String[]> gitems=group.getGitems();
-		List<GroupMember> groupMembers =new ArrayList<GroupMember>();
-		for(String [] gitem : gitems){
-			GroupMember groupMember=new GroupMember();
-			groupMember.setGroupId(group.getId());
-			groupMember.setNickName(gitem[0]);
-			groupMember.setUserId(gitem[1]);
-			groupMembers.add(groupMember);
-		}
-		if(request.getAttribute("state").equals("0")){
-			myGroupService.updateGroup(group);
-			myGroupService.insertRelatedMembers(groupMembers);
-		}else{
-			myGroupService.updateGroup(group);
-			myGroupService.updateRelatedMembers(groupMembers);
-		}
-		
+//		group.setGitems();
+//		List<String[]> gitems=group.getGitems();
+//		List<GroupMember> groupMembers =new ArrayList<GroupMember>();
+//		for(String [] gitem : gitems){
+//			GroupMember groupMember=new GroupMember();
+//			groupMember.setGroupId(group.getId());
+//			groupMember.setNickName(gitem[0]);
+//			groupMember.setUserId(gitem[1]);
+//			groupMembers.add(groupMember);
+//		}
+//		if(request.getAttribute("state").equals("0")){
+//			myGroupService.updateGroup(group);
+//			myGroupService.insertRelatedMembers(groupMembers);
+//		}else{
+//			myGroupService.updateGroup(group);
+//			myGroupService.updateRelatedMembers(groupMembers);
+//		}
+		myGroupService.updateGroup(group);
 		return "redirect:/myGroup/list";
 	}
 	

@@ -64,9 +64,10 @@
                     </span>
                   </div>
                   <div class="accordion-body collapse" id="collapse_${status.index+1}">
-                    <c:forEach items="${group.groupMembers}" var="member" varStatus="item_status">
+                    <c:forEach items="${group.gitems}" var="member" varStatus="item_status">
                        <div class="accordion-inner" style="padding-left:55px">
-						 ${member.nickName}&nbsp&nbsp&nbsp ${member.userId}
+						  <div>${member[0]}</div>
+						  <div>${member[1]}</div>
                        </div>
                      </c:forEach>
                   </div>
