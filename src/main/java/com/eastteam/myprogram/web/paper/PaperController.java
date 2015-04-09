@@ -136,9 +136,11 @@ public class PaperController {
 	}
 	
 	@RequestMapping(value = "save", method = RequestMethod.POST)
-	public String save(Model model, Paper paper, HttpServletRequest request){
+	public String save(Model model, Paper paper, HttpServletRequest request, HttpSession session){
 		logger.info("in paper Controller save parper");
-
+		
+		User user = (User)session.getAttribute("user");
+		paper.setCreater(user);
 		this.paperService.saveQuestions(paper);
 		
 		return "redirect:/paper/list/";

@@ -66,8 +66,8 @@
 	    where q.question_id=pq.question_id and pq.paper_id=#{paper_id} order by pq.position
 	</select>
 	<insert id="insertPaper" parameterType="Paper" useGeneratedKeys="true" keyProperty="id">
-		insert into papers (paper_name, creat_timestamp, business_type, status) 
-		values(#{paperName}, now(), #{businessType.id}, '1-0-1-0');
+		insert into papers (paper_name, creat_timestamp, business_type, status, user_id) 
+		values(#{paperName}, now(), #{businessType.id}, '1-0-1-0', #{creater.id});
 	</insert>
 	<insert id="insertQuestions" parameterType="map">
 		insert into paper_questions (paper_id, question_id, position) 
