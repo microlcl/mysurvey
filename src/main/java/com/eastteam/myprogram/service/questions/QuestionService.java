@@ -36,6 +36,7 @@ public class QuestionService extends PageableService {
 		param.put("pageSize", pageRequest.getPageSize());
 		param.put("sort", this.getOrderValue(pageRequest.getSort()));
 		param.put("userId", parameters.get("userId"));
+		param.put("categoryIdList", parameters.get("categoryIdList"));
 		List<Question> questions = questionMybatisDao.search(param);
 		
 		Iterator<Question> it = questions.iterator();
