@@ -17,10 +17,10 @@
 		<h1>管理</h1>
 			<div class="submenu">
 			<mytag:PermssionTag functionId="F7-1">
-				<a id="question-tab" href="${ctx}/question/list">问题管理</a>
+				<a id="question-tab" href="${ctx}/question/list?search_userId=${user.id}">问题管理</a>
 			</mytag:PermssionTag>
 			<mytag:PermssionTag functionId="F8-1">
-				<a id="paper-tab" href="${ctx}/paper/list">调查问卷</a>
+				<a id="paper-tab" href="${ctx}/paper/list?search_userId=${user.id}">调查问卷</a>
 			</mytag:PermssionTag>
 			</div>
 
