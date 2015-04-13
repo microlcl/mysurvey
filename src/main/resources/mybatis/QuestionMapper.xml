@@ -34,14 +34,13 @@
 	
 	<!-- 获取问题 -->
 	<select id="search" parameterType="map" resultMap="questionDetailMap">
-		select q.question_id, q.question, q.question_type, q.question_options, q.business_type, q.trashed, q.user_id,u.name as creater_name from questions q
-		left join users u on q.user_id=u.id 
+		select q.question_id, q.question, q.question_type, q.question_options, q.business_type, q.trashed, q.user_id,q.user_id as creater_name from questions q
 		<where>
 			<if test="keyword != null">
 				q.question like '%${keyword}%'
 			</if>
 			<if test="userId != null">
-				and u.id=#{userId}
+				and q.user_id=#{userId}
 			</if>
 			<if test="categoryIdList != null">
 		        and q.business_type in 
@@ -64,13 +63,12 @@
 	<!-- 问题数量 -->
 	<select id="getCount" parameterType="map" resultType="Long">
 		select count(0) from questions q 
-		left join users u on q.user_id=u.id 
 		<where>
 			<if test="keyword != null">
 			    question like '%${keyword}%'
 			</if>
 			<if test="userId != null">
-				and u.id=#{userId}
+				and q.user_id=#{userId}
 			</if>
 			<if test="categoryIdList != null">
 		        and business_type in 

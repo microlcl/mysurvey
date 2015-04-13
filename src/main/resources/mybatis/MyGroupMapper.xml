@@ -23,8 +23,7 @@
 	
 	
 	<select id="search" parameterType="String" resultMap="myGroupDetailMap">
-	   select g.group_id, g.group_name, g.comment, g.content , g.edit_date,u.name as creater_name from groups g
-		inner join users u on g.user_id=u.id 
+	   select g.group_id, g.group_name, g.comment, g.content , g.edit_date,g.user_id as creater_name from groups g
 		<where>
 		  g.user_id=#{userId}
 		</where>
