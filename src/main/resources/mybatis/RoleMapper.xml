@@ -130,4 +130,10 @@
 	  select m.module_id, m.pid, m.name, m.description, m.path
 	    from modules m
 	</select>
+	
+	<select id="getFunctions" resultType="Function">
+	    select f.function_id as id, f.module_id as moduleId, f.name, f.description, f.path 
+	    from functions f, role_function rf 
+	    where rf.function_id=f.function_id and rf.role_id=#{role_id}
+	</select>
 </mapper> 

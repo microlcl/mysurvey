@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.eastteam.myprogram.entity.Function;
 import com.eastteam.myprogram.entity.Role;
 import com.eastteam.myprogram.entity.RoleFunction;
 
@@ -32,8 +33,13 @@ public class RoleMybatisDaoTest extends SpringTransactionalTestCase {
 		RoleFunction roleFunction=new RoleFunction();
 		roleFunction.setRole_id("R1");
 		roleFunction.setFunction_id("F7");
-		roleDao.saveRole_Function(roleFunction);
 //		roleDao.deleteRole_Function("R1");
 //		assertEquals(4,roleDao.getRole("R1").getFunctions().size());
+	}
+	
+	@Test
+	public void testGetFunctions() throws Exception {
+		List<Function> functions = roleDao.getFunctions("R0");
+		System.out.println(functions);
 	}
 }
