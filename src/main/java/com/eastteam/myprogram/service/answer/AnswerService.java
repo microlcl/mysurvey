@@ -54,6 +54,11 @@ public class AnswerService {
 		List<Question> questions = paperService.getQuestions(String.valueOf(surveyPaper.getId()));
 		
 		for (Question question : questions) {
+			
+			//开放性问题暂时不做处理
+			if (question.getQuestionType().equals(Question.OPEN_QUESTION))
+				continue;
+			
 			Map<String, Object> parameters = new HashMap<String, Object>();
 			parameters.put("surveyId", survey.getId());
 			parameters.put("questionId", question.getId());

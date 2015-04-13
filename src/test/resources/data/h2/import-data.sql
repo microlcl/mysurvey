@@ -152,6 +152,7 @@ insert into paper_questions (paper_id, question_id, position) values (1, 7, 30);
 insert into paper_questions (paper_id, question_id, position) values (1, 6, 40);
 insert into paper_questions (paper_id, question_id, position) values (1, 5, 50);
 insert into paper_questions (paper_id, question_id, position) values (1, 4, 60);
+insert into paper_questions (paper_id, question_id, position) values (1, 3, 60);
 insert into paper_questions (paper_id, question_id, position) values (2, 1, 10);
 insert into paper_questions (paper_id, question_id, position) values (2, 2, 20);
 insert into paper_questions (paper_id, question_id, position) values (2, 3, 30);
