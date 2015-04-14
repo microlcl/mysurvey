@@ -31,12 +31,10 @@ public class QuestionService extends PageableService {
 	public List search(Map parameters, Pageable pageRequest) {
 		logger.info("in service, pagesize = " + pageSize);
 		
-		Map<String,Object>param = Maps.newHashMap();
+		Map<String,Object>param = Maps.newHashMap(parameters);
 		param.put("offset", pageRequest.getOffset());
 		param.put("pageSize", pageRequest.getPageSize());
 		param.put("sort", this.getOrderValue(pageRequest.getSort()));
-		param.put("userId", parameters.get("userId"));
-		param.put("categoryIdList", parameters.get("categoryIdList"));
 		List<Question> questions = questionMybatisDao.search(param);
 		
 		Iterator<Question> it = questions.iterator();
