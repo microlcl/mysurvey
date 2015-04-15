@@ -17,24 +17,32 @@ delete from groups;
 
 
 insert into modules(module_id, pid, name, description, path) values('M1','','方案管理系统','方案管理系统','');
-insert into modules(module_id, pid, name, description, path) values('M1-7','M1','问题管理','问题管理','');
-insert into modules(module_id, pid, name, description, path) values('M1-8','M1','问卷管理','问卷管理','');
+insert into modules(module_id, pid, name, description, path) values('M1-1','M1','我的用户组','我的用户组','');
+insert into modules(module_id, pid, name, description, path) values('M1-2','M1','我发起的调查','我发起的调查','');
+insert into modules(module_id, pid, name, description, path) values('M1-3','M1','我参与的调查','我参与的调查','');
+
+
+insert into modules(module_id, pid, name, description, path) values('M1-7','M1','我的问题','我的问题','');
+insert into modules(module_id, pid, name, description, path) values('M1-8','M1','我的问卷','我的问卷','');
 
 insert into functions(function_id, module_id, name, description, path) values('F0','M1','主界面','查看主界面','/index.jsp');
+insert into functions(function_id, module_id, name, description, path) values('F1-1','M1-1','我的群组:列表：','有权限查看列表','/myGroup/list');
+insert into functions(function_id, module_id, name, description, path) values('F1-2','M1-1','我的群组:增加','有权限保存','/myGroup/saveGroup');
+insert into functions(function_id, module_id, name, description, path) values('F1-3','M1-1','我的群组:修改','有权限修改','/myGroup/toUpdateGroup,/myGroup/updateGroup,/myGroup/importGroup');
+insert into functions(function_id, module_id, name, description, path) values('F1-4','M1-1','我的群组:删除','有权限删除','/myGroup/deleteGroup/');
 
-insert into functions(function_id, module_id, name, description, path) values('F6-1','M1-6','问题：列表','菜单导航','/mySurvey/myGroup');
 
-insert into functions(function_id, module_id, name, description, path) values('F7-1','M1-7','问题：列表','菜单导航','/question/list');
-insert into functions(function_id, module_id, name, description, path) values('F7-2','M1-7','问题：增加','有权限增加','/question/addQuestion,/question/saveQuestion');
-insert into functions(function_id, module_id, name, description, path) values('F7-3','M1-7','问题：修改','有权限修改','/question/editQuestion,/question/updateQuestion');
-insert into functions(function_id, module_id, name, description, path) values('F7-4','M1-7','问题：删除','有权限删除','/question/deleteQuestion');
+insert into functions(function_id, module_id, name, description, path) values('F7-1','M1-7','我的问题：列表','菜单导航','/question/list');
+insert into functions(function_id, module_id, name, description, path) values('F7-2','M1-7','我的问题：增加','有权限增加','/question/addQuestion,/question/saveQuestion');
+insert into functions(function_id, module_id, name, description, path) values('F7-3','M1-7','我的问题：修改','有权限修改','/question/editQuestion,/question/updateQuestion');
+insert into functions(function_id, module_id, name, description, path) values('F7-4','M1-7','我的问题：删除','有权限删除','/question/deleteQuestion');
 
-insert into functions(function_id, module_id, name, description, path) values('F8-1','M1-8','调查问卷：列表','菜单导航','/paper/list');
-insert into functions(function_id, module_id, name, description, path) values('F8-2','M1-8','调查问卷：增加','有权限增加','/paper/add/,/paper/save');
-insert into functions(function_id, module_id, name, description, path) values('F8-3','M1-8','调查问卷：修改','有权限修改','/paper/edit,/paper/update');
-insert into functions(function_id, module_id, name, description, path) values('F8-4','M1-8','调查问卷：删除','有权限删除','/paper/delete');
-insert into functions(function_id, module_id, name, description, path) values('F8-5','M1-8','调查问卷：发布','有权限发布调查问卷','/paper/publish');
-insert into functions(function_id, module_id, name, description, path) values('F8-6','M1-8','调查问卷：查看','有权限查看','/paper/show');
+insert into functions(function_id, module_id, name, description, path) values('F8-1','M1-8','我的调查问卷：列表','菜单导航','/paper/list');
+insert into functions(function_id, module_id, name, description, path) values('F8-2','M1-8','我的调查问卷：增加','有权限增加','/paper/add/,/paper/save');
+insert into functions(function_id, module_id, name, description, path) values('F8-3','M1-8','我的调查问卷：修改','有权限修改','/paper/edit,/paper/update');
+insert into functions(function_id, module_id, name, description, path) values('F8-4','M1-8','我的调查问卷：删除','有权限删除','/paper/delete');
+insert into functions(function_id, module_id, name, description, path) values('F8-5','M1-8','我的调查问卷：发布','有权限发布调查问卷','/paper/publish');
+insert into functions(function_id, module_id, name, description, path) values('F8-6','M1-8','我的调查问卷：查看','有权限查看','/paper/show');
 
 insert into users(id, name, password, email, register_date, department_id) values('admin','admin','a94d5cd0079cfc8db030e1107de1addd1903a01b','530460414@qq.com','2012-06-04 01:00:00','D1-1');
 insert into users(id, name, password, email, register_date, department_id) values('lichlei@cn.ibm.com','lichlei@cn.ibm.com','a94d5cd0079cfc8db030e1107de1addd1903a01b','lichlei@cn.ibm.com','2012-06-04 01:00:00','D1-1');
@@ -48,22 +56,23 @@ insert into users(id, name, password, email, register_date, department_id) value
 insert into roles(role_id, name, description) values('R0', '管理员','超级用户');
 insert into roles(role_id, name, description) values('R1', '问题管理员','问题管理员');
 insert into roles(role_id, name, description) values('R2', '问卷管理员','问卷管理员');
+insert into roles(role_id, name, description) values('R9', '普通用户','普通用户');
 
 insert into user_role(user_id, role_id) values('admin','R0');
-insert into user_role(user_id, role_id) values('lichlei@cn.ibm.com','R0');
+insert into user_role(user_id, role_id) values('lichlei@cn.ibm.com','R9');
 insert into user_role(user_id, role_id) values('wangxhdl@cn.ibm.com','R0');
 insert into user_role(user_id, role_id) values('gongbf@cn.ibm.com','R0');
 insert into user_role(user_id, role_id) values('zhangfd@cn.ibm.com','R0');
 insert into user_role(user_id, role_id) values('liush@cn.ibm.com','R0');
 insert into user_role(user_id, role_id) values('ldlxiao@cn.ibm.com','R0');
 insert into user_role(user_id, role_id) values('maoyeye@qq.com','R0');
-insert into user_role(user_id, role_id) values('lichlei@cn.ibm.com','R1');
 
 insert into role_function(role_id, function_id, description) values('R0','F0','');
+insert into role_function(role_id, function_id, description) values('R0','F1-1','');
+insert into role_function(role_id, function_id, description) values('R0','F1-2','');
+insert into role_function(role_id, function_id, description) values('R0','F1-3','');
+insert into role_function(role_id, function_id, description) values('R0','F1-4','');
 insert into role_function(role_id, function_id, description) values('R0','F7-1','');
-
-
-insert into role_function(role_id, function_id, description) values('R0','F6-1','');
 insert into role_function(role_id, function_id, description) values('R0','F7-2','');
 insert into role_function(role_id, function_id, description) values('R0','F7-3','');
 insert into role_function(role_id, function_id, description) values('R0','F7-4','');
@@ -74,19 +83,23 @@ insert into role_function(role_id, function_id, description) values('R0','F8-4',
 insert into role_function(role_id, function_id, description) values('R0','F8-5','');
 insert into role_function(role_id, function_id, description) values('R0','F8-6','');
 
-insert into role_function(role_id, function_id, description) values('R1','F0','');
-insert into role_function(role_id, function_id, description) values('R1','F7-1','');
-insert into role_function(role_id, function_id, description) values('R1','F7-2','');
-insert into role_function(role_id, function_id, description) values('R1','F7-3','');
-insert into role_function(role_id, function_id, description) values('R1','F7-4','');
+insert into role_function(role_id, function_id, description) values('R9','F0','');
+insert into role_function(role_id, function_id, description) values('R9','F1-1','');
+insert into role_function(role_id, function_id, description) values('R9','F1-2','');
+insert into role_function(role_id, function_id, description) values('R9','F1-3','');
+insert into role_function(role_id, function_id, description) values('R9','F1-4','');
+insert into role_function(role_id, function_id, description) values('R9','F7-1','');
+insert into role_function(role_id, function_id, description) values('R9','F7-2','');
+insert into role_function(role_id, function_id, description) values('R9','F7-3','');
+insert into role_function(role_id, function_id, description) values('R9','F7-4','');
+insert into role_function(role_id, function_id, description) values('R9','F8-1','');
+insert into role_function(role_id, function_id, description) values('R9','F8-2','');
+insert into role_function(role_id, function_id, description) values('R9','F8-3','');
+insert into role_function(role_id, function_id, description) values('R9','F8-4','');
+insert into role_function(role_id, function_id, description) values('R9','F8-5','');
+insert into role_function(role_id, function_id, description) values('R9','F8-6','');
 
-insert into role_function(role_id, function_id, description) values('R2','F0','');
-insert into role_function(role_id, function_id, description) values('R2','F8-1','');
-insert into role_function(role_id, function_id, description) values('R2','F8-2','');
-insert into role_function(role_id, function_id, description) values('R2','F8-3','');
-insert into role_function(role_id, function_id, description) values('R2','F8-4','');
-insert into role_function(role_id, function_id, description) values('R2','F8-5','');
-insert into role_function(role_id, function_id, description) values('R2','F8-6','');
+
 
 -- category数据：
 insert into category(id, pid, name, created_date, trashed, comment) values('1','','类别','2012-06-04 02:00:00','F','分类根节点');

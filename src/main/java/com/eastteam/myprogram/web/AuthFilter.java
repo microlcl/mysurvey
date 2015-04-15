@@ -23,21 +23,12 @@ import com.eastteam.myprogram.entity.User;
 @Component("AuthFilter")
 public class AuthFilter implements Filter {
 	
-	private final String[] IGNORED_URLS = {"/account/register","/account/checkLoginName",
+	private final String[] IGNORED_URLS = {
 			"/category/api/search","/category/api/getAll","/category/api/getChildren",
-			"/account/api/search",
-			"/account/api/searchDefault",
-			"/media/api/search",
-			"/product/api/search","/product/api/getProduct",
-			"/holder/api/search",
 			"/category/api/getAll/getBusinessType","/question/api/search",
 			"/category/api/getAll/paperStatus",
-			"/category/api/getAll/getTaskStatus","/category/api/getChildren/getTaskType","/category/api/getChildren/getTaskPriority",
-			"/case/api/search","/account/api/searchUser",
-			"/paper/api/search","/category/api/getChildren/getCaseStatus","/category/api/getChildren/getBusinessType","/paper/api/getQuestions","/category/api/getChildren/getCharacterType",
-			"/category/api/getAll/getSchemeStauts",	"/category/api/getAll/getStyles","/category/api/getChildren/getSchemeStauts","/category/api/getAll/getProductCategories","/category/api/getChildren/getProductAttribute",
-			"/category/api/getChildren/getFormType","/paper/api/searchAll"
-			
+			"/paper/api/search","/category/api/getChildren/getCaseStatus","/category/api/getChildren/getBusinessType","/paper/api/getQuestions",
+			"/paper/api/searchAll"
 		};
 	
 	private final String[] IGNORED_REG = {"/paper/api/getQuestions"};
@@ -115,19 +106,18 @@ public class AuthFilter implements Filter {
 	}
 	
 	private boolean isAccessable(String uri, User user) {
-//		List<String> authorizedUriList = user.getAuthorizedUriList();
-//		
-//		if (authorizedUriList == null || authorizedUriList.isEmpty())
-//			return false;
-//		
-//		for (String authorizedUri : authorizedUriList) {
-//			if (!StringUtils.isBlank(authorizedUri) && StringUtils.startsWith(uri,authorizedUri.trim())) {
-//				return true;
-//			}
-//		}
-//		
-//		return false;		
-		return true;
+		List<String> authorizedUriList = user.getAuthorizedUriList();
+		
+		if (authorizedUriList == null || authorizedUriList.isEmpty())
+			return false;
+		
+		for (String authorizedUri : authorizedUriList) {
+			if (!StringUtils.isBlank(authorizedUri) && StringUtils.startsWith(uri,authorizedUri.trim())) {
+				return true;
+			}
+		}
+		
+		return false;		
 	}
 
 }

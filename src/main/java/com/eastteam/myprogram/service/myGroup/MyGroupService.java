@@ -5,12 +5,10 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.catalina.connector.Request;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,9 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.eastteam.myprogram.dao.MyGroupMybatisDao;
 import com.eastteam.myprogram.entity.Group;
 import com.eastteam.myprogram.entity.GroupMember;
-import com.eastteam.myprogram.entity.User;
 import com.eastteam.myprogram.service.PageableService;
-import com.eastteam.myprogram.service.paper.PaperService;
 
 @Component
 @Transactional
@@ -55,7 +51,6 @@ public class MyGroupService extends PageableService{
 	public void deleteGroup(Long groupId){
 		logger.info("delete group "+groupId);
 		myGroupsMybatisDao.deleteGroup(groupId);
-		myGroupsMybatisDao.deleteRelatedMembers(groupId);
 	}
 	
 	public Group getSelectedGroup(Long groupId){

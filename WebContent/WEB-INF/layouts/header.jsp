@@ -1,18 +1,17 @@
 <%@ page language="java" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://com.eastteam.myprogram/mytaglib" prefix="mytag" %>
+<%@ taglib prefix='fmt' uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
 <div id="header">
 	<div id="title">
-	    <h1><a href="${ctx}">调查问卷系统</a><small>--easySurvey</small>
+	    <h1><a href="${ctx}">调查问卷</a><small>--easySurvey</small>
 	    	<c:if test="${not empty user.id}">
 			    <div class="btn-group pull-right">
 					<a class="btn dropdown-toggle" data-toggle="dropdown" href="#"> <i
-						class="icon-user"></i> ${user.name} <span class="caret"></span>
+						class="icon-user"></i> ${user.id} <span class="caret"></span>
 					</a>				
 					<ul class="dropdown-menu">	
-						<li><a href="${ctx}/account/edit/profile/${user.id}">修改个人信息</a></li>
-						<li class="divider"></li>
 						<li><a href="${ctx}/account/logout">退出</a></li>
 					</ul>				
 				</div>

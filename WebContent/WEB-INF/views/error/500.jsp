@@ -4,9 +4,7 @@
 <%response.setStatus(200);%>
 
 <%
-	Throwable ex = null;
-	if (exception != null)
-		ex = exception;
+	Throwable ex = exception;
 	if (request.getAttribute("javax.servlet.error.exception") != null)
 		ex = (Throwable) request.getAttribute("javax.servlet.error.exception");
 
