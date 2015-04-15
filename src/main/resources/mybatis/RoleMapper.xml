@@ -147,4 +147,13 @@
 	    select distinct u.user_id as userId, u.role_id as roleId, r.name as roleName 
 	    from user_role u join roles r on u.role_id = r.role_id
 	</select>
+	
+	<insert id="addUserRole" parameterType="UserRole" >
+		insert into user_role (role_id, user_id) 
+		values(#{roleId}, #{userId});
+	</insert>
+	
+	<delete id="removeUserRole" parameterType="UserRole">
+		delete from user_role where role_id=#{roleId} and user_id=#{userId};
+	</delete>
 </mapper> 

@@ -23,13 +23,11 @@ public class RoleService extends PageableService{
 	
 	@Override
 	public List search(Map parameters, Pageable pageRequest) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public Long getCount(Map parameters) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 	
@@ -37,4 +35,15 @@ public class RoleService extends PageableService{
 		return roleMybatisDao.findUserByRole(roleId);
 	}
 
+	public List<UserRole> getAllUserRoles() {
+		return roleMybatisDao.allUserRoles();
+	}
+	
+	public void addUserRole(UserRole userRole) {
+		roleMybatisDao.addUserRole(userRole);
+	}
+	
+	public void removeUserRole(UserRole userRole) {
+		roleMybatisDao.removeUserRole(userRole);
+	}
 }
