@@ -57,6 +57,7 @@ insert into user_role(user_id, role_id) values('zhangfd@cn.ibm.com','R0');
 insert into user_role(user_id, role_id) values('liush@cn.ibm.com','R0');
 insert into user_role(user_id, role_id) values('ldlxiao@cn.ibm.com','R0');
 insert into user_role(user_id, role_id) values('maoyeye@qq.com','R0');
+insert into user_role(user_id, role_id) values('lichlei@cn.ibm.com','R1');
 
 insert into role_function(role_id, function_id, description) values('R0','F0','');
 insert into role_function(role_id, function_id, description) values('R0','F7-1','');

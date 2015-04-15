@@ -5,6 +5,8 @@ import java.util.Map;
 
 import com.eastteam.myprogram.entity.Function;
 import com.eastteam.myprogram.entity.Role;
+import com.eastteam.myprogram.entity.User;
+import com.eastteam.myprogram.entity.UserRole;
 
 
 /**
@@ -24,4 +26,6 @@ public interface RoleMybatisDao {
 	List<Role> findRole(Role role);
 	List<Role> selectAll();
 	List<Function> getFunctions(String roleId);
+	List<UserRole> findUserByRole(String roleId);
+	List<UserRole> allUserRoles();
 }

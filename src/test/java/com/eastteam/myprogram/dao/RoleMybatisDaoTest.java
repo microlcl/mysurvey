@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.eastteam.myprogram.entity.Function;
 import com.eastteam.myprogram.entity.Role;
 import com.eastteam.myprogram.entity.RoleFunction;
+import com.eastteam.myprogram.entity.UserRole;
 
 public class RoleMybatisDaoTest extends SpringTransactionalTestCase {
 	private static Logger logger = LoggerFactory.getLogger(RoleMybatisDaoTest.class);
@@ -35,6 +36,20 @@ public class RoleMybatisDaoTest extends SpringTransactionalTestCase {
 		roleFunction.setFunction_id("F7");
 //		roleDao.deleteRole_Function("R1");
 //		assertEquals(4,roleDao.getRole("R1").getFunctions().size());
+	}
+	
+	@Test
+	public void testUserRole() {
+		List<UserRole> userRoles = roleDao.findUserByRole("R0");
+		logger.info(""+userRoles.size());
+		for (UserRole ur : userRoles)
+			logger.info(ur.getRoleName()+":"+ur.getUserId());
+	}
+	
+	@Test
+	public void testAllUserRoles() {
+		List<UserRole> userRoles = roleDao.allUserRoles();
+		logger.info(""+userRoles.size());
 	}
 	
 	@Test

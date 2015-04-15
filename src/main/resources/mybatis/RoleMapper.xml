@@ -136,4 +136,15 @@
 	    from functions f, role_function rf 
 	    where rf.function_id=f.function_id and rf.role_id=#{role_id}
 	</select>
+	
+	<select id="findUserByRole" resultType="UserRole">
+	    select distinct u.user_id as userId, u.role_id as roleId, r.name as roleName 
+	    from user_role u join roles r on u.role_id = r.role_id
+	    where u.role_id=#{roleId}
+	</select>
+	
+	<select id="findUserByRole" resultType="UserRole">
+	    select distinct u.user_id as userId, u.role_id as roleId, r.name as roleName 
+	    from user_role u join roles r on u.role_id = r.role_id
+	</select>
 </mapper> 
