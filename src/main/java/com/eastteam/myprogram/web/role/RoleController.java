@@ -24,7 +24,7 @@ public class RoleController {
 	@RequestMapping(value = "all", method = RequestMethod.GET)
 	public String showAllUserRoles(Model model, ServletRequest request, HttpSession session) {
 		
-		List<UserRole> userRoles = roleService.getAllUserRoles();
+		List<UserRole> userRoles = roleService.getAllAdmins();
 		
 		model.addAttribute("userRoles", userRoles);
 		

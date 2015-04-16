@@ -28,6 +28,7 @@ public interface RoleMybatisDao {
 	List<Function> getFunctions(String roleId);
 	List<UserRole> findUserByRole(String roleId);
 	List<UserRole> allUserRoles();
+	List<UserRole> allAdmins();
 	void removeUserRole(UserRole userRole);
 	void addUserRole(UserRole userRole);
 }

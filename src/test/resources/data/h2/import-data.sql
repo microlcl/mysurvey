@@ -21,7 +21,7 @@ insert into modules(module_id, pid, name, description, path) values('M1-1','M1',
 insert into modules(module_id, pid, name, description, path) values('M1-2','M1','我发起的调查','我发起的调查','');
 insert into modules(module_id, pid, name, description, path) values('M1-3','M1','我参与的调查','我参与的调查','');
 
-
+insert into modules(module_id, pid, name, description, path) values('M1-6','M1','角色管理','角色管理','');
 insert into modules(module_id, pid, name, description, path) values('M1-7','M1','我的问题','我的问题','');
 insert into modules(module_id, pid, name, description, path) values('M1-8','M1','我的问卷','我的问卷','');
 
@@ -31,6 +31,10 @@ insert into functions(function_id, module_id, name, description, path) values('F
 insert into functions(function_id, module_id, name, description, path) values('F1-3','M1-1','我的群组:修改','有权限修改','/myGroup/toUpdateGroup,/myGroup/updateGroup,/myGroup/importGroup');
 insert into functions(function_id, module_id, name, description, path) values('F1-4','M1-1','我的群组:删除','有权限删除','/myGroup/deleteGroup/');
 
+
+insert into functions(function_id, module_id, name, description, path) values('F6-1','M1-4','角色管理：列表','菜单导航','/role/all');
+insert into functions(function_id, module_id, name, description, path) values('F6-2','M1-4','角色管理：增加','有权限增加','/role/add');
+insert into functions(function_id, module_id, name, description, path) values('F6-3','M1-4','角色管理：删除','有权限删除','/role/remove');
 
 insert into functions(function_id, module_id, name, description, path) values('F7-1','M1-7','我的问题：列表','菜单导航','/question/list');
 insert into functions(function_id, module_id, name, description, path) values('F7-2','M1-7','我的问题：增加','有权限增加','/question/addQuestion,/question/saveQuestion');
@@ -72,6 +76,9 @@ insert into role_function(role_id, function_id, description) values('R0','F1-1',
 insert into role_function(role_id, function_id, description) values('R0','F1-2','');
 insert into role_function(role_id, function_id, description) values('R0','F1-3','');
 insert into role_function(role_id, function_id, description) values('R0','F1-4','');
+insert into role_function(role_id, function_id, description) values('R0','F6-1','');
+insert into role_function(role_id, function_id, description) values('R0','F6-2','');
+insert into role_function(role_id, function_id, description) values('R0','F6-3','');
 insert into role_function(role_id, function_id, description) values('R0','F7-1','');
 insert into role_function(role_id, function_id, description) values('R0','F7-2','');
 insert into role_function(role_id, function_id, description) values('R0','F7-3','');
