@@ -14,15 +14,12 @@
 			<a href="${ctx}/paper/list?search_userId=${user.id}">我的问卷</a>
 			<a href="${ctx}/question/list?search_userId=${user.id}">我的问题</a>
 		</div>
-		<h1>管理</h1>
-			<div class="submenu">
-			<mytag:PermssionTag functionId="F7-1">
-				<a id="question-tab" href="${ctx}/question/list?search_userId=${user.id}">问题管理</a>
-			</mytag:PermssionTag>
-			<mytag:PermssionTag functionId="F8-1">
-				<a id="paper-tab" href="${ctx}/paper/list?search_userId=${user.id}">调查问卷</a>
-			</mytag:PermssionTag>
-			</div>
-
+		<mytag:PermssionTag functionId="F21">
+			<h1>管理</h1>
+				<div class="submenu">			
+					<a id="question-tab" href="${ctx}/question/list">问题管理</a>
+					<a id="paper-tab" href="${ctx}/paper/list">调查问卷</a>
+				</div>
+		</mytag:PermssionTag>
 	</div>
 </c:if>

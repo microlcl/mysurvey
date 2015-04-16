@@ -60,6 +60,7 @@
 		<url-pattern>/question/*</url-pattern>
 		<url-pattern>/paper/*</url-pattern>
 		<url-pattern>/myGroup/*</url-pattern>
+		<url-pattern>/survey/*</url-pattern>
 	</filter-mapping>
 
 	<filter>
