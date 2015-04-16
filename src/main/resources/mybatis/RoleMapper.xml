@@ -143,11 +143,6 @@
 	    where u.role_id=#{roleId}
 	</select>
 	
-	<select id="findUserByRole" resultType="UserRole">
-	    select distinct u.user_id as userId, u.role_id as roleId, r.name as roleName 
-	    from user_role u join roles r on u.role_id = r.role_id
-	</select>
-	
 	<insert id="addUserRole" parameterType="UserRole" >
 		insert into user_role (role_id, user_id) 
 		values(#{roleId}, #{userId});
