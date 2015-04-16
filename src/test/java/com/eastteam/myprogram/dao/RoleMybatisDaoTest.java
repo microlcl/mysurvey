@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.eastteam.myprogram.entity.Function;
 import com.eastteam.myprogram.entity.Role;
-import com.eastteam.myprogram.entity.RoleFunction;
 import com.eastteam.myprogram.entity.UserRole;
 
 public class RoleMybatisDaoTest extends SpringTransactionalTestCase {
@@ -29,32 +28,26 @@ public class RoleMybatisDaoTest extends SpringTransactionalTestCase {
 	}
 	
 	
-	@Test
-	public void testSaveRole_Function() throws Exception{
-		RoleFunction roleFunction=new RoleFunction();
-		roleFunction.setRole_id("R1");
-		roleFunction.setFunction_id("F7");
-//		roleDao.deleteRole_Function("R1");
-//		assertEquals(4,roleDao.getRole("R1").getFunctions().size());
-	}
+
 	
 	@Test
 	public void testUserRole() {
-		List<UserRole> userRoles = roleDao.findUserByRole("R0");
+		List<UserRole> userRoles = roleDao.findUserByRole("R9");
 		logger.info(""+userRoles.size());
 		for (UserRole ur : userRoles)
 			logger.info(ur.getRoleName()+":"+ur.getUserId());
 	}
 	
-	@Test
-	public void testAllUserRoles() {
-		List<UserRole> userRoles = roleDao.allUserRoles();
-		logger.info(""+userRoles.size());
-	}
 	
 	@Test
 	public void testGetFunctions() throws Exception {
-		List<Function> functions = roleDao.getFunctions("R0");
+		List<Function> functions = roleDao.getFunctions("R9");
 		System.out.println(functions);
+	}
+	
+	@Test
+	public void getRole() throws Exception {
+		Role role = roleDao.getRole("R9");
+		System.out.println(role);
 	}
 }

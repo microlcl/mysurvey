@@ -2,6 +2,7 @@ package com.eastteam.myprogram.web.account;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -14,8 +15,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.eastteam.myprogram.entity.Role;
 import com.eastteam.myprogram.entity.User;
 import com.eastteam.myprogram.service.account.AccountService;
+import com.eastteam.myprogram.service.role.RoleService;
 import com.eastteam.myprogram.web.WebUtils;
 
 @Controller
@@ -25,6 +28,8 @@ public class LoginController {
 	
 	@Autowired
 	AccountService accountService;
+	@Autowired
+	RoleService roleService;
 
 	private static Logger logger = LoggerFactory.getLogger(LoginController.class);
 	
@@ -41,6 +46,12 @@ public class LoginController {
 		if (u == null) {
 			u = new User(loginuser.getId());
 		}
+		String roleid = accountService.getRoleId(u.getId());
+		Role role = roleService.getRole(roleid);
+		List<Role> roles = new ArrayList<Role>();
+		roles.add(role);
+		u.setRoles(roles);
+		
 //		if (u == null) {
 //			redirectAttributes.addFlashAttribute("message", "用户名或密码错误");
 //			return "redirect:/login";
@@ -59,9 +70,9 @@ public class LoginController {
 			userid = loginuser.getId();
 		}
 		u.setAuthorizedUriList(authorizedUriList);
-//		List<String> authorizedFunctionIdList = accountService.getAuthorizedFunctionList(u);
-//		u.setAuthorizedFunctionList(authorizedFunctionIdList);
-//		logger.info(u.getAuthorizedFunctionList().toString());
+		List<String> authorizedFunctionIdList = accountService.getAuthorizedFunctionList(u);
+		u.setAuthorizedFunctionList(authorizedFunctionIdList);
+		logger.info(u.getAuthorizedFunctionList().toString());
 		session.setAttribute("user", u);
 		String lastUri = WebUtils.getLastVistURL(session);
 		if( lastUri != null) {
