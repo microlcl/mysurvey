@@ -48,15 +48,13 @@ public class AccountService{
 			return null;
 		
 		Set<String> uriSet = Sets.newHashSet();
-		String roleId = getRoleId(user.getId());
-		Role role = this.roleDao.getRole(roleId);
-		for (Function function : role.getFunctions()) {
-			String uris = function.getPath();
-			String[] uriArray = uris.split(",");
-			uriSet.addAll(Arrays.asList(uriArray));
+		for (Role role : user.getRoles()) {
+			for (Function function : role.getFunctions()) {
+				String uris = function.getPath();
+				String[] uriArray = uris.split(",");
+				uriSet.addAll(Arrays.asList(uriArray));
+			}		
 		}
-			
-	
 		ArrayList<String> uriList = Lists.newArrayList(uriSet);
 		Collections.sort(uriList, Collator.getInstance());		
 		
@@ -73,21 +71,21 @@ public class AccountService{
 		}
 	}
 	
-//	public List<String> getAuthorizedFunctionList(User user) {
-//		if (user == null || user.getRoles() == null)
-//			return null;
-//		
-//		Set<String> functionIdSet = Sets.newHashSet();
-//		for (Role role : user.getRoles()) {
-//			if (role.getFunctions() == null)
-//				continue;
-//			for (Function function : role.getFunctions()) {
-//				functionIdSet.add(function.getId());
-//			}
-//			
-//		}		
-//		ArrayList<String> functionidList = Lists.newArrayList(functionIdSet);
-//		return Collections.unmodifiableList(functionidList);
-//	}
+	public List<String> getAuthorizedFunctionList(User user) {
+		if (user == null || user.getRoles() == null)
+			return null;
+		
+		Set<String> functionIdSet = Sets.newHashSet();
+		for (Role role : user.getRoles()) {
+			if (role.getFunctions() == null)
+				continue;
+			for (Function function : role.getFunctions()) {
+				functionIdSet.add(function.getId());
+			}
+			
+		}		
+		ArrayList<String> functionidList = Lists.newArrayList(functionIdSet);
+		return Collections.unmodifiableList(functionidList);
+	}
 
 }

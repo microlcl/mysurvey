@@ -5,11 +5,13 @@ import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.eastteam.myprogram.dao.RoleMybatisDao;
+import com.eastteam.myprogram.entity.Role;
 import com.eastteam.myprogram.entity.UserRole;
 import com.eastteam.myprogram.service.PageableService;
 
@@ -19,6 +21,7 @@ public class RoleService extends PageableService{
 
 	private static Logger logger = LoggerFactory.getLogger(RoleService.class);
 	
+	@Autowired
 	private RoleMybatisDao roleMybatisDao;
 	
 	@Override
@@ -45,5 +48,9 @@ public class RoleService extends PageableService{
 	
 	public void removeUserRole(UserRole userRole) {
 		roleMybatisDao.removeUserRole(userRole);
+	}
+	
+	public Role getRole(String roleId) {
+		return roleMybatisDao.getRole(roleId);
 	}
 }
