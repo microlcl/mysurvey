@@ -42,6 +42,10 @@ public class RoleService extends PageableService{
 		return roleMybatisDao.allUserRoles();
 	}
 	
+	public List<UserRole> getAllAdmins() {
+		return roleMybatisDao.allAdmins();
+	}
+	
 	public void addUserRole(UserRole userRole) {
 		roleMybatisDao.addUserRole(userRole);
 	}
