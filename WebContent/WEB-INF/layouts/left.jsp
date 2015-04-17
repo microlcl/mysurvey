@@ -16,7 +16,8 @@
 		</div>
 		<mytag:PermssionTag functionId="F21">
 			<h1>管理</h1>
-				<div class="submenu">			
+				<div class="submenu">	
+					<a id="role-tab" href="${ctx}/role/all">角色管理</a>		
 					<a id="question-tab" href="${ctx}/question/list">问题管理</a>
 					<a id="paper-tab" href="${ctx}/paper/list">调查问卷</a>
 				</div>

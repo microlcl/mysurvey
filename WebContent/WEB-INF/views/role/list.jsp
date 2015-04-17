@@ -12,6 +12,7 @@
 <script src="${ctx}/static/easyui/jquery.easyui.min.js" type="text/javascript"></script>
 <link rel="stylesheet" type="text/css" href="${ctx}/static/easyui/mytree.css">
 
+
 <title>权限管理</title>
 </head>
 <body>
@@ -26,11 +27,14 @@
 	    		<tr>
 	    			<td>${ur.roleName}</td>
 	    			<td>${ur.userId}</td>
-	    			<td><a class="btn" href="">删除</a></td>
+	    			<td><a class="btn" href="${ctx}/role/remove?userId=${ur.userId}&roleId=${ur.roleId}">删除</a></td>
     			</tr>
 			</c:forEach>
     	</tbody>
 	</table>
+	<div class="form-actions" style="min-height: 23px;margin-top: 0 !important;">
+		<input id="submit_btn" style="height: 40px !important;width: 130px !important;" class="btn" type="button" value="新增" onclick="showNew()"/>
+	</div>
 </div>
 </body>
 </html>

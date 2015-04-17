@@ -43,7 +43,7 @@ public class RoleController {
 
 		roleService.removeUserRole(userRole);
 		
-		return "";
+		return "redirect:/role/all";
 	}
 	
 	@RequestMapping(value = "add", method = RequestMethod.GET)
