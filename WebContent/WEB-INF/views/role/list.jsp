@@ -11,7 +11,11 @@
 
 <script src="${ctx}/static/easyui/jquery.easyui.min.js" type="text/javascript"></script>
 <link rel="stylesheet" type="text/css" href="${ctx}/static/easyui/mytree.css">
+<script type="text/javascript">
+function showNew() {
 
+}
+</script>
 
 <title>权限管理</title>
 </head>
@@ -34,6 +38,9 @@
 	</table>
 	<div class="form-actions" style="min-height: 23px;margin-top: 0 !important;">
 		<input id="submit_btn" style="height: 40px !important;width: 130px !important;" class="btn" type="button" value="新增" onclick="showNew()"/>
+	</div>
+	<div>
+	
 	</div>
 </div>
 </body>
