@@ -34,6 +34,10 @@ public class RoleService extends PageableService{
 		return null;
 	}
 	
+	public List<Role> getAllRoles() {
+		return roleMybatisDao.selectAll();
+	}
+	
 	public List<UserRole> getUsersByRole(String roleId){
 		return roleMybatisDao.findUserByRole(roleId);
 	}

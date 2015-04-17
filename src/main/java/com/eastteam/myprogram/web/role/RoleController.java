@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.eastteam.myprogram.entity.Role;
 import com.eastteam.myprogram.entity.UserRole;
 import com.eastteam.myprogram.service.role.RoleService;
 
@@ -25,8 +26,10 @@ public class RoleController {
 	public String showAllUserRoles(Model model, ServletRequest request, HttpSession session) {
 		
 		List<UserRole> userRoles = roleService.getAllAdmins();
+		List<Role> roles = roleService.getAllRoles();
 		
 		model.addAttribute("userRoles", userRoles);
+		model.addAttribute("roles", roles);
 		
 		return "role/list";
 	}
@@ -58,7 +61,7 @@ public class RoleController {
 
 		roleService.addUserRole(userRole);
 		
-		return "";
+		return "redirect:/role/all";
 	}
 
 }
