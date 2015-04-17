@@ -44,18 +44,16 @@ public class LoginController {
 		logger.debug("in log controller. user " + loginuser.getId() + ",password=" + loginuser.getPlainPassword());
 		User u = accountService.getUser(loginuser.getId(), loginuser.getPlainPassword());
 		if (u == null) {
-			u = new User(loginuser.getId());
+			redirectAttributes.addFlashAttribute("message", "用户名或密码错误");
+			return "redirect:/login";
 		}
+		
 		String roleid = accountService.getRoleId(u.getId());
 		Role role = roleService.getRole(roleid);
 		List<Role> roles = new ArrayList<Role>();
 		roles.add(role);
-		u.setRoles(roles);
-		
-//		if (u == null) {
-//			redirectAttributes.addFlashAttribute("message", "用户名或密码错误");
-//			return "redirect:/login";
-//		}
+		u.setRoles(roles);		
+
 		logger.info(u.toString());
 
 		logger.info("set user in session");
