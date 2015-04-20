@@ -65,7 +65,7 @@ public class SurveyController {
 	@RequestMapping (value = "myLaunch", method = RequestMethod.GET)
 	public String myLaunch(
 			@RequestParam(value = "page", defaultValue = "1") int pageNumber,
-			@RequestParam(value = "sortType", defaultValue = "paper_id") String sortType,
+			@RequestParam(value = "sortType", defaultValue = "survey_id desc") String sortType,
 			Model model, ServletRequest request, HttpSession session) {
 		
 		Map<String, Object> searchParams = Servlets.getParametersStartingWith(
@@ -214,25 +214,37 @@ public class SurveyController {
 	
 	@RequestMapping(value = "surveyAction/{id}", method = RequestMethod.POST)
 	public String publishAndSaveSurvey(@ModelAttribute Survey survey,@PathVariable("id") String id,RedirectAttributes redirectAttributes,HttpSession session,HttpServletRequest request){
-		
-		String isPublish = request.getParameter("isPublish");
-		if (isPublish.equals("true")) {
-			if (survey.getId() == null)
-				survey.setId(Long.parseLong(id));
-			survey.setStatus("P");
-			surveyService.updateSurvey(survey);
-			return "survey/publishOK";
-		} else {
+	  if(request.getParameter("act").equalsIgnoreCase("save")){
+			  survey.setStatus("D");
+			  survey.setCreater((User) session.getAttribute("user"));
+			  survey.setPaper(paperService.selectPaper(id));
+			  survey.setPaperURL(ServiceAddr+request.getContextPath()+"/survey/accessSurvey/");
+			  surveyService.createSurvey(survey, "save");
+			  return "survey/publishOK";
+	  }else if(request.getParameter("act").equalsIgnoreCase("update")){
+		  surveyService.updateSurvey(survey);
+		  return "survey/publishOK";
+	  }else{
+		//String isPublish = request.getParameter("isPublish");
 			survey.setCreater((User) session.getAttribute("user"));
 			survey.setPaper(paperService.selectPaper(id));
+			if(survey.getStatus().equalsIgnoreCase("D")){
+				survey.setStatus("P");
+				surveyService.updateSurvey(survey);
+			}else {
+				survey.setStatus("P");
+				surveyService.saveSurvey(survey);
+			}
 			survey.setPaperURL(ServiceAddr+request.getContextPath()+"/survey/accessSurvey/");
-			if(surveyService.createSurvey(survey)){
+			if(surveyService.createSurvey(survey,"publish")){
 				return "survey/publishOK";
 			} else {
 				return "survey/publishFail";
 			}
-		}
+		
+	  }
 	}
+	
 	
 	/*@RequestMapping(value = "createAndSaveSurvey/{paperid}", method = RequestMethod.POST)
 	public String createAndSaveSurvey(@ModelAttribute Survey survey,@PathVariable("paperid") String paperid,RedirectAttributes redirectAttributes,HttpSession session,HttpServletRequest request){

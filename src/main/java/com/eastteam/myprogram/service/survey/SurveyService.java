@@ -56,18 +56,12 @@ public class SurveyService extends PageableService {
 		for (Survey survey : surveys) {
 			//调查状态： N - 新建, D - 草稿, R - 可发布, P - 已发布, F - 已完成, C - 作废
 			survey.setStatus(survey.getStatus().trim()); 
-			if (survey.getStatus().trim().equals("N"))
-				survey.setStatusString("新建");
 			if (survey.getStatus().trim().equals("D"))
 				survey.setStatusString("草稿");
-			if (survey.getStatus().trim().equals("R"))
-				survey.setStatusString("可发布");
 			if (survey.getStatus().trim().equals("P"))
 				survey.setStatusString("已发布");
 			if (survey.getStatus().trim().equals("F"))
 				survey.setStatusString("已完成");
-			if (survey.getStatus().trim().equals("C"))
-				survey.setStatusString("作废");
 			logger.debug("Transforming status :" + survey.getStatus() + " to " + survey.getStatusString());
 			
 			String[] groupsid = survey.getGroupsId().trim().split(",");
@@ -94,20 +88,16 @@ public class SurveyService extends PageableService {
 		List<Survey> surveys = surveyMybatisDao.search(param);
 		
 		for (Survey survey : surveys) {
-			//调查状态： N - 新建, D - 草稿, R - 可发布, P - 已发布, F - 已完成, C - 作废
+			//调查状态：D - 草稿(可发布), P - 已发布, F - 已完成
 			survey.setStatus(survey.getStatus().trim()); 
-			if (survey.getStatus().trim().equals("N"))
-				survey.setStatusString("新建");
+			
 			if (survey.getStatus().trim().equals("D"))
 				survey.setStatusString("草稿");
-			if (survey.getStatus().trim().equals("R"))
-				survey.setStatusString("可发布");
 			if (survey.getStatus().trim().equals("P"))
 				survey.setStatusString("已发布");
 			if (survey.getStatus().trim().equals("F"))
 				survey.setStatusString("已完成");
-			if (survey.getStatus().trim().equals("C"))
-				survey.setStatusString("作废");
+			
 			logger.debug("Transforming status :" + survey.getStatus() + " to " + survey.getStatusString());
 			
 			String[] groupsid = survey.getGroupsId().trim().split(",");
@@ -169,50 +159,61 @@ public class SurveyService extends PageableService {
 		}
 	}
 	
+	public void saveSurvey(Survey survey){
+		logger.info("save survey :"+ survey.getSubject());
+		surveyMybatisDao.save(survey);
+	}
+	
 	public void updateSurvey(Survey survey){
 		logger.info("updating survey :"+ survey.getSubject());
 		logger.info("groups:"+survey.getGroupsId());
 		surveyMybatisDao.updateSurvey(survey);
 	}
 	
-	public boolean createSurvey(Survey survey){
-		HashSet<String> _receiver=new HashSet<String>();
-		HashSet<String[]> _receiversInfo=new HashSet<String[]>();
-		String[] groupsId=survey.getSurveyGroup().split("\\,");
-		List<SurveyReceiver> surveyReceivers=new ArrayList<SurveyReceiver>();
-		List<Group> groups=new ArrayList<Group>();
-		for(String groupId : groupsId){
-			groups.add(myGroupMybatisDao.getSelectedGroup(Long.parseLong(groupId)));
-		}
-		for(Group group : groups){
-			group.setGitems();
-			for(String[] gitems : group.getGitems()){
-				_receiver.add(gitems[1]);
-				_receiversInfo.add(gitems);
+	
+	public boolean createSurvey(Survey survey,String act){
+		if(act.equalsIgnoreCase("update")){
+			this.updateSurvey(survey);
+		}else if(act.equalsIgnoreCase("save")){
+			this.saveSurvey(survey);
+		}else if (act.equalsIgnoreCase("publish")) {
+			HashSet<String> _receiver=new HashSet<String>();
+			HashSet<String[]> _receiversInfo=new HashSet<String[]>();
+			String[] groupsId=survey.getSurveyGroup().split("\\,");
+			List<SurveyReceiver> surveyReceivers=new ArrayList<SurveyReceiver>();
+			List<Group> groups=new ArrayList<Group>();
+			for(String groupId : groupsId){
+				groups.add(myGroupMybatisDao.getSelectedGroup(Long.parseLong(groupId)));
+			}
+			for(Group group : groups){
+				group.setGitems();
+				for(String[] gitems : group.getGitems()){
+					_receiver.add(gitems[1]);
+					_receiversInfo.add(gitems);
+				}
+			}
+			if(act.equalsIgnoreCase("publish")){
+				for(String[] recInfoItem : _receiversInfo){
+					SurveyReceiver surveyReceiver=new SurveyReceiver();
+					surveyReceiver.setNickName(recInfoItem[0]);
+					surveyReceiver.setUserId(recInfoItem[1]);
+					surveyReceiver.setStatus("0");
+					surveyReceiver.setUpdate_timeStamp(null);
+					surveyReceiver.setSurveyId(survey.getId());
+					surveyReceivers.add(surveyReceiver);
+				}
+				Map<String, Object> map=new HashMap<String, Object>();
+				map.put("surveyReceivers", surveyReceivers);
+				surveyReceiverMybatisDao.save(map);
+				logger.info("save new survey :"+ survey.getSubject()+" by user:"+survey.getCreater().getEmail()+",asscoiated survey receivers:");
+				for(SurveyReceiver _surveyReceiver : surveyReceivers){
+					logger.info(_surveyReceiver.getUserId());
+				}
+				logger.info("===>receiver list over");
+			    return new EmailSender().sendmail(survey.getSubject(),_receiver.toArray(), survey.getDescription(), survey.getPaperURL()+survey.getId(), "text/html;charset=gb2312");
 			}
 		}
-		
-		surveyMybatisDao.save(survey);
-		
-		for(String[] recInfoItem : _receiversInfo){
-			SurveyReceiver surveyReceiver=new SurveyReceiver();
-			surveyReceiver.setNickName(recInfoItem[0]);
-			surveyReceiver.setUserId(recInfoItem[1]);
-			surveyReceiver.setStatus("0");
-			surveyReceiver.setUpdate_timeStamp(null);
-			surveyReceiver.setSurveyId(survey.getId());
-			surveyReceivers.add(surveyReceiver);
-		}
-		Map<String, Object> map=new HashMap<String, Object>();
-		map.put("surveyReceivers", surveyReceivers);
-		surveyReceiverMybatisDao.save(map);
-		logger.info("save new survey :"+ survey.getSubject()+" by user:"+survey.getCreater().getEmail()+",asscoiated survey receivers:");
-		for(SurveyReceiver _surveyReceiver : surveyReceivers){
-			logger.info(_surveyReceiver.getUserId());
-		}
-		logger.info("===>receiver list over");
-	    return new EmailSender().sendmail(survey.getSubject(),_receiver.toArray(), survey.getDescription(), survey.getPaperURL()+survey.getId(), "text/html;charset=gb2312");
-		//return true;
+		return true;
 	}
 	
 	

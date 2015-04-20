@@ -19,6 +19,6 @@
 	</script>
 </head>
 <body>
-    发布成功
+操作成功
 </body>
 </html>

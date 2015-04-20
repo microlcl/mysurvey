@@ -46,7 +46,7 @@
 		    }
 		}
 		
-		function formatAndCheck(){
+		function formatAndCheckAndSend(){
 		    var _surveyGroup = "";
 		    $("input[name='groupid']").each(function(){
 		       var mark=$(this).parent().find('i');
@@ -80,6 +80,88 @@
 		        $("#ddateEmptyError").hide();
 		        $("#ddateInvalidError").hide();
 		        $("#groupError").hide();
+		        $("#surveyForm").submit();
+		        $("#action-bar").hide();
+		        $("#submitOK").show();
+		    }
+		}
+		
+		function formatAndCheckAndSave(){
+		    var _surveyGroup = "";
+		    $("input[name='groupid']").each(function(){
+		       var mark=$(this).parent().find('i');
+		       if(mark.css('display')!='none' && $(this).val()!=""){
+		          _surveyGroup += $(this).val()+",";
+ 		       }
+		    });
+		    $("#surveyGroup").val(_surveyGroup);
+		    if($("#datetimepicker7").val()==""){
+		       $("#ddateEmptyError").show();
+		       $("#ddateInvalidError").hide();
+		       $("#subjectError").hide();
+		       $("#groupError").hide();
+		    }else if(deaddateVerification($("#datetimepicker7").val())){
+		        $("#ddateEmptyError").hide();
+		        $("#ddateInvalidError").show();
+		        $("#subjectError").hide();
+		        $("#groupError").hide();
+		    }else if($("#surveySubject").val()==""){
+		        $("#subjectError").show();
+		        $("#ddateEmptyError").hide();
+		        $("#ddateInvalidError").hide();
+		        $("#groupError").hide();
+		    }else if(_surveyGroup==""){
+		        $("#subjectError").hide();
+		        $("#ddateEmptyError").hide();
+		        $("#ddateInvalidError").hide();
+		        $("#groupError").show();
+		    }else{
+		        $("#subjectError").hide();
+		        $("#ddateEmptyError").hide();
+		        $("#ddateInvalidError").hide();
+		        $("#groupError").hide();
+		        $("#act").val("save");
+		        $("#surveyForm").submit();
+		        $("#action-bar").hide();
+		        $("#submitOK").show();
+		    }
+		}
+		
+		function formatAndCheckAndSaveUpdate(){
+		    var _surveyGroup = "";
+		    $("input[name='groupid']").each(function(){
+		       var mark=$(this).parent().find('i');
+		       if(mark.css('display')!='none' && $(this).val()!=""){
+		          _surveyGroup += $(this).val()+",";
+ 		       }
+		    });
+		    $("#surveyGroup").val(_surveyGroup);
+		    if($("#datetimepicker7").val()==""){
+		       $("#ddateEmptyError").show();
+		       $("#ddateInvalidError").hide();
+		       $("#subjectError").hide();
+		       $("#groupError").hide();
+		    }else if(deaddateVerification($("#datetimepicker7").val())){
+		        $("#ddateEmptyError").hide();
+		        $("#ddateInvalidError").show();
+		        $("#subjectError").hide();
+		        $("#groupError").hide();
+		    }else if($("#surveySubject").val()==""){
+		        $("#subjectError").show();
+		        $("#ddateEmptyError").hide();
+		        $("#ddateInvalidError").hide();
+		        $("#groupError").hide();
+		    }else if(_surveyGroup==""){
+		        $("#subjectError").hide();
+		        $("#ddateEmptyError").hide();
+		        $("#ddateInvalidError").hide();
+		        $("#groupError").show();
+		    }else{
+		        $("#subjectError").hide();
+		        $("#ddateEmptyError").hide();
+		        $("#ddateInvalidError").hide();
+		        $("#groupError").hide();
+		        $("#act").val("update");
 		        $("#surveyForm").submit();
 		        $("#action-bar").hide();
 		        $("#submitOK").show();
@@ -151,7 +233,7 @@
 				<c:set var="toId" value="${survey.id }"/>
 			</c:if>
 			
-			<form id="surveyForm" action="${ctx}/survey/surveyAction/${toId}" method="post" class="form-horizontal">
+			<form id="surveyForm" name="surveyForm" action="${ctx}/survey/surveyAction/${toId}" method="post" class="form-horizontal">
 				<c:if test="${isPublish} "><input type="hidden" id="surveyId" name="surveyId" value="${survey.id }"></c:if>
 				<div class="control-group">
 					<label for="question" class="control-label formlabel">问卷主题:</label>
@@ -176,7 +258,7 @@
 				<div class="control-group">
 					<label for="question" class="control-label formlabel">调查截止日期:</label>
 					<div class="controls">
-					   <input type="text" <c:if test="${survey.status=='P' || survey.status=='F'}">disabled="disabled"</c:if> id="datetimepicker7" <c:if test="${survey.deadlineTimestamp!=null }">value=<fmt:formatDate value="${survey.deadlineTimestamp}" pattern="yyyy年MM月dd日   HH:mm"/></c:if> name="deadlineTimestamp" readonly="true" placeholder="双击选择时间与日期" onclick="getDeadline()"  />
+					   <input type="text" <c:if test="${survey.status=='P' || survey.status=='F'}">disabled="disabled"</c:if> id="datetimepicker7" <c:if test="${survey.deadlineTimestamp!=null }"> value="<fmt:formatDate value="${survey.deadlineTimestamp}" pattern="yyyy/MM/dd HH:mm"/>"</c:if> name="deadlineTimestamp" readonly="readonly" placeholder="双击选择时间与日期" onclick="getDeadline()"  />
 					   <span id="ddateEmptyError" class="error" style="display:none">请设定调查截止日期！</span>
 					   <span id="ddateInvalidError" class="error" style="display:none">请设定有效的截止日期！</span>
 					</div>
@@ -201,9 +283,11 @@
 				</div>
 				<input type="text" name="surveyGroup" id="surveyGroup" style="display:none;">
 				<input type="hidden" name="isPublish" id="isPublish" value="${isPublish }">
+				<input type="hidden" name="act" id="act" value="">
+				<input type="hidden" name="status" id="act" value="${survey.status }">
 			</form>
 
-			<c:if test="${survey.status=='P' || survey.status=='F' || survey.status=='N' }">
+			<c:if test="${survey.status=='P' || survey.status=='F'}">
 				<form id="SendNotification" action="${ctx}/survey/sendNoti" method="post" class="form-horizontal">
 					<div class="control-group">
 						<label for="question" class="control-label formlabel">问卷完成状况:</label>
@@ -246,7 +330,7 @@
 									   </c:choose>
 									</div>
 								</c:forEach>
-									<c:if test="${(survey.status=='P' || survey.status=='N')&& receivers!=''}">
+									<c:if test="${(survey.status=='P')&& receivers!=''}">
 									<input type="text" name="surveyId" value="${survey.id }" style="display:none;">
 				                    <input type="text" name="subject" value="来自${survey.userId}的问卷调查：${survey.subject}的提醒" style="display:none;"> 
 				                    <input type="text" name="receivers" value="${receivers }" style="display:none;">
@@ -265,7 +349,15 @@
 			</c:if>
 		</div>
 		<div id="action-bar" class="form-actions" style="min-height: 23px;margin-top: 0 !important;">
-			<c:if test="${survey.status!='P' && survey.status!='F'}"><input id="submit_btn" class="btn btn-warning"  type="button" value="提交" onclick="formatAndCheck();" />&nbsp;	</c:if>
+			<c:if test="${survey.status==null}">
+			<input id="submit_btn" class="btn btn-warning"  type="button" value="发送问卷" onclick="formatAndCheckAndSend();" />&nbsp;&nbsp;&nbsp;
+			<input id="submit_btn" class="btn btn-success"  type="button" value="保存为草稿" onclick="formatAndCheckAndSave();" />	
+			</c:if>
+			<c:if test="${survey.status=='D'}">
+			<input id="submit_btn" class="btn btn-warning"  type="button" value="发送问卷" onclick="formatAndCheckAndSend();" />&nbsp;&nbsp;&nbsp;
+			<input id="submit_btn" class="btn btn-success"  type="button" value="保存修改" onclick="formatAndCheckAndSaveUpdate();" />	
+			</c:if>
+			
 			<input id="cancel_btn" class="btn" type="button" value="返回" onclick="history.back()"/>
 		</div>
 		<center><span id="submitOK" style="display:none;"><h3>请稍等...</h3></span></center>
