@@ -23,16 +23,17 @@
 	</mvc:annotation-driven>
 	
 	<bean id="multipartResolver"  class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
-	<!--bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">	  
-		<property name="basename" value="messages"/>
-	</bean-->
+
 	<!-- 定义JSP文件的位置 --> 
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="prefix" value="/WEB-INF/views/"/>
 		<property name="suffix" value=".jsp"/>
 		<property name="order" value="1"/>
 	</bean>
-	
+	<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+	    <property name="basename" value="messages"></property>
+	    <property name="useCodeAsDefaultMessage" value="true"></property>
+	</bean>
 			
 	<!-- 容器默认的DefaultServletHandler处理 所有静态内容与无RequestMapping处理的URL-->	
 	<mvc:default-servlet-handler/>

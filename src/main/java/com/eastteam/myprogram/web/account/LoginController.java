@@ -5,6 +5,7 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.support.RequestContext;
 
 import com.eastteam.myprogram.entity.Role;
 import com.eastteam.myprogram.entity.User;
@@ -40,11 +42,12 @@ public class LoginController {
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
-	public String login(User loginuser, HttpSession session, RedirectAttributes redirectAttributes) {
+	public String login(User loginuser, HttpSession session, HttpServletRequest request,RedirectAttributes redirectAttributes) {
 		logger.debug("in log controller. user " + loginuser.getId() + ",password=" + loginuser.getPlainPassword());
 		User u = accountService.getUser(loginuser.getId(), loginuser.getPlainPassword());
+		RequestContext requestContext = new RequestContext(request);
 		if (u == null) {
-			redirectAttributes.addFlashAttribute("message", "用户名或密码错误");
+			redirectAttributes.addFlashAttribute("message", requestContext.getMessage("login.error"));
 			return "redirect:/login";
 		}
 		

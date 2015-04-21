@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <c:set var="ctx" value="${pageContext.request.contextPath}" />
 
 <html>
@@ -22,14 +23,14 @@
 		</c:if>
 		<c:if test="${empty user.id}">
 			<div class="control-group">
-				<label for="loginName" class="control-label">名称:</label>
+				<label for="loginName" class="control-label"><spring:message code="login.username"/></label>
 				<div class="controls">
 					<input type="text" id="loginName" name="id"
 						value="${username}" class="input-medium required" />
 				</div>
 			</div>
 			<div class="control-group">
-				<label for="plainPassword" class="control-label">密码:</label>
+				<label for="plainPassword" class="control-label"><spring:message code="login.password"/></label>
 				<div class="controls">
 					<input type="password" id="plainPassword" name="plainPassword"
 						class="input-medium required" />
@@ -39,11 +40,8 @@
 			<div class="control-group">
 				<div class="controls">
 					<label class="checkbox" for="rememberMe"><input
-						type="checkbox" id="rememberMe" name="rememberMe" /> 记住我</label> <input
-						id="submit_btn" class="btn btn-primary" type="submit" value="登录" />
-					<a class="btn" href="${ctx}/account/register">注册</a> <span
-						class="help-block">(DB里面已有的用户密码： 123456)
-					</span>
+						type="checkbox" id="rememberMe" name="rememberMe" /> <spring:message code="login.rememberme"/></label> <input
+						id="submit_btn" class="btn btn-primary" type="submit" value='<spring:message code="login.signin"/>' />
 				</div>
 			</div>
 		</c:if>

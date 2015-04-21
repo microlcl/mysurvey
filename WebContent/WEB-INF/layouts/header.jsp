@@ -2,10 +2,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://com.eastteam.myprogram/mytaglib" prefix="mytag" %>
 <%@ taglib prefix='fmt' uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
 <div id="header">
 	<div id="title">
-	    <h1><a href="${ctx}">调查问卷</a><small>--easySurvey</small>
+	    <h1><a href="${ctx}"><spring:message code="app.title"/></a><small>--<spring:message code="app.subTitle"/> </small>
 	    	<c:if test="${not empty user.id}">
 			    <div class="btn-group pull-right">
 					<a class="btn dropdown-toggle" data-toggle="dropdown" href="#"> <i
