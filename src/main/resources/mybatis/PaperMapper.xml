@@ -40,6 +40,9 @@
 		<if test="sort != null">
 			order by p.${sort}
 		</if>
+		if test="offset != null">
+			limit #{offset}, #{pageSize}
+		</if>
 	</select>
 	<select id="getCount" parameterType="map" resultType="Long">
 		select count(0) from (select distinct p.paper_id from papers p 
