@@ -103,7 +103,7 @@
 				</tr>
 				</thead>
 				<tbody>
-				<c:forEach items="${papers}" var="paper">
+				<c:forEach items="${papers.content}" var="paper">
 					<tr>
 						<td>${paper.paperName}&nbsp;</td>
 						<td>${paper.businessType.name}&nbsp;</td>						
@@ -123,6 +123,7 @@
 				</c:forEach>
 				</tbody>		
 			</table>
+			<tags:pagination page="${papers}" paginationSize="4"/>
 		</div>
 	</div>
 	<div class="form-actions" style="min-height: 23px;margin-top: 0 !important;">
