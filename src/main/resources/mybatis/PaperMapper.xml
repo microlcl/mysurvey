@@ -40,7 +40,7 @@
 		<if test="sort != null">
 			order by p.${sort}
 		</if>
-		if test="offset != null">
+		<if test="offset != null">
 			limit #{offset}, #{pageSize}
 		</if>
 	</select>
