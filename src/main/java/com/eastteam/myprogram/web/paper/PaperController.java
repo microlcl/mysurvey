@@ -63,11 +63,8 @@ public class PaperController {
 			searchParams.put("businessType", request.getParameter("search_categoryId2"));
 		}
 		searchParams.put("sort", sortType);
-		String[] checkboxValues = request.getParameterValues("search_userId");
-		if(checkboxValues != null && checkboxValues.length != 0){
-			searchParams.put("userId", ((User) session.getAttribute("user")).getId());
-		}
-		List<Paper> papers = this.paperService.search(searchParams);
+		Page<Paper> papers = this.paperService.getCurrentPageContent(
+				searchParams, pageNumber, Integer.parseInt(configProperties.getProperty("paper.pagesize")), sortType);
 		model.addAttribute("papers", papers);
 		model.addAttribute("sortType", sortType);
 		model.addAttribute("searchParams", Servlets.encodeParameterStringWithPrefix(searchParams, "search_"));
