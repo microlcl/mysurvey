@@ -12,12 +12,43 @@
 
 <script src="${ctx}/static/easyui/jquery.easyui.min.js" type="text/javascript"></script>
 <link rel="stylesheet" type="text/css" href="${ctx}/static/easyui/mytree.css">
+<script>
+$(document).ready(function() {
+	
+	var surveyStatus = [];
+	<c:forEach items="${surveyStatus}" var="surveyStatus">
+		surveyStatus.push('${surveyStatus}');
+	</c:forEach>
+	$("#cc").combotree({ 
+		onLoadSuccess:function(node){//数据加载成功触发 
+			$("#cc").combotree('setValues', surveyStatus);
+		},
+		onBeforeSelect:function(node){ 
+			var tree = $(this).tree;
+			var isLeaf = tree('isLeaf', node.target);
+			console.log("isLeaf=" + isLeaf);
+			return isLeaf;
+		}
+	});
+});
+</script>
 
 <title>我发起的调查</title>
 </head>
 <body>
 	<div class="form">
 		<h1>我发起的调查</h1>
+		<div class=" onefield" style="height:40px !important; text-align: right !important;padding-right: 10px;padding-top: 7px;margin-left:20px;background-color: white;">
+			<form style="padding-left:10px;">
+				<span  style="float:left;">
+					调查状态：
+					<input id="cc" class="easyui-combotree" data-options="url:'${ctx}/category/api/getSurveyStatus',method:'get',required:false" style="width:200px;" name="search_surveyStatus" value="${param.search_surveyStatus}" />
+					&nbsp; &nbsp; &nbsp; &nbsp;调查名称：<input type="text" name="search_keyword" value="${param.search_keyword}" style="width:400px;margin-bottom: 0px;margin-left:10px;" placeholder="输入关键字搜索">
+					<button type="submit" class="btn" id="search_btn_test"><i class="icon-search"></i></button>
+				</span>
+			</form>
+		</div>
+		
 		<div  style="padding:20px;">
 			<table id="contentTable" class="table table-striped table-bordered table-condensed">
 				<thead>

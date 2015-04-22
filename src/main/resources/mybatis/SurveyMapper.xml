@@ -24,13 +24,22 @@
 		        s.user_id = #{userId}
 		    </if>
 		    <if test="surveysByUser != null">
+		    	(
 		        <foreach collection="surveysByUser" index="index" item="survey" >
 		           <if test="index != 0"> or </if> s.survey_id = ${survey.surveyId} 
 		        </foreach>
+		        
 		        <if test="surveysByUser.size() == 0">
 		        	s.survey_id = null
 		        </if>
+		        )
 		    </if>
+		    <if test="surveyStatus != null">
+		    	and s.status = #{surveyStatus}
+		    </if>
+		    <if test="keyword != null">
+				and upper(s.subject) like upper('%${keyword}%')
+			</if>
 		    <if test="groupId != null">
 		        and s.groups_id = #{groupId}
 		    </if>
@@ -49,13 +58,22 @@
 		        s.user_id = #{userId}
 		    </if>
 		    <if test="surveysByUser != null">
+		    	(
 		        <foreach collection="surveysByUser" index="index" item="survey" >
 		           <if test="index != 0"> or </if> s.survey_id = ${survey.surveyId} 
 		        </foreach>
+		        
 		        <if test="surveysByUser.size() == 0">
 		        	s.survey_id = null
 		        </if>
+		        )
 		    </if>
+		    <if test="surveyStatus != null">
+		    	and s.status = #{surveyStatus}
+		    </if>
+		    <if test="keyword != null">
+				and upper(s.subject) like upper('%${keyword}%')
+			</if>
 		    <if test="groupId != null">
 		        and s.groups_id = #{groupId}
 		    </if>

@@ -73,7 +73,6 @@ public class SurveyController {
 		searchParams.put("userId", ((User) session.getAttribute("user")).getId());
 		String userId = request.getParameter("search_userId");
 		int pageSize = Integer.parseInt(configProperties.getProperty("survey.pageSize"));
-		
 		logger.info(searchParams.toString());
 		
 		Page<Survey> surveys = surveyService.getCurrentPageContent(
@@ -85,6 +84,7 @@ public class SurveyController {
 		model.addAttribute("sortType", sortType);
 		model.addAttribute("pageNumber", pageNumber);
 		model.addAttribute("searchParams", Servlets.encodeParameterStringWithPrefix(searchParams, "search_"));
+		model.addAttribute("surveyStatus", searchParams.get("surveyStatus"));
 		
 		logger.info("searchParams=" + searchParams);
 		return "survey/myLaunch";
@@ -99,10 +99,17 @@ public class SurveyController {
 		Map<String, Object> searchParams = Servlets.getParametersStartingWith(
 				request, "search_");
 		int pageSize = Integer.parseInt(configProperties.getProperty("survey.pageSize"));
-		
+		String surveyStatus = null;
+		String keyword = null;
+		if (request.getParameter("search_surveyStatus") != "" && request.getParameter("search_surveyStatus") != null) {
+			surveyStatus = request.getParameter("search_surveyStatus");
+		}
+		if (request.getParameter("search_keyword") != "" && request.getParameter("search_keyword") != null) {
+			keyword = request.getParameter("search_keyword");
+		}
 		User user = (User) session.getAttribute("user");
 		String userId = user.getId();
-		Page<Survey> surveys = surveyService.getAllParticipationByUser(userId, pageNumber, pageSize, sortType);
+		Page<Survey> surveys = surveyService.getAllParticipationByUser(userId, pageNumber, pageSize, sortType, surveyStatus, keyword);
 		
 		logger.info("result length: " + surveys.getContent().size());
 		
@@ -110,6 +117,7 @@ public class SurveyController {
 		model.addAttribute("sortType", sortType);
 		model.addAttribute("pageNumber", pageNumber);
 		model.addAttribute("searchParams", Servlets.encodeParameterStringWithPrefix(searchParams, "search_"));
+		model.addAttribute("surveyStatus", surveyStatus);
 		
 		return "survey/myParticipation";
 	}

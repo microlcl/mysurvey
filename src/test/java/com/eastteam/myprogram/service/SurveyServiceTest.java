@@ -24,7 +24,7 @@ public class SurveyServiceTest extends SpringTransactionalTestCase {
 	
 	@Test
 	public void getAllParticipationByUserTest() {
-		surveyService.getAllParticipationByUser("admin", 1, 15, "survey_id");
+		surveyService.getAllParticipationByUser("admin", 1, 15, "survey_id","","");
 	}
 
 }

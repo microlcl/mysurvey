@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import com.eastteam.myprogram.entity.Category;
 import com.eastteam.myprogram.entity.CategoryLiteBean;
 import com.eastteam.myprogram.service.category.CategoryService;
+import com.google.common.collect.Lists;
 
 @Controller
 @RequestMapping(value = "/category")
@@ -75,6 +76,29 @@ public class CategoryController {
 		return categoryService.getFuntionCategorys(functionId);
 	}
 	
+	@RequestMapping(method = RequestMethod.GET, value = "/api/getSurveyStatus", produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public List<CategoryLiteBean> getSurveyStatus() {
+		List<CategoryLiteBean> surveyStatusList1 = Lists.newArrayList();
+		List<CategoryLiteBean> surveyStatusList = Lists.newArrayList();
+		CategoryLiteBean surveyStatus = new CategoryLiteBean();
+		surveyStatus.setName("调查状态");
+		CategoryLiteBean surveyStatusD = new CategoryLiteBean();
+		surveyStatusD.setId("D");
+		surveyStatusD.setName("草稿");
+		surveyStatusList.add(surveyStatusD);
+		CategoryLiteBean surveyStatusP = new CategoryLiteBean();
+		surveyStatusP.setId("P");
+		surveyStatusP.setName("已发布");
+		surveyStatusList.add(surveyStatusP);
+		CategoryLiteBean surveyStatusF = new CategoryLiteBean();
+		surveyStatusF.setId("F");
+		surveyStatusF.setName("已完成");
+		surveyStatusList.add(surveyStatusF);
+		surveyStatus.setChildren(surveyStatusList);
+		surveyStatusList1.add(surveyStatus);
+		return surveyStatusList1;
+	}
 	/**
 	 * 得到一级子节点，用于生产下拉列表
 	 * @param functionId

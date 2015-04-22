@@ -133,13 +133,15 @@ public class SurveyService extends PageableService {
 		return survey;
 	}
 	
-	public Page<Survey> getAllParticipationByUser(String userId, int pageNumber, int pageSize, String sort) {
+	public Page<Survey> getAllParticipationByUser(String userId, int pageNumber, int pageSize, String sort, String surveyStatus, String keyword) {
 		
 		Pageable pageRequest = new PageRequest(pageNumber-1, pageSize, new Sort(sort));
 		Map parameters = new HashMap<String, Object>();
 
 		List<SurveyReceiver> surveysByUser = surveyReceiverMybatisDao.allSurveysByUser(userId);
 		parameters.put("surveysByUser", surveysByUser);
+		parameters.put("surveyStatus", surveyStatus);
+		parameters.put("keyword", keyword);
 		Long count = getCount(parameters);
 		List<Survey> surveys = this.search(parameters, pageRequest);
 		Page<Survey> contents = new PageImpl<Survey>(surveys, pageRequest, count);
