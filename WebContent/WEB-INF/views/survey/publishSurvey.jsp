@@ -286,67 +286,6 @@
 				<input type="hidden" name="act" id="act" value="">
 				<input type="hidden" name="status" id="act" value="${survey.status }">
 			</form>
-
-			<c:if test="${survey.status=='P' || survey.status=='F'}">
-				<form id="SendNotification" action="${ctx}/survey/sendNoti" method="post" class="form-horizontal">
-					<div class="control-group">
-						<label for="question" class="control-label formlabel">问卷完成状况:</label>
-						<div class="controls">
-							<div class="accordion-group" style="width: 500px;">
-								<div class="accordion-heading">
-									<center>
-										<a href="#collapse" data-toggle="collapse"
-											class="accordion-toggle"
-											style="display: inline-block; word-wrap: break-word; text-decoration: none;">
-											点击查看问卷完成状况 </a>
-									</center>
-
-								</div>
-								<div class="accordion-body collapse" id="collapse">
-								<div class="accordion-inner" style="padding-left: 260px">
-									<select onchange="groupBy(this)" >
-										<option value="1">显示全部</option>
-										<option value="2">未完成</option>
-										<option value="3">已完成</option>
-									</select>
-								</div>
-									<c:forEach items="${surveyReceivers}" var="surveyReceiver" varStatus="status">
-									<div id="${surveyReceiver.status}_${status.count}" class="accordion-inner" style="padding-left: 40px">
-									 <c:choose>
-									   <c:when test="${surveyReceiver.nickName=='' || surveyReceiver.nickName==null}">
-									      ${surveyReceiver.userId}
-									   </c:when>
-									   <c:otherwise>
-									      ${surveyReceiver.nickName}
-									   </c:otherwise>
-									 </c:choose>
-									 <c:choose>
-									   <c:when test="${surveyReceiver.status==0}">
-									      <span  class="error" style="float:right;margin-right:140px">未完成</span>
-									   </c:when >
-									   <c:otherwise>
-									      <span style="float:right;padding-right:10px"><i class="icon-ok"></i><font color="green" style="font-weight:bold;">已操作于</font>-- <fmt:formatDate value="${surveyReceiver.update_timeStamp}" pattern="yyyy/MM/dd  HH:mm"/></span>
-									   </c:otherwise>
-									   </c:choose>
-									</div>
-								</c:forEach>
-									<c:if test="${(survey.status=='P')&& receivers!=''}">
-									<input type="text" name="surveyId" value="${survey.id }" style="display:none;">
-				                    <input type="text" name="subject" value="来自${survey.userId}的问卷调查：${survey.subject}的提醒" style="display:none;"> 
-				                    <input type="text" name="receivers" value="${receivers }" style="display:none;">
-				                    <input type="text" name="URL" value="${survey.paperURL }" style="display:none;">
-									<div class="accordion-inner" id="0_sender">
-									   <textarea name="desctription" style="width:340px;height:80px">Hi Dear<br>    请尽快完成调查，点击下方链接或将地址复制到浏览器地址栏中打开。<br>调查截止日期：   <fmt:formatDate value="${survey.deadlineTimestamp}" pattern="yyyy年MM月dd日   HH:mm"/></textarea>
-									   <input type="button" id="sendbtn" value="点击发送提醒" class="btn btn-warning" onclick="sendNoti()" style="height:80px">
-									</div>
-									</c:if>
-								</div>
-								
-							</div>
-						</div>
-					</div>
-				</form>
-			</c:if>
 		</div>
 		<div id="action-bar" class="form-actions" style="min-height: 23px;margin-top: 0 !important;">
 			<c:if test="${survey.status==null}">

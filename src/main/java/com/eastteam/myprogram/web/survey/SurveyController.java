@@ -191,18 +191,7 @@ public class SurveyController {
 //		}
 //		model.addAttribute("gitems",gitems);
 		
-		List<SurveyReceiver> surveyReceivers=new ArrayList<SurveyReceiver>();
-		String receivers="";
-		Map<String, Object> map=new HashMap<String, Object>();
-		map.put("surveyId", survey.getId());
-		surveyReceivers=surveyService.getAssociatedReceivers(map);
-		for(SurveyReceiver surveyReceiver : surveyReceivers){
-			if(surveyReceiver.getStatus().equals("0")){
-				receivers += surveyReceiver.getUserId()+",";
-			}
-		}
-		model.addAttribute("surveyReceivers",surveyReceivers);
-		model.addAttribute("receivers",receivers);
+		
 		model.addAttribute("survey", survey);
 		model.addAttribute("paper",paper);
 		model.addAttribute("groups",groups);
@@ -366,6 +355,22 @@ public class SurveyController {
 		Survey survey = surveyService.selectSurvey(surveyId);
 		List<Question> questions = answerService.answerStatisticsBySurvey(survey);
 		Set<String> answerIds = answerService.allAnswererIdsBySurvey(surveyId);
+		
+		List<SurveyReceiver> surveyReceivers=new ArrayList<SurveyReceiver>();
+		String receivers="";
+		Map<String, Object> map=new HashMap<String, Object>();
+		map.put("surveyId", survey.getId());
+		surveyReceivers=surveyService.getAssociatedReceivers(map);
+		for(SurveyReceiver surveyReceiver : surveyReceivers){
+			if(surveyReceiver.getStatus().equals("0")){
+				receivers += surveyReceiver.getUserId()+",";
+			}
+		}
+		
+		logger.info("receiver numbers:" + surveyReceivers.size());
+		
+		model.addAttribute("surveyReceivers",surveyReceivers);
+		model.addAttribute("receivers",receivers);
 		model.addAttribute("questions", questions);
 		model.addAttribute("survey", survey);
 		model.addAttribute("answerIds", answerIds);
