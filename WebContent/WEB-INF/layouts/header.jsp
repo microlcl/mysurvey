@@ -13,7 +13,7 @@
 						class="icon-user"></i> ${user.id} <span class="caret"></span>
 					</a>				
 					<ul class="dropdown-menu">	
-						<li><a href="${ctx}/account/logout">退出</a></li>
+						<li><a href="${ctx}/account/logout"><spring:message code="app.logout"/></a></li>
 					</ul>				
 				</div>
 			</c:if>
