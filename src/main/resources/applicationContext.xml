@@ -59,6 +59,10 @@
 	<bean id="methodCacheInterceptor" class="com.eastteam.myprogram.utils.MethodCacheInterceptor">	
 	    <property name="cache" ref="myCache"/>	
 	</bean>	
+	<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+	    <property name="basename" value="messages"></property>
+	    <property name="useCodeAsDefaultMessage" value="true"></property>
+	</bean>	
 
 		<!-- production环境 -->
  	<beans profile="production">
