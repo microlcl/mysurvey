@@ -97,7 +97,7 @@
 				page : nextPage,
 				search_categoryId:$('#categorySelector').combotree('getValues'),
 				search_keyword : $('#searchKeyword').val(),
-				search_trashed : 'F'
+				search_trashed : 'F',
 				search_userId : "${user.id}"
 			},
 
