@@ -12,7 +12,34 @@
 
 <script src="${ctx}/static/easyui/jquery.easyui.min.js" type="text/javascript"></script>
 <link rel="stylesheet" type="text/css" href="${ctx}/static/easyui/mytree.css">
+<script>
 
+function groupBy(obj){
+		
+   $(".accordion-inner").each(function(){
+       var id=$(this).attr('id');
+       if(id){
+        var jud=id.split("_");
+        if(obj.value==3){
+        if(jud[0]==0){
+	          $(this).hide();
+	       }else{
+	          $(this).show();
+	       }
+	       }else if(obj.value==2){
+	         if(jud[0]==1){
+	          $(this).hide();
+	       }else{
+	          $(this).show();
+	       }
+	       }else{
+	           $(this).show();
+	       }
+       }
+   });
+}
+
+</script>
 <title>答案统计</title>
 </head>
 <body>
