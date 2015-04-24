@@ -5,10 +5,14 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
+
+import javax.persistence.criteria.Path;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -43,6 +47,15 @@ public class SurveyService extends PageableService {
 	private AnswerMybatisDao answerMybatisDao;
 	@Autowired
 	private SurveyReceiverMybatisDao surveyReceiverMybatisDao;
+	
+	
+	@Autowired
+  	@Qualifier("configProperties")
+  	private Properties configProperties;
+	
+	private static final String EMAIL_SYS="SystemEmail";
+	private static final String EMAIL_SYS_PSW="SystemEmailPassword";
+	private static final String EMAIL_SYS_STMP="SystemEmailSTMP";
 	
 	private int pageSize;
 	
@@ -173,7 +186,7 @@ public class SurveyService extends PageableService {
 	}
 	
 	
-	public boolean createSurvey(Survey survey,String act){
+	public boolean createSurvey(Survey survey,String act,String surveyPath){
 		if(act.equalsIgnoreCase("update")){
 			this.updateSurvey(survey);
 		}else if(act.equalsIgnoreCase("save")){
@@ -212,7 +225,12 @@ public class SurveyService extends PageableService {
 					logger.info(_surveyReceiver.getUserId());
 				}
 				logger.info("===>receiver list over");
-			    return new EmailSender().sendmail(survey.getSubject(),_receiver.toArray(), survey.getDescription(), survey.getPaperURL()+survey.getId(), "text/html;charset=gb2312");
+				logger.info("===>SurveyUrl:"+surveyPath+survey.getId());
+			    return new EmailSender().sendmail(configProperties.getProperty(EMAIL_SYS),
+			    		configProperties.getProperty(EMAIL_SYS_PSW),
+			    		configProperties.getProperty(EMAIL_SYS_STMP),
+			    		survey.getSubject(),_receiver.toArray(), survey.getDescription(),surveyPath+survey.getId(), "text/html;charset=gb2312");
+				//return true;
 			}
 		}
 		return true;
@@ -222,7 +240,10 @@ public class SurveyService extends PageableService {
 	public boolean sendNotification(String receivers,String subject,String surveyId,String desctription,String URL){
 		String _receiver[] = receivers.split("\\,");
 		logger.info("send notification");
-	    return new EmailSender().sendmail(subject,_receiver, desctription, URL+surveyId, "text/html;charset=gb2312");
+	    return new EmailSender().sendmail(configProperties.getProperty(EMAIL_SYS),
+	    		configProperties.getProperty(EMAIL_SYS_PSW),
+	    		configProperties.getProperty(EMAIL_SYS_STMP),
+	    		subject,_receiver, desctription, URL+surveyId, "text/html;charset=gb2312");
 		//return true;
 	}
 	

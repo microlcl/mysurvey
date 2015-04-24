@@ -7,7 +7,7 @@
 		<id property="id" column="survey_id"/>
 		<result property="userId" column="user_id"/>
 		<result property="paperId" column="paper_id"/>
-		<result property="paperURL" column="paper_url"/>
+<!-- 		<result property="paperURL" column="paper_url"/> -->
 		<result property="groupsId" column="groups_id"/>
 		<result property="sentTimestamp" column="sent_timestamp"/>
 		<result property="deadlineTimestamp" column="deadline_timestamp"/>
@@ -17,7 +17,7 @@
 		<result property="isAnonymous" column="is_anonymous"/> 
 	</resultMap>
 	<select id="search" parameterType="map" resultMap="surveyDetailMap">
-		select s.survey_id, s.user_id, s.paper_url, s.groups_id, s.sent_timestamp, s.deadline_timestamp, 
+		select s.survey_id, s.user_id, s.groups_id, s.sent_timestamp, s.deadline_timestamp, 
 		 s.description, s.status, s.update_timestamp, s.subject from survey s
 		<where>
 		    <if test="userId != null">
@@ -116,9 +116,9 @@
         	    <if test="status != null">
         	        status=#{status},
         	    </if>
-        	    <if test="paperURL != null">
-        	        paper_url=#{paperURL},
-        	    </if>
+<!--         	    <if test="paperURL != null"> -->
+<!--         	        paper_url=#{paperURL}, -->
+<!--         	    </if> -->
         	     <if test="receivers != null">
         	        receivers=#{receivers},
         	    </if>
@@ -128,8 +128,8 @@
 	</update>
 	
 	<insert id="save" parameterType="Survey" useGeneratedKeys="true" keyProperty="id" >
-		insert into survey (user_id, paper_id, paper_url, subject, groups_id, sent_timestamp, deadline_timestamp, is_anonymous, description,status,receivers)
-		values (#{creater.id},#{paper.id},#{paperURL},#{subject},#{surveyGroup},now(),#{deadlineTimestamp},#{isAnonymous},#{description},#{status},#{receivers});
+		insert into survey (user_id, paper_id, subject, groups_id, sent_timestamp, deadline_timestamp, is_anonymous, description,status,receivers)
+		values (#{creater.id},#{paper.id},#{subject},#{surveyGroup},now(),#{deadlineTimestamp},#{isAnonymous},#{description},#{status},#{receivers});
 	</insert>
 	
 </mapper>

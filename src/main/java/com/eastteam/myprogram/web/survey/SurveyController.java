@@ -1,6 +1,5 @@
 package com.eastteam.myprogram.web.survey;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -14,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,12 +53,12 @@ public class SurveyController {
 	@Autowired
 	private AnswerService answerService;
 	
-	
-	private static final String ServiceAddr="http://localhost:8080";
-	
 	@Autowired
   	@Qualifier("configProperties")
   	private Properties configProperties;
+	
+	private static final String APPPATH="AppPath";
+	private static final String SURVEYPATH="SurveyPath";
 	
 	private static Logger logger = LoggerFactory.getLogger(SurveyController.class);
 	
@@ -215,8 +215,8 @@ public class SurveyController {
 			  survey.setStatus("D");
 			  survey.setCreater((User) session.getAttribute("user"));
 			  survey.setPaper(paperService.selectPaper(id));
-			  survey.setPaperURL(ServiceAddr+request.getContextPath()+"/survey/accessSurvey/");
-			  surveyService.createSurvey(survey, "save");
+//			  survey.setPaperURL(ServiceAddr+request.getContextPath()+"/survey/accessSurvey/");
+			  surveyService.createSurvey(survey, "save",null);
 			  return "survey/publishOK";
 	  }else if(request.getParameter("act").equalsIgnoreCase("update")){
 		  surveyService.updateSurvey(survey);
@@ -225,6 +225,8 @@ public class SurveyController {
 		//String isPublish = request.getParameter("isPublish");
 			survey.setCreater((User) session.getAttribute("user"));
 			survey.setPaper(paperService.selectPaper(id));
+//			survey.setPaperURL(ServiceAddr+request.getContextPath()+"/survey/accessSurvey/");
+			
 			if(survey.getStatus().equalsIgnoreCase("D")){
 				survey.setStatus("P");
 				surveyService.updateSurvey(survey);
@@ -232,8 +234,7 @@ public class SurveyController {
 				survey.setStatus("P");
 				surveyService.saveSurvey(survey);
 			}
-			survey.setPaperURL(ServiceAddr+request.getContextPath()+"/survey/accessSurvey/");
-			if(surveyService.createSurvey(survey,"publish")){
+			if(surveyService.createSurvey(survey,"publish",configProperties.getProperty(APPPATH)+request.getContextPath()+configProperties.getProperty(SURVEYPATH))){
 				return "survey/publishOK";
 			} else {
 				return "survey/publishFail";

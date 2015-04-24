@@ -22,7 +22,6 @@ create table survey(
 	update_timestamp timestamp, --更新时间
 	user_id varchar(64) not null, -- 调查发起人
 	paper_id bigint not null,   -- 一次调查只包含一个paper
-	paper_url varchar(128) not null, -- 调查问卷的url，用户收到的邮件中，点击此url进行答题, url由survey_id生成
 	subject varchar(128),  -- 调查问卷的主题
 	groups_id varchar(32) not null,  -- 如果有多个group，用逗号隔开
 	sent_timestamp timestamp,  -- 调查发送时间

@@ -17,15 +17,15 @@ import com.eastteam.myprogram.service.survey.SurveyService;
  
 public class EmailSender {  
 	private static Logger logger = LoggerFactory.getLogger(SurveyService.class);
-	private static final String EMAIL="18661014104@163.com";
-	private static final String EPASW="gongbinfeng123";
-	private static final String SMTP="smtp.163.com";
 	
-    public boolean sendmail(String subject, Object[] to,  
+    public boolean sendmail(String email,String password, String stmp,String subject, Object[] to,  
             String description, String paperURL, String mimeType) {  
         try {  
-             String servername = EMAIL; 
-             String serverpaswd = EPASW;
+             String servername = email; 
+             String serverpaswd = password;
+             
+			final String EMAIL = email;
+			final String SMTP = stmp;
              
              Properties props = new Properties();  
              props = java.lang.System.getProperties();
