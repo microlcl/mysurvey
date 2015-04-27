@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="tags" tagdir="/WEB-INF/tags" %>
 <%@ taglib uri="http://com.eastteam.myprogram/mytaglib" prefix="mytag" %>
+<%@taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
 <html>
 <head>
@@ -29,10 +30,10 @@
 				
 				messages: {
 					paperName: {
-						required: "请填写问卷名称"
+						required: "<spring:message code="addpaper.papername.message"/>"
 					},
 					"businessType.id": {
-						required: "请选择业务类型"
+						required: "<spring:message code="addpaper.businesstype.message"/>"
 					}
 				}
 			});
@@ -124,37 +125,37 @@
 </head>
 <body>
 	<div class="form">
-		<h1>新增问卷</h1>
+		<h1><spring:message code="addpaper.title"/></h1>
 		<div class="alert hide" id="warning-block">
-	  	   <strong>注意: </strong>请选择业务类型和表单类型。
+	  	   <strong><spring:message code="addpaper.warning1"/> </strong><spring:message code="addpaper.warning2"/>
 		</div>
 		<div style="padding:20px;">
 			<form id="questionsForm" action="${ctx}/paper/save" method="post" class="form-horizontal">
 				<div class="control-group">
-					<label for="paperName" class="control-label">问卷名称:</label>
+					<label for="paperName" class="control-label"><spring:message code="addpaper.papername"/></label>
 					<div class="controls">						
-						<input type="text" id="paperName" name="paperName"  maxlength="64" class="input-large required" placeholder="0~64个字符" value="${selectpaper.paperName}"/>
+						<input type="text" id="paperName" name="paperName"  maxlength="64" class="input-large required" placeholder="<spring:message code="addpaper.papername.placeholder"/>" value="${selectpaper.paperName}"/>
 					</div>
 				</div>
 				<div class="control-group">
-					<label for="businessType" class="control-label">业务类型:</label>					
+					<label for="businessType" class="control-label"><spring:message code="addpaper.businesstype"/></label>					
 					<div class="controls">	
 						<input id="businessType" class="easyui-combobox" name="businessType.id" data-options="url:'${ctx}/category/api/getChildren/getBusinessType',method:'get',valueField:'id',textField:'text'" value="${selectpaper.businessType.id}"/>
 					</div>
 				</div>				
 
-				<button id="select_questions_button" style="height: 40px !important;width: 180px !important; margin-top: 10px;" type="button" class="btn btn-warning" id="search_btn" onclick="questionPopupWindow({callback:addQuestions})">请点击此处选择问题</button>
-				<button id="delete_questions_button" style="height: 40px !important;width: 180px !important; margin-top: 10px; margin-left:40px; display:none;" type="button" class="btn btn-danger" id="delete_btn" onclick="removeAllQuestions();">删除所有所选问题</button>
+				<button id="select_questions_button" style="height: 40px !important;width: 180px !important; margin-top: 10px;" type="button" class="btn btn-warning" id="search_btn" onclick="questionPopupWindow({callback:addQuestions})"><spring:message code="addpaper.selectquestion"/></button>
+				<button id="delete_questions_button" style="height: 40px !important;width: 180px !important; margin-top: 10px; margin-left:40px; display:none;" type="button" class="btn btn-danger" id="delete_btn" onclick="removeAllQuestions();"><spring:message code="addpaper.deletequestion"/></button>
 				<div id="selected_questions" style="display: none;">
-					<label style="width: 100%;font-weight: bold;line-height: 30px;text-align: left; padding-left: 20px;">您所选择的问题如下:</label>
+					<label style="width: 100%;font-weight: bold;line-height: 30px;text-align: left; padding-left: 20px;"><spring:message code="addpaper.showselectedquestions"/></label>
 					<div class="accordion" style="border-color: transparent;  width: 80%; margin-left: 100px;"  id="myaccordion1">
 					</div>
 				</div>
 			</form>
 		</div>
 		<div class="form-actions" style="min-height: 23px;margin-top: 0 !important;">
-			<input id="submit_btn" class="btn btn-warning" style="display: none;" type="button" value="提交" onclick="submitForm();" />&nbsp;	
-			<input id="cancel_btn" class="btn"  style="display: none;" type="button" value="返回" onclick="history.back()"/>
+			<input id="submit_btn" class="btn btn-warning" style="display: none;" type="button" value="<spring:message code="addpaper.submit"/>" onclick="submitForm();" />&nbsp;	
+			<input id="cancel_btn" class="btn"  style="display: none;" type="button" value="<spring:message code="addpaper.back"/>" onclick="history.back()"/>
 		</div>
 	</div>
 	<!-- resource 选择模态对话框 -->
@@ -166,8 +167,8 @@
 				<ul class="inline">
 						<li><input id="myq1_{id}" value="{id}" type="hidden" name="questions[{index}].id"/> </li>
 						<li style="width: 680px;"><a class="accordion-toggle" data-toggle="collapse" data-parent="#myaccordion1" href="#collapse_{id}">Q{id}: {question}</a></li>
-						<li>问题坐标：<input type="text" name="questions[{index}].position"  maxlength="64" class="required" placeholder="数字" style="width: 25px !important; margin-top: 10px;" value="{position}"/></li>
-						<li><a href="javascript:void(0);" onclick="deleteQuestion(this)" title="删除" style=""><span style="margin:0px 0px -11px 5px" class="iconImg iconImg_delete"></span></a></li>
+						<li><spring:message code="addpaper.questionposition"/><input type="text" name="questions[{index}].position"  maxlength="64" class="required" placeholder="<spring:message code="addpaper.questionposition.placeholder"/>" style="width: 25px !important; margin-top: 10px;" value="{position}"/></li>
+						<li><a href="javascript:void(0);" onclick="deleteQuestion(this)" title="<spring:message code="addpaper.delete"/>" style=""><span style="margin:0px 0px -11px 5px" class="iconImg iconImg_delete"></span></a></li>
 				</ul>
 			</div>
 			

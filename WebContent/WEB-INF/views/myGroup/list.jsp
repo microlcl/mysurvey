@@ -4,6 +4,7 @@
 <%@ taglib uri="http://com.eastteam.myprogram/mytaglib" prefix="mytag" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %> 
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
 <html>
 <head>
@@ -30,15 +31,15 @@
 </head>
 <body>
 <div class="form" >
-	<h1>用户组管理</h1>
+	<h1><spring:message code="group.title"/></h1>
 
  	<div class=" onefield" style="height:40px !important; text-align: right !important;padding-top: 7px;margin-left:20px;background-color: white;">
 		<form style="padding-left:10px;" action="${ctx}/myGroup/saveGroup" method="post" onsubmit="return checkName()">
 				<span  style="float:left;">
-				新建用户组：
-				&nbsp; &nbsp;<input type="text" id="groupName" name="groupName" style="width:400px;margin-bottom: 0px;margin-left:10px;" placeholder="请输入新群组名称">
-				<span id="groupName_error" class="error" style="display:none">请填写群组名!</span>
-				<button type="submit" class="btn btn-success" style="margin-left: 20px;"><i class="icon-plus" style="margin-right: 5px;"></i>添加用户组</button>
+				<spring:message code="group.create"/>
+				&nbsp; &nbsp;<input type="text" id="groupName" name="groupName" style="width:400px;margin-bottom: 0px;margin-left:10px;" placeholder="<spring:message code="group.groupname"/>">
+				<span id="groupName_error" class="error" style="display:none"><spring:message code="group.groupnameerror"/></span>
+				<button type="submit" class="btn btn-success" style="margin-left: 20px;"><i class="icon-plus" style="margin-right: 5px;"></i><spring:message code="group.add"/></button>
 				</span>
 		</form>	
 	</div>

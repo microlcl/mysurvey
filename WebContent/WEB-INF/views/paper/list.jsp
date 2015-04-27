@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="tags" tagdir="/WEB-INF/tags" %>
 <%@ taglib uri="http://com.eastteam.myprogram/mytaglib" prefix="mytag" %>
+<%@taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
 <html>
 <head>
@@ -69,18 +70,18 @@
 </head>
 <body>
 	<div class="form">
-		<h1>调查问卷</h1>
+		<h1><spring:message code="paper.title"/></h1>
 		<div class=" onefield" style="height:40px !important; text-align: right !important;padding-right: 10px;padding-top: 7px;margin-left:20px;background-color: white;">
 			<form style="padding-left:10px;">
 				<span  style="float:left;">
-					问卷状态：
+					<spring:message code="paper.status"/>
 					<input id="cc1" class="easyui-combotree" data-options="url:'${ctx}/category/api/getAll/paperStatus',method:'get',required:false" style="width:200px;" name="search_categoryId1" value="${param.search_categoryId}" />
-					&nbsp;&nbsp;&nbsp;&nbsp;问卷类型：
+					&nbsp;&nbsp;&nbsp;&nbsp;<spring:message code="paper.type"/>：
 					<input id="cc2" class="easyui-combotree" data-options="url:'${ctx}/category/api/getAll/getBusinessType',method:'get',required:false" style="width:200px;" name="search_categoryId2" value="${param.search_categoryId}"/>
 					<label class="checkbox inline" style="margin-left:20px">									
-		   			我的问卷<input value="${user.id}" type="checkbox" <c:if test="${!empty param.search_userId}">checked</c:if> name="search_userId"/>
+		   			<spring:message code="paper.mypaper"/><input value="${user.id}" type="checkbox" <c:if test="${!empty param.search_userId}">checked</c:if> name="search_userId"/>
 		   			</label>
-					<mytag:PermssionTag functionId="F8-2"><button type="button" class="btn btn-success" onclick="location.href='${ctx}/paper/add/'" style="margin-left: 20px;"><i class="icon-plus" style="margin-right: 5px;"></i>新建问卷</button></mytag:PermssionTag>
+					<mytag:PermssionTag functionId="F8-2"><button type="button" class="btn btn-success" onclick="location.href='${ctx}/paper/add/'" style="margin-left: 20px;"><i class="icon-plus" style="margin-right: 5px;"></i><spring:message code="paper.create"/></button></mytag:PermssionTag>
 					<!-- 
 					&nbsp;&nbsp;&nbsp;&nbsp;
 					<a href="${ctx}/paper/add/" style="padding: 5px; background-color: #DADADA;border-radius: 4px 4px 4px 4px;line-height: 30px; font-weight: bold;">
@@ -88,7 +89,7 @@
 					</a>
 					 -->
 				</span>
-				<input type="text" name="search_keyword" value="${param.search_keyword}" style="width:150px;margin-bottom: 0px;margin-left:10px;" placeholder="输入关键字搜索">
+				<input type="text" name="search_keyword" value="${param.search_keyword}" style="width:150px;margin-bottom: 0px;margin-left:10px;" placeholder="<spring:message code="paper.search.keyword"/>">
 				<button type="submit" class="btn" id="search_btn_test"><i class="icon-search"></i></button>
 			</form>
 		</div>
@@ -96,10 +97,10 @@
 			<table id="contentTable" class="table table-striped table-bordered table-condensed">
 				<thead>
 				<tr>
-					<th>问卷名称</th>
-					<th>问卷类型</th>
-					<th>问卷状态</th>
-					<th>操作</th>
+					<th><spring:message code="paper.papername"/></th>
+					<th><spring:message code="paper.papertype"/></th>
+					<th><spring:message code="paper.paperstatus"/></th>
+					<th><spring:message code="paper.operation"/></th>
 				</tr>
 				</thead>
 				<tbody>
@@ -109,14 +110,14 @@
 						<td>${paper.businessType.name}&nbsp;</td>						
 						<td>${paper.status.name}&nbsp;</td>
 						<td>
-							<mytag:PermssionTag functionId="F8-6"><a href="${ctx}/paper/show/${paper.id}" id="showLink-${paper.id}"><i class="icon-folder-open"></i> 查看</a>&nbsp;&nbsp;</mytag:PermssionTag>
-							<mytag:PermssionTag functionId="F8-3"><a href="${ctx}/paper/edit/${paper.id}" id="editLink-${paper.id}"><i class="icon-edit"></i> 修改</a>&nbsp;&nbsp;</mytag:PermssionTag>
+							<mytag:PermssionTag functionId="F8-6"><a href="${ctx}/paper/show/${paper.id}" id="showLink-${paper.id}"><i class="icon-folder-open"></i> <spring:message code="paper.show"/></a>&nbsp;&nbsp;</mytag:PermssionTag>
+							<mytag:PermssionTag functionId="F8-3"><a href="${ctx}/paper/edit/${paper.id}" id="editLink-${paper.id}"><i class="icon-edit"></i> <spring:message code="paper.edit"/></a>&nbsp;&nbsp;</mytag:PermssionTag>
 							<c:if test="${paper.status.id!='1-0-1-2'}">	
-							<mytag:PermssionTag functionId="F8-4"><a href="${ctx}/paper/delete/${paper.id}" id="deleteLink-${paper.id}"><i class="icon-remove"></i>废弃</a></mytag:PermssionTag>
+							<mytag:PermssionTag functionId="F8-4"><a href="${ctx}/paper/delete/${paper.id}" id="deleteLink-${paper.id}"><i class="icon-remove"></i><spring:message code="paper.delete"/></a></mytag:PermssionTag>
 							</c:if>
 							<c:if test="${paper.status.id!='1-0-1-1'}">
 							<!-- 		<mytag:PermssionTag functionId="F8-5"><button type="button" class="btn btn-danger" id="publishbutton-${paper.id}" onclick="location.href='${ctx}/paper/publish/${paper.id}'" style="padding: 0 12px !important; margin-left: 20px;"><i class="icon-share-alt" style="margin-right: 5px;"></i>发布问卷</button></mytag:PermssionTag> -->
-								<mytag:PermssionTag functionId="F8-5"><a href="${ctx}/survey/createSurvey/${paper.id}" id="showLink-${paper.id}"><i class="icon-share-alt"></i> 创建调查</a></mytag:PermssionTag>
+								<mytag:PermssionTag functionId="F8-5"><a href="${ctx}/survey/createSurvey/${paper.id}" id="showLink-${paper.id}"><i class="icon-share-alt"></i> <spring:message code="paper.createsurvey"/></a></mytag:PermssionTag>
 							</c:if>
 						</td>
 					</tr>

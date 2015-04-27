@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="tags" tagdir="/WEB-INF/tags" %>
 <%@ taglib uri="http://com.eastteam.myprogram/mytaglib" prefix="mytag" %>
+<%@taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
 <html>
 <head>
@@ -21,12 +22,12 @@
 </head>
 <body>
 	<div class="form">
-		<h1>问卷细节</h1>
+		<h1><spring:message code="paperdetail.title"/></h1>
 		<div  style="padding:20px;">
 			<c:forEach items="${questions}" var="question" varStatus="status">
                   <div class="accordion-heading">
                   	<span style="padding-left:8px">Q${status.count}：</span>
-                      	${question.question}<c:if test="${question.trashed == 'T'}"><span style="color:#FF0000">(此问题已被删除)</span></c:if>
+                      	${question.question}<c:if test="${question.trashed == 'T'}"><span style="color:#FF0000"><spring:message code="paperdetail.question.trashed"/></span></c:if>
                    </div>
                     <div class="accordion-inner" style="padding-left:55px">
 						<c:if test="${question.questionType == '1'}">
@@ -53,7 +54,7 @@
 		</div>
 
 	<div class="form-actions" style="min-height: 23px;margin-top: 0 !important;">
-		<input id="cancel_btn" style="height: 40px !important;width: 130px !important;" class="btn" type="button" value="返回" onclick="history.back()"/>
+		<input id="cancel_btn" style="height: 40px !important;width: 130px !important;" class="btn" type="button" value="<spring:message code="paperdetail.back"/>" onclick="history.back()"/>
 	</div>
 	</div>	
 </body>

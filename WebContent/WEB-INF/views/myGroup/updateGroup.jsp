@@ -3,7 +3,7 @@
 <%@ taglib prefix="tags" tagdir="/WEB-INF/tags" %>
 <%@ taglib uri="http://com.eastteam.myprogram/mytaglib" prefix="mytag" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %> 
-
+<%@taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
 <html>
 <head>
@@ -22,8 +22,8 @@
 		}		
 	})
 	function addOption(){
-		var optionDiv = '<span class="control-group" ><label for="question" class="control-label formlabel">联系人昵称:</label><input type="text" name="nickName">  &nbsp; &nbsp; id：<input type="text" placeholder="联系人id不能为空" name="userId">'
-						+' <a href="javascript:void(0);" onclick="deleteOption(this)" title="删除"><span style="margin:0px 0px -11px 5px" class="iconImg iconImg_delete"></span></a></div></div></span>';
+		var optionDiv = '<span class="control-group" ><label for="question" class="control-label formlabel"><spring:message code="updategroup.nickname"/></label><input type="text" name="nickName">  &nbsp; &nbsp; <spring:message code="updategroup.id"/><input type="text" placeholder="<spring:message code="updategroup.id.error"/>" name="userId">'
+						+' <a href="javascript:void(0);" onclick="deleteOption(this)" title="<spring:message code="updategroup.deleteoption"/>"><span style="margin:0px 0px -11px 5px" class="iconImg iconImg_delete"></span></a></div></div></span>';
 		$("#options").append(optionDiv);
 	}
 	
@@ -97,38 +97,38 @@
 <body>
 	<form  id="inputForm" onsubmit="return sub()" action="${ctx}/myGroup/updateGroup" method="post" class="form-horizontal" enctype="multipart/form-data">
 	<div class="form">
-	<h1>编辑用户组</h1>
+	<h1><spring:message code="updategroup.title"/></h1>
 	<table>
 	 <tbody>
 	  <tr valign="top">
 	    <td>
-	    <div id="warning-block" class="alert alert-error hide" style="width:300px;margin-left:130px"><strong>注意!</strong> 问题正在使用中，已有选项不可删除</div>
+	    <div id="warning-block" class="alert alert-error hide" style="width:300px;margin-left:130px"><strong><spring:message code="updategroup.warning1"/></strong> <spring:message code="updategroup.warning2"/></div>
 		<div class="control-group">
-				<label for="question" class="control-label formlabel">群组名:</label>
+				<label for="question" class="control-label formlabel"><spring:message code="updategroup.groupname"/></label>
 				<div class="controls">
 					<input type="hidden" name="id" value="${group.id}">
 					<input type="text" id="groupName" name="groupName"  value="${group.groupName}" style="width:200px"  maxlength="32"/>
-					<span id="groupName_error" class="error" style="display:none">请填写群组名!</span>
+					<span id="groupName_error" class="error" style="display:none"><spring:message code="updategroup.groupname.error"/></span>
 				</div>
 		</div>
 			<div class="control-group">
-                    <label for="option" class="control-label formlabel">群组备注:</label>
+                    <label for="option" class="control-label formlabel"><spring:message code="updategroup.comment"/></label>
                     <textarea name="comment" style="width:440px" maxlength="128">${group.comment }</textarea>
 			</div>
 <%-- 			<c:if test="${group.content != ''}"> --%>
 			   <c:forEach items="${group.gitems}" var="member" varStatus="status">
 				<span class="control-group" >
-                       <label for="question" class="control-label formlabel">联系人昵称:</label><input type="text" value="${member[0]}" name="nickName"> &nbsp; &nbsp;  id：<input type="text" value="${member[1]}" name="userId">
-						<a href="javascript:void(0);" onclick="deleteOption(this)" title="删除"><span style="margin:0px 0px -11px 5px" class="iconImg iconImg_delete"></span></a>
+                       <label for="question" class="control-label formlabel"><spring:message code="updategroup.nickname"/></label><input type="text" value="${member[0]}" name="nickName"> &nbsp; &nbsp;  <spring:message code="updategroup.id"/><input type="text" value="${member[1]}" name="userId">
+						<a href="javascript:void(0);" onclick="deleteOption(this)" title="<spring:message code="updategroup.deleteoption"/>"><span style="margin:0px 0px -11px 5px" class="iconImg iconImg_delete"></span></a>
 				</span>
 			   </c:forEach>
 <%-- 			</c:if>   --%>
 			<div id="options"></div>
 			
 			<div class="control-group">
-			     <label for="option" class="control-label formlabel">添加新联系人</label>  <a title="创建" onclick="addOption()" href="javascript:void(0);"><span class="iconImg iconImg_create" style="margin:0px 0px -11px" ></span></a>
-			     <span id="groupContent_error" class="error" style="display:none">小组名单不能为空！</span>
-			     <span id="groupId_error" class="error" style="display:none">请输入正确的联系人id！</span><br>
+			     <label for="option" class="control-label formlabel"><spring:message code="updategroup.addoption"/></label>  <a title="<spring:message code="updategroup.add"/>" onclick="addOption()" href="javascript:void(0);"><span class="iconImg iconImg_create" style="margin:0px 0px -11px" ></span></a>
+			     <span id="groupContent_error" class="error" style="display:none"><spring:message code="updategroup.groupcontent.error"/></span>
+			     <span id="groupId_error" class="error" style="display:none"><spring:message code="updategroup.groupid.error"/></span><br>
 			</div>   
 		    <input style="display:none;" name="content">
 			<input type="file" id="CSVfile" name="CSVfile" onchange="importCSV()"style="padding-left:70px;width:60px" />
@@ -138,8 +138,8 @@
 	  </tbody>
 	</table>
 		<div class="form-actions" style="padding-top:30px">
-			<input id="submit_btn" class="btn btn-warning" type="submit" value="提交"/>&nbsp;	
-			<input id="cancel_btn" class="btn" type="button" value="返回" onclick="history.back()"/>
+			<input id="submit_btn" class="btn btn-warning" type="submit" value="<spring:message code="updategroup.submit"/>"/>&nbsp;	
+			<input id="cancel_btn" class="btn" type="button" value="<spring:message code="updategroup.cancel"/>" onclick="history.back()"/>
 		</div>
 	</div>
 </form>

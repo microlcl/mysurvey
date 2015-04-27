@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="tags" tagdir="/WEB-INF/tags" %>
 <%@ taglib uri="http://com.eastteam.myprogram/mytaglib" prefix="mytag" %>
+<%@taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
 <html>
 <head>
@@ -16,19 +17,19 @@
 </head>
 <body>
 <div class="form" >
-	<h1>问题管理</h1>
+	<h1><spring:message code="question.title"/></h1>
 
  	<div class=" onefield" style="height:40px !important; text-align: right !important;padding-top: 7px;margin-left:20px;background-color: white;">
 			<form style="padding-left:10px;">
 				<span  style="float:left;">
-				类别：<input id="cc" name="search_categoryId" class="easyui-combotree" value="${param.search_categoryId}" multiple data-options="url:'${ctx}/category/api/getAll/getBusinessType',method:'get',required:false" style="width:200px;">	 
-				&nbsp; &nbsp;<input type="text" name="search_keyword" value="${param.search_keyword}" style="width:400px;margin-bottom: 0px;margin-left:10px;" placeholder="输入关键字搜索">
+				<spring:message code="question.type"/><input id="cc" name="search_categoryId" class="easyui-combotree" value="${param.search_categoryId}" multiple data-options="url:'${ctx}/category/api/getAll/getBusinessType',method:'get',required:false" style="width:200px;">	 
+				&nbsp; &nbsp;<input type="text" name="search_keyword" value="${param.search_keyword}" style="width:400px;margin-bottom: 0px;margin-left:10px;" placeholder="<spring:message code="question.searchkeyword"/>">
 				<button type="submit" class="btn" id="search_btn_test"><i class="icon-search"></i></button>
 				<label class="checkbox inline" style="margin-left:20px">									
-		   			我的问题<input value="${user.id}" type="checkbox" <c:if test="${!empty param.search_userId}">checked</c:if> name="search_userId"/>
+		   			<spring:message code="question.myquestion"/><input value="${user.id}" type="checkbox" <c:if test="${!empty param.search_userId}">checked</c:if> name="search_userId"/>
 		   		</label>
-			    <mytag:PermssionTag functionId="F7-2"><button type="button" class="btn btn-success" onclick="location.href='${ctx}/question/addQuestion/'" style="margin-left: 20px;"><i class="icon-plus" style="margin-right: 5px;"></i>新建问题</button></mytag:PermssionTag>
-				&nbsp; &nbsp;&nbsp; &nbsp;<tags:sort/>
+			    <mytag:PermssionTag functionId="F7-2"><button type="button" class="btn btn-success" onclick="location.href='${ctx}/question/addQuestion/'" style="margin-left: 20px;"><i class="icon-plus" style="margin-right: 5px;"></i><spring:message code="question.addquestion"/></button></mytag:PermssionTag>
+				<tags:sort/>
 				</span>
 			</form>
 	</div>
@@ -39,20 +40,20 @@
 			<div class="accordion-group">
                   <div class="accordion-heading">
                   	<span style="padding-left:8px">Q${status.index+1+(pageNumber-1)*5}：</span>
-                    <a href="#collapse_${status.index+1+(pageNumber-1)*5}" data-parent="#questions" data-toggle="collapse" class="accordion-toggle" style="display: inline-block; word-wrap: break-word; width: 700px;text-decoration: none;">
-                      	${question.question}<c:if test="${question.paperAnswered}"><span style="color:#FF0000">(正在使用)</span></c:if>
+                    <a href="#collapse_${status.index+1+(pageNumber-1)*5}" data-parent="#questions" data-toggle="collapse" class="accordion-toggle" style="display: inline-block; word-wrap: break-word; width: 800px;text-decoration: none;">
+                      	${question.question}<c:if test="${question.paperAnswered}"><span style="color:#FF0000"><spring:message code="question.isusing"/></span></c:if>
+                      	<span><a target="_blank" style="width: 50px" href="${ctx}/account/show/userInfo/${question.creater.id}">${question.creater.name}</a></span>
                     </a>
-                    <span><a target="_blank" style="display: inline-block; word-wrap: break-word; width: 150px " href="${ctx}/account/show/userInfo/${question.creater.id}">${question.creater.name}</a></span>
                     <span style="float: right; padding: 8px 20px 8px 10px;">
                     	
-                    	<mytag:PermssionTag functionId="F7-3"><a href="${ctx}/question/editQuestion/question_${question.id}"><i class="icon-edit"></i>修改</a></mytag:PermssionTag>
+                    	<mytag:PermssionTag functionId="F7-3"><a href="${ctx}/question/editQuestion/question_${question.id}"><i class="icon-edit"></i><spring:message code="question.edit"/></a></mytag:PermssionTag>
                     	<mytag:PermssionTag functionId="F7-4">
                     	<c:choose>
                     		<c:when test="${question.paperAnswered}">
-                    			<a href="javascript:void(0);" onclick="errorAlert()"><i class="icon-remove-circle"></i>删除</a>
+                    			<a href="javascript:void(0);" onclick="errorAlert()"><i class="icon-remove-circle"></i><spring:message code="question.delete"/></a>
                     		</c:when>
                     		<c:otherwise>
-                    			<a href="javascript:void(0);" onclick="questionDeletePopupWindow(${question.id})"><i class="icon-remove-circle"></i>删除</a>
+                    			<a href="javascript:void(0);" onclick="questionDeletePopupWindow(${question.id})"><i class="icon-remove-circle"></i><spring:message code="question.delete"/></a>
                     		</c:otherwise>
                     	</c:choose>
                     	</mytag:PermssionTag>
@@ -92,11 +93,11 @@
 	<div class="modal-header">
 		<button type="button" class="close" data-dismiss="modal"
 			aria-hidden="true">&times;</button>
-		<h4>确定删除该问题吗？</h4>
+		<h4><spring:message code="question.deletewarning"/></h4>
 	</div>
 	<div class="modal-footer">
-		<a href="#" class="btn" data-dismiss="modal" aria-hidden="true"">关闭</a> 
-		<a id="deleteBtn" href="" class="btn btn-primary">确定</a>
+		<a href="#" class="btn" data-dismiss="modal" aria-hidden="true""><spring:message code="question.deletewarning.close"/></a> 
+		<a id="deleteBtn" href="" class="btn btn-primary"><spring:message code="question.deletewarning.ok"/></a>
 	</div>
 </div>
 </div>
@@ -116,7 +117,7 @@
 		});
 		
 		function errorAlert(){
-			var errorDiv = '<div class="alert alert-error" style="width:250px;margin-bottom:-10px;margin-left:20px"><button type="button" class="close" data-dismiss="alert">×</button><strong>注意!</strong> 问题正在使用中，无法删除</div>';
+			var errorDiv = '<div class="alert alert-error" style="width:250px;margin-bottom:-10px;margin-left:20px"><button type="button" class="close" data-dismiss="alert">×</button><strong><spring:message code="question.erroralert1"/></strong> <spring:message code="question.erroralert2"/></div>';
 			$("#error-block").empty();
 			$("#error-block").append(errorDiv);
 		}

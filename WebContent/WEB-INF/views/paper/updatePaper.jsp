@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="tags" tagdir="/WEB-INF/tags" %>
 <%@ taglib uri="http://com.eastteam.myprogram/mytaglib" prefix="mytag" %>
+<%@taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
 <html>
 <head>
@@ -137,18 +138,18 @@
 	</div>
 
 	<div class="form">
-		<h1>修改问卷</h1>
+		<h1><spring:message code="updatepaper.title"/></h1>
 		<div style="padding:20px;">
 			<form id="questionsForm" action="${ctx}/paper/update"  method="post" class="form-horizontal">
 				<input id="paper_id" value="${selectpaper.id}" type="hidden" name="id"/>
 				<div class="control-group">
-					<label for="paperName" class="control-label">问卷名称:</label>
+					<label for="paperName" class="control-label"><spring:message code="updatepaper.papername"/></label>
 					<div class="controls">						
-						<input type="text" id="paperName" name="paperName"  maxlength="64" class="input-large required" placeholder="0~64个字符" value="${selectpaper.paperName}"/>
+						<input type="text" id="paperName" name="paperName"  maxlength="64" class="input-large required" placeholder="<spring:message code="updatepaper.papername.placeholder"/>" value="${selectpaper.paperName}"/>
 					</div>
 				</div>
 				<div class="control-group">
-					<label for="cc2" class="control-label">问卷类型:</label>					
+					<label for="cc2" class="control-label"><spring:message code="updatepaper.papertype"/></label>					
 					<div class="controls">	
 						<input id="cc2" class="easyui-combobox" name="businessType.id" data-options="url:'${ctx}/category/api/getChildren/getBusinessType',method:'get',valueField:'id',textField:'text'" value="${selectpaper.businessType.id}"/>
 					</div>
@@ -156,8 +157,8 @@
 	
 				<div class="control-group">
 				<div class="controls">
-				<button id="select_questions_button"  type="button" class="btn btn-warning" onclick="questionPopupWindow({callback:addQuestions})">选择问题</button>
-				<button id="delete_questions_button"  type="button" class="btn btn-danger" onclick="removeAllQuestions();">删除所有问题</button>
+				<button id="select_questions_button"  type="button" class="btn btn-warning" onclick="questionPopupWindow({callback:addQuestions})"><spring:message code="updatepaper.selectquestion"/></button>
+				<button id="delete_questions_button"  type="button" class="btn btn-danger" onclick="removeAllQuestions();"><spring:message code="updatepaper.deleteallquestion"/></button>
 				</div>
 				</div>
 				<div id="selected_questions" >
@@ -170,8 +171,8 @@
 				                  		<ul class="inline">
 											<li><input id="myq1_${question.id}" value="${question.id}" type="hidden" name="questions[${status.index}].id"/> </li>
 											<li style="width: 680px;"><a class="accordion-toggle" data-toggle="collapse" data-parent="#myaccordion1" href="#collapse_${question.id}">Q${question.id}: ${question.question}</a></li>
-											<li>问题坐标：<input type="text" name="questions[${status.index}].position"  maxlength="64" class="required" placeholder="数字" style="width: 25px !important; margin-top: 10px;" value="${question.position}"/></li>
-				                      		<li><a href="javascript:void(0);" onclick="deleteQuestion(this)" title="删除" style=""><span style="margin:0px 0px -11px 5px" class="iconImg iconImg_delete"></span></a></li>
+											<li><spring:message code="updatepaper.questionposition"/><input type="text" name="questions[${status.index}].position"  maxlength="64" class="required" placeholder="<spring:message code="updatepaper.questionposition.placeholder"/>" style="width: 25px !important; margin-top: 10px;" value="${question.position}"/></li>
+				                      		<li><a href="javascript:void(0);" onclick="deleteQuestion(this)" title="<spring:message code="updatepaper.deletequestion"/>" style=""><span style="margin:0px 0px -11px 5px" class="iconImg iconImg_delete"></span></a></li>
 				                      	</ul>
 				                   	</div>
 								</div>
@@ -205,8 +206,8 @@
 			</form>
 		</div>
 		<div class="form-actions">
-			<input id="submit_btn" class="btn btn-warning" type="submit" value="提交" onclick="$('#questionsForm').submit();" />&nbsp;	
-			<input id="cancel_btn" class="btn" type="button" value="返回" onclick="history.back()"/>
+			<input id="submit_btn" class="btn btn-warning" type="submit" value="<spring:message code="updatepaper.submit"/>" onclick="$('#questionsForm').submit();" />&nbsp;	
+			<input id="cancel_btn" class="btn" type="button" value="<spring:message code="updatepaper.back"/>" onclick="history.back()"/>
 		</div>
 	</div>
 
