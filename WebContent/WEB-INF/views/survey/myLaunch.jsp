@@ -3,6 +3,7 @@
 <%@ taglib prefix="tags" tagdir="/WEB-INF/tags" %>
 <%@ taglib uri="http://com.eastteam.myprogram/mytaglib" prefix="mytag" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %> 
+<%@taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
 <html>
 <head>
@@ -37,13 +38,13 @@ $(document).ready(function() {
 </head>
 <body>
 	<div class="form">
-		<h1>我发起的调查</h1>
+		<h1><spring:message code="survey.mylaunch.title"/></h1>
 		<div class=" onefield" style="height:40px !important; text-align: right !important;padding-right: 10px;padding-top: 7px;margin-left:20px;background-color: white;">
 			<form style="padding-left:10px;">
 				<span  style="float:left;">
-					调查状态：
+					<spring:message code="survey.mylaunch.status"/>
 					<input id="cc" class="easyui-combotree" data-options="url:'${ctx}/category/api/getSurveyStatus',method:'get',required:false" style="width:200px;" name="search_surveyStatus" value="${param.search_surveyStatus}" />
-					&nbsp; &nbsp; &nbsp; &nbsp;调查名称：<input type="text" name="search_keyword" value="${param.search_keyword}" style="width:400px;margin-bottom: 0px;margin-left:10px;" placeholder="输入关键字搜索">
+					&nbsp; &nbsp; &nbsp; &nbsp;<spring:message code="survey.mylaunch.name"/><input type="text" name="search_keyword" value="${param.search_keyword}" style="width:400px;margin-bottom: 0px;margin-left:10px;" placeholder="<spring:message code="survey.mylaunch.name.placeholder"/>">
 					<button type="submit" class="btn" id="search_btn_test"><i class="icon-search"></i></button>
 				</span>
 			</form>
@@ -53,12 +54,12 @@ $(document).ready(function() {
 			<table id="contentTable" class="table table-striped table-bordered table-condensed">
 				<thead>
 				<tr>
-					<th>调查名称</th>
-					<th>调查状态</th>
-					<th>更新时间</th>
-					<th>被调查者</th>
-					<th>截止日期</th>
-					<th>操作</th>
+					<th><spring:message code="survey.mylaunch.surveyname"/></th>
+					<th><spring:message code="survey.mylaunch.surveystatus"/></th>
+					<th><spring:message code="survey.mylaunch.updatetime"/></th>
+					<th><spring:message code="survey.mylaunch.informant"/></th>
+					<th><spring:message code="survey.mylaunch.deadline"/></th>
+					<th><spring:message code="survey.mylaunch.operation"/></th>
 				</tr>
 				</thead>
 				<tbody>
@@ -71,13 +72,13 @@ $(document).ready(function() {
 						<td><fmt:formatDate value="${survey.deadlineTimestamp}" pattern="yyyy年MM月dd日   HH:mm"/>&nbsp;</td>
 						<td>
 							<c:if test="${survey.status!='R'}">	
-							<mytag:PermssionTag functionId="F8-6"><a href="${ctx}/survey/surveyDetail/${survey.id}" id="showLink-${survey.id}"><i class="icon-folder-open"></i> 查看</a>&nbsp;&nbsp;</mytag:PermssionTag>
+							<mytag:PermssionTag functionId="F8-6"><a href="${ctx}/survey/surveyDetail/${survey.id}" id="showLink-${survey.id}"><i class="icon-folder-open"></i> <spring:message code="survey.mylaunch.show"/></a>&nbsp;&nbsp;</mytag:PermssionTag>
 							</c:if>
 							<c:if test="${survey.status=='R'}">	
-							<mytag:PermssionTag functionId="F8-3"><a href="${ctx}/survey/surveyDetail/${survey.id}" id="editLink-${survey.id}"><i class="icon-edit"></i> 查看(可发布)</a>&nbsp;&nbsp;</mytag:PermssionTag>
+							<mytag:PermssionTag functionId="F8-3"><a href="${ctx}/survey/surveyDetail/${survey.id}" id="editLink-${survey.id}"><i class="icon-edit"></i> <spring:message code="survey.mylaunch.show"/><spring:message code="survey.mylaunch.canpublish"/></a>&nbsp;&nbsp;</mytag:PermssionTag>
 							</c:if>
 							<%-- <c:if test="${survey.status=='P' || survey.status=='F'}"> --%>	
-							<mytag:PermssionTag functionId="F8-4"><a href="${ctx}/survey/statistic/${survey.id}" id="deleteLink-${paper.id}"><i class="icon-remove"></i> 答案统计</a></mytag:PermssionTag>
+							<mytag:PermssionTag functionId="F8-4"><a href="${ctx}/survey/statistic/${survey.id}" id="deleteLink-${paper.id}"><i class="icon-remove"></i> <spring:message code="survey.mylaunch.answers"/></a></mytag:PermssionTag>
 							<%-- </c:if> --%>
 						</td>
 					</tr>

@@ -3,6 +3,7 @@
 <%@ taglib prefix="tags" tagdir="/WEB-INF/tags" %>
 <%@ taglib uri="http://com.eastteam.myprogram/mytaglib" prefix="mytag" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %> 
+<%@taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
 <html>
 <head>
@@ -68,8 +69,8 @@
 </head>
 <body>
 	<div class="form">
-	  <h1>回答问卷： ${survey.subject} 
-	   <br> 发起人：${survey.userId} &nbsp&nbsp&nbsp 截止日期：<fmt:formatDate value="${survey.deadlineTimestamp}" pattern="yyyy年MM月dd日   HH:mm"/>
+	  <h1><spring:message code="survey.action.title"/>： ${survey.subject} 
+	   <br> <spring:message code="survey.action.initiator"/>${survey.userId} &nbsp&nbsp&nbsp <spring:message code="survey.action.deadline"/><fmt:formatDate value="${survey.deadlineTimestamp}" pattern="yyyy年MM月dd日   HH:mm"/>
 	  </h1>
 	  <form id="actionForm" action="${ctx}/survey/saveAction" method="post">
 	  <input type="text" id="surveyId" name="surveyId" value="${survey.id}" style="display:none;" />
@@ -80,7 +81,7 @@
 			   <c:if test="${question.trashed == 'F'}">
 			     <div id="question" >
                   <div class="accordion-heading">
-                    <span id="nullAlert" class="error" style="display:none;">请完成此问题</span>
+                    <span id="nullAlert" class="error" style="display:none;"><spring:message code="survey.action.alert"/></span>
                   	<span style="padding-left:8px" id="question_${question.id }">Q${status.count}：</span>
                       	${question.question}
                    </div>
@@ -115,9 +116,9 @@
       </form>
 	<div class="form-actions" style="min-height: 23px;margin-top: 0 !important;">
 		<c:if test="${!expired}">
-			<input id="submit_btn" style="height: 40px !important;width: 130px !important;" class="btn" type="button" value="提交" onclick="sumbitForm()"/>
+			<input id="submit_btn" style="height: 40px !important;width: 130px !important;" class="btn" type="button" value="<spring:message code="survey.action.submit"/>" onclick="sumbitForm()"/>
 		</c:if>
-		<input id="cancel_btn" style="height: 40px !important;width: 130px !important;" class="btn" type="button" value="返回" onclick="history.back()"/>
+		<input id="cancel_btn" style="height: 40px !important;width: 130px !important;" class="btn" type="button" value="<spring:message code="survey.action.back"/>" onclick="history.back()"/>
 	</div>
 	</div>	
 </body>

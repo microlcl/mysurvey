@@ -4,6 +4,7 @@
 <%@ taglib prefix="tags" tagdir="/WEB-INF/tags" %>
 <%@ taglib uri="http://com.eastteam.myprogram/mytaglib" prefix="mytag" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
 <html>
 <head>
@@ -38,13 +39,13 @@ $(document).ready(function() {
 </head>
 <body>
 	<div class="form">
-		<h1>我参与的调查</h1>
+		<h1><spring:message code="survey.myparticipation.title"/></h1>
 		<div class=" onefield" style="height:40px !important; text-align: right !important;padding-right: 10px;padding-top: 7px;margin-left:20px;background-color: white;">
 			<form style="padding-left:10px;">
 				<span  style="float:left;">
-					调查状态：
+					<spring:message code="survey.myparticipation.status"/>
 					<input id="cc" class="easyui-combotree" data-options="url:'${ctx}/category/api/getSurveyStatus',method:'get',required:false" style="width:200px;" name="search_surveyStatus" value="${param.search_surveyStatus}" />
-					&nbsp; &nbsp; &nbsp; &nbsp;调查名称：<input type="text" name="search_keyword" value="${param.search_keyword}" style="width:400px;margin-bottom: 0px;margin-left:10px;" placeholder="输入关键字搜索">
+					&nbsp; &nbsp; &nbsp; &nbsp;<spring:message code="survey.myparticipation.name"/><input type="text" name="search_keyword" value="${param.search_keyword}" style="width:400px;margin-bottom: 0px;margin-left:10px;" placeholder="<spring:message code="survey.myparticipation.name.placeholder"/>">
 					<button type="submit" class="btn" id="search_btn_test"><i class="icon-search"></i></button>
 				</span>
 			</form>
@@ -53,12 +54,12 @@ $(document).ready(function() {
 			<table id="contentTable" class="table table-striped table-bordered table-condensed">
 				<thead>
 				<tr>
-					<th>调查名称</th>
-					<th>调查状态</th>
-					<th>更新时间</th>
-					<th>发起人</th>
-					<th>截止日期</th>
-					<th>操作</th>
+					<th><spring:message code="survey.myparticipation.surveyname"/></th>
+					<th><spring:message code="survey.myparticipation.surveystatus"/></th>
+					<th><spring:message code="survey.myparticipation.updatetime"/></th>
+					<th><spring:message code="survey.myparticipation.initiator"/></th>
+					<th><spring:message code="survey.myparticipation.deadline"/></th>
+					<th><spring:message code="survey.myparticipation.operation"/></th>
 				</tr>
 				</thead>
 				<tbody>
@@ -72,9 +73,9 @@ $(document).ready(function() {
 						<td><fmt:formatDate value="${survey.deadlineTimestamp}" pattern="yyyy年MM月dd日   HH:mm"/>&nbsp;</td>
 						<td>
 							<mytag:PermssionTag functionId="F8-6">
-								<a href="${ctx}/survey/accessSurvey/${survey.id}" id="showLink-${survey.id}"><i class="icon-folder-open"></i>查看
-								<c:if test="${survey.deadlineTimestamp > nowDate}">(可修改)</c:if>
-								<c:if test="${survey.deadlineTimestamp <= nowDate}">(已截止)</c:if>
+								<a href="${ctx}/survey/accessSurvey/${survey.id}" id="showLink-${survey.id}"><i class="icon-folder-open"></i><spring:message code="survey.myparticipation.show"/>
+								<c:if test="${survey.deadlineTimestamp > nowDate}"><spring:message code="survey.myparticipation.canedit"/></c:if>
+								<c:if test="${survey.deadlineTimestamp <= nowDate}"><spring:message code="survey.myparticipation.expire"/></c:if>
 								</a>&nbsp;&nbsp;
 							</mytag:PermssionTag>
 						</td>

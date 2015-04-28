@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="tags" tagdir="/WEB-INF/tags" %>
 <%@ taglib uri="http://com.eastteam.myprogram/mytaglib" prefix="mytag" %>
+<%@taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
 <html>
 <head>
@@ -19,6 +20,6 @@
 	</script>
 </head>
 <body>
-操作成功
+<spring:message code="survey.publishok.text"/>
 </body>
 </html>

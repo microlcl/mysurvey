@@ -3,6 +3,7 @@
 <%@ taglib prefix="tags" tagdir="/WEB-INF/tags" %>
 <%@ taglib uri="http://com.eastteam.myprogram/mytaglib" prefix="mytag" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
 <html>
 <head>
@@ -26,7 +27,7 @@
 		
 		function checkAnonymous(){
 		    var  check=document.getElementById("isAnonymousCheck");
-		    var alertInfo="<br><strong><font color='red'>*此调查为匿名调查</font></strong>";
+		    var alertInfo="<br><strong><font color='red'><spring:message code="survey.publishsurvey.anonymousalert"/></font></strong>";
 		    if(check.checked){
 		      $('#isAnonymous').val('T');
 		      $('#description').val($('#description').val()+alertInfo);
@@ -198,9 +199,9 @@
 </head>
 <body>
 	<div class="form">
-		<h1>发布问卷:&nbsp ${paper.paperName }</h1>
+		<h1><spring:message code="survey.publishsurvey.title"/>:&nbsp ${paper.paperName }</h1>
 		<div class="alert hide" id="warning-block">
-	  	   <strong>注意: </strong>请选择业务类型和表单类型。
+	  	   <strong><spring:message code="survey.publishsurvey.warning1"/> </strong><spring:message code="survey.publishsurvey.warning2"/>
 		</div>
 		<div style="padding:20px;">
 			
@@ -212,41 +213,41 @@
 			<form id="surveyForm" name="surveyForm" action="${ctx}/survey/surveyAction/${toId}" method="post" class="form-horizontal">
 				<c:if test="${isPublish} "><input type="hidden" id="surveyId" name="surveyId" value="${survey.id }"></c:if>
 				<div class="control-group">
-					<label for="question" class="control-label formlabel">问卷主题:</label>
+					<label for="question" class="control-label formlabel"><spring:message code="survey.publishsurvey.subject"/></label>
 					<div class="controls">						
-						<input type="text" id="surveySubject" name="subject"  maxlength="128" class="input-large required" placeholder="0~128个字符" <c:if test="${survey.status=='P' || survey.status=='F'}">disabled="disabled"</c:if> <c:if test="${survey.subject!=null }">value="${survey.subject }"</c:if> />
-						 <span id="subjectError" class="error" style="display:none">请输入调查主题</span>
+						<input type="text" id="surveySubject" name="subject"  maxlength="128" class="input-large required" placeholder="<spring:message code="survey.publishsurvey.subject.placeholder"/>" <c:if test="${survey.status=='P' || survey.status=='F'}">disabled="disabled"</c:if> <c:if test="${survey.subject!=null }">value="${survey.subject }"</c:if> />
+						 <span id="subjectError" class="error" style="display:none"><spring:message code="survey.publishsurvey.subject.error"/></span>
 					</div>
 				</div>
 				<div class="control-group">
-					<label for="question" class="control-label formlabel">问卷详情:</label>
+					<label for="question" class="control-label formlabel"><spring:message code="survey.publishsurvey.paperdetail"/></label>
 					<div class="controls">						
-						<a href="${ctx}/paper/show/${paper.id}" id="showLink-${paper.id}"><i class="icon-folder-open"></i> 点击查看查看问卷</a>
+						<a href="${ctx}/paper/show/${paper.id}" id="showLink-${paper.id}"><i class="icon-folder-open"></i> <spring:message code="survey.publishsurvey.paperdetail.btn"/></a>
 					</div>
 				</div>
 				<div class="control-group">
-					<label for="question" class="control-label formlabel">是否匿名调查:</label>
+					<label for="question" class="control-label formlabel"><spring:message code="survey.publishsurvey.anonymous"/></label>
 					<div class="controls">
 					   <input type="checkbox" <c:if test="${survey.status=='P' || survey.status=='F'}">disabled="disabled"</c:if> <c:if test="${survey.isAnonymous=='T' }">checked="checked"</c:if> id="isAnonymousCheck" onclick="checkAnonymous()" >
 					   <input type="text" id="isAnonymous" <c:if test="${survey.isAnonymous=='T' }">value="T"</c:if><c:if test="${survey.isAnonymous=='F' }">value="F"</c:if> name="isAnonymous" style="display:none;">
 					</div>
 				</div>
 				<div class="control-group">
-					<label for="question" class="control-label formlabel">调查截止日期:</label>
+					<label for="question" class="control-label formlabel"><spring:message code="survey.publishsurvey.deadline"/></label>
 					<div class="controls">
-					   <input type="text" <c:if test="${survey.status=='P' || survey.status=='F'}">disabled="disabled"</c:if> id="datetimepicker7" <c:if test="${survey.deadlineTimestamp!=null }"> value="<fmt:formatDate value="${survey.deadlineTimestamp}" pattern="yyyy/MM/dd HH:mm"/>"</c:if> name="deadlineTimestamp" readonly="readonly" placeholder="双击选择时间与日期" onclick="getDeadline()"  />
-					   <span id="ddateEmptyError" class="error" style="display:none">请设定调查截止日期！</span>
-					   <span id="ddateInvalidError" class="error" style="display:none">请设定有效的截止日期！</span>
+					   <input type="text" <c:if test="${survey.status=='P' || survey.status=='F'}">disabled="disabled"</c:if> id="datetimepicker7" <c:if test="${survey.deadlineTimestamp!=null }"> value="<fmt:formatDate value="${survey.deadlineTimestamp}" pattern="yyyy/MM/dd HH:mm"/>"</c:if> name="deadlineTimestamp" readonly="readonly" placeholder="<spring:message code="survey.publishsurvey.deadline.placeholder"/>" onclick="getDeadline()"  />
+					   <span id="ddateEmptyError" class="error" style="display:none"><spring:message code="survey.publishsurvey.deadline.emptyerror"/></span>
+					   <span id="ddateInvalidError" class="error" style="display:none"><spring:message code="survey.publishsurvey.deadline.invaliderror"/></span>
 					</div>
 				</div>
 				<div class="control-group">
-					<label for="question" class="control-label formlabel">调查描述:</label>					
+					<label for="question" class="control-label formlabel"><spring:message code="survey.publishsurvey.description"/></label>					
 					<div class="controls">
-					    <textarea id="description" <c:if test="${survey.status=='P' || survey.status=='F'}">disabled="disabled"</c:if> name="description" style="width:440px" maxlength="128"><c:if test="${survey.description!=null }">${survey.description }</c:if><c:if test="${survey.description==null }">Hi Dear:<br>    您收到一份调查问卷，请点击下方链接或复制地址到浏览器中开始</c:if></textarea>
+					    <textarea id="description" <c:if test="${survey.status=='P' || survey.status=='F'}">disabled="disabled"</c:if> name="description" style="width:440px" maxlength="128"><c:if test="${survey.description!=null }">${survey.description }</c:if><c:if test="${survey.description==null }">Hi Dear:<br>    <spring:message code="survey.publishsurvey.description.text"/></c:if></textarea>
 					</div>
 				</div>	
 				<div class="control-group">
-				<label for="question" class="control-label formlabel">调查的群组:</label>		
+				<label for="question" class="control-label formlabel"><spring:message code="survey.publishsurvey.groups"/></label>		
 				<c:if test="${survey.status=='P' || survey.status=='F'}"><div class="controls"><input type="text" disabled="disabled" value="${survey.groupsString }"></div></c:if>
 				 <c:if test="${survey.status!='P' && survey.status!='F'}">
 					 <div class="controls" style="width:550px">
@@ -254,7 +255,7 @@
 					    <div class="btn" onclick="markGroup(this)" style="margin-top:5px" id="group_${group.id }">${group.groupName}<i class="icon-ok" style="width:20px;display:${group.flagString};"></i><input type="text" value="${group.id }" id="groupid" name="groupid" style="display:none;"></div>
 					  </c:forEach>
 					 </div>
-					 <span id="groupError" class="error" style="display:none">请勾选需要调查的群组</span>
+					 <span id="groupError" class="error" style="display:none"><spring:message code="survey.publishsurvey.groups.error"/></span>
 					 </c:if>
 				</div>
 				<input type="text" name="surveyGroup" id="surveyGroup" style="display:none;">
@@ -265,17 +266,17 @@
 		</div>
 		<div id="action-bar" class="form-actions" style="min-height: 23px;margin-top: 0 !important;">
 			<c:if test="${survey.status==null}">
-			<input id="submit_btn" class="btn btn-warning"  type="button" value="发送问卷" onclick="formatAndCheckAndSend();" />&nbsp;&nbsp;&nbsp;
-			<input id="submit_btn" class="btn btn-success"  type="button" value="保存为草稿" onclick="formatAndCheckAndSave();" />	
+			<input id="submit_btn" class="btn btn-warning"  type="button" value="<spring:message code="survey.publishsurvey.send"/>" onclick="formatAndCheckAndSend();" />&nbsp;&nbsp;&nbsp;
+			<input id="submit_btn" class="btn btn-success"  type="button" value="<spring:message code="survey.publishsurvey.save"/>" onclick="formatAndCheckAndSave();" />	
 			</c:if>
 			<c:if test="${survey.status=='D'}">
-			<input id="submit_btn" class="btn btn-warning"  type="button" value="发送问卷" onclick="formatAndCheckAndSend();" />&nbsp;&nbsp;&nbsp;
-			<input id="submit_btn" class="btn btn-success"  type="button" value="保存修改" onclick="formatAndCheckAndSaveUpdate();" />	
+			<input id="submit_btn" class="btn btn-warning"  type="button" value="<spring:message code="survey.publishsurvey.send"/>" onclick="formatAndCheckAndSend();" />&nbsp;&nbsp;&nbsp;
+			<input id="submit_btn" class="btn btn-success"  type="button" value="<spring:message code="survey.publishsurvey.saveupdate"/>" onclick="formatAndCheckAndSaveUpdate();" />	
 			</c:if>
 			
-			<input id="cancel_btn" class="btn" type="button" value="返回" onclick="history.back()"/>
+			<input id="cancel_btn" class="btn" type="button" value="<spring:message code="survey.publishsurvey.back"/>" onclick="history.back()"/>
 		</div>
-		<center><span id="submitOK" style="display:none;"><h3>请稍等...</h3></span></center>
+		<center><span id="submitOK" style="display:none;"><h3><spring:message code="survey.publishsurvey.wait"/></h3></span></center>
 	</div>
 </body>
 </html>
