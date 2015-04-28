@@ -76,7 +76,7 @@
 				<span  style="float:left;">
 					<spring:message code="paper.status"/>
 					<input id="cc1" class="easyui-combotree" data-options="url:'${ctx}/category/api/getAll/paperStatus',method:'get',required:false" style="width:200px;" name="search_categoryId1" value="${param.search_categoryId}" />
-					&nbsp;&nbsp;&nbsp;&nbsp;<spring:message code="paper.type"/>：
+					&nbsp;&nbsp;&nbsp;&nbsp;<spring:message code="paper.type"/>
 					<input id="cc2" class="easyui-combotree" data-options="url:'${ctx}/category/api/getAll/getBusinessType',method:'get',required:false" style="width:200px;" name="search_categoryId2" value="${param.search_categoryId}"/>
 					<label class="checkbox inline" style="margin-left:20px">									
 		   			<spring:message code="paper.mypaper"/><input value="${user.id}" type="checkbox" <c:if test="${!empty param.search_userId}">checked</c:if> name="search_userId"/>
