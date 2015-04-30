@@ -51,7 +51,6 @@ function groupBy(obj){
 		<ul class="nav nav-tabs" id="titleTab">
 		    <li class="active"><a href="#statistic" data-toggle="tab">答案统计</a></li>
 		    <li><a href="#submitted" data-toggle="tab">参与问卷查看</a></li>
-		    <li><a href="#assignee" data-toggle="tab">参与人员</a></li>
 	    </ul>
 	    
 	    <div id="titleTabContent" class="tab-content" style="padding:20px;">
@@ -95,25 +94,6 @@ function groupBy(obj){
 		      </c:forEach>
 		   </div>
 		   <div class="tab-pane fade" id="submitted">
-		   		<c:forEach items="${answerIds}" var="id" varStatus="as">
-		   			<c:set var="answererName" value="${id}"/>
-		   			<c:if test="${survey.isAnonymous == 'T' }">
-		   				<c:set var="answererName" value="******"/>
-		   			</c:if>
-		   			    <table class="table table-hover">
-		   			    	<thead>
-		   			    		<tr><th>参与人</th><th>问卷链接</th></tr>
-		   			    	</thead>
-		   			    	<tbody>
-		   			    		<tr>
-		   			    			<td>${answererName }</td>
-		   			    			<td><a class="btn" href="${ctx}/survey/accessSurvey/${survey.id}?userId=${id}">点击查看</a></td>
-		   			    		</tr>
-		   			    	</tbody>
-					    </table>
-		   		</c:forEach>
-		   </div>
-		   <div class="tab-pane fade" id="assignee">
 		   		<c:if test="${survey.status=='P' || survey.status=='F'}">
 				<form id="SendNotification" action="${ctx}/survey/sendNoti" method="post" class="form-horizontal">
 					<div class="control-group">
@@ -141,10 +121,48 @@ function groupBy(obj){
 									<div id="${surveyReceiver.status}_${status.count}" class="accordion-inner" style="padding-left: 40px">
 									 <c:choose>
 									   <c:when test="${surveyReceiver.nickName=='' || surveyReceiver.nickName==null}">
-									      ${surveyReceiver.userId}
+									      <c:choose>
+										   <c:when test="${surveyReceiver.status==0}">
+										   	<c:if test="${survey.isAnonymous=='T' }">
+										   		*****
+										   	</c:if>
+										   	<c:if test="${survey.isAnonymous!='T' }">
+										   		${surveyReceiver.userId}
+										   	</c:if>
+										   </c:when >
+										   <c:otherwise>
+										      <a class="btn" href="${ctx}/survey/accessSurvey/${survey.id}?userId=${surveyReceiver.userId}">
+										      	<c:if test="${survey.isAnonymous=='T' }">
+											   		*****
+											   	</c:if>
+											   	<c:if test="${survey.isAnonymous!='T' }">
+											   		${surveyReceiver.userId}
+											   	</c:if>
+										      </a>
+										   </c:otherwise>
+										   </c:choose>
 									   </c:when>
 									   <c:otherwise>
-									      ${surveyReceiver.nickName}
+									      <c:choose>
+										   <c:when test="${surveyReceiver.status==0}">
+										   		<c:if test="${survey.isAnonymous=='T' }">
+											   		*****
+											   	</c:if>
+											   	<c:if test="${survey.isAnonymous!='T' }">
+											   		${surveyReceiver.nickName}
+											   	</c:if>
+										   </c:when >
+										   <c:otherwise>
+										      <a class="btn" href="${ctx}/survey/accessSurvey/${survey.id}?userId=${surveyReceiver.userId}">
+											  	<c:if test="${survey.isAnonymous=='T' }">
+											   		*****
+											   	</c:if>
+											   	<c:if test="${survey.isAnonymous!='T' }">
+											   		${surveyReceiver.nickName}
+											   	</c:if>
+											  </a>
+										   </c:otherwise>
+										   </c:choose>
 									   </c:otherwise>
 									 </c:choose>
 									 <c:choose>
@@ -168,7 +186,6 @@ function groupBy(obj){
 									</div>
 									</c:if>
 								</div>
-								
 							</div>
 						</div>
 					</div>
