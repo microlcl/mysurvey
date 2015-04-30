@@ -79,12 +79,16 @@ public class SurveyService extends PageableService {
 			
 			String[] groupsid = survey.getGroupsId().trim().split(",");
 			String groupString = "";
-			for (String s : groupsid) {
-				Group g = myGroupMybatisDao.getSelectedGroup(Long.parseLong(s.trim()));
-				groupString += g.getGroupName() + ",";
+			if (!groupsid[0].equals("")) {
+				for (String s : groupsid) {
+					Group g = myGroupMybatisDao.getSelectedGroup(Long
+							.parseLong(s.trim()));
+					groupString += g.getGroupName() + ",";
+				}
+
+				groupString = groupString
+						.substring(0, groupString.length() - 1);
 			}
-			
-			groupString = groupString.substring(0, groupString.length() - 1);
 			survey.setGroupsString(groupString);
 		}
 		
@@ -115,7 +119,8 @@ public class SurveyService extends PageableService {
 			
 			String[] groupsid = survey.getGroupsId().trim().split(",");
 			String groupString = "";
-			if(groupsid.length>1){
+			//System.out.println("======>"+groupsid[0]);
+			if(!groupsid[0].equals("")){
 				for (String s : groupsid) {
 					Group g = myGroupMybatisDao.getSelectedGroup(Long.parseLong(s.trim()));
 					groupString += g.getGroupName() + ",";
