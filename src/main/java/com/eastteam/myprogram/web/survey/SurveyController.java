@@ -168,7 +168,7 @@ public class SurveyController {
 	}
 	
 	@RequestMapping(value = "surveyDetail/{id}", method = RequestMethod.GET)
-	public String publishSurvey(@PathVariable("id") String id,Model model,HttpSession session){
+	public String publishSurvey(@PathVariable("id") String id,Model model,HttpSession session,HttpServletRequest request){
 		Survey survey = surveyService.selectSurvey(id);
 		Paper paper=paperService.selectPaper(String.valueOf(survey.getPaperId()));
 		logger.info(survey.getIsAnonymous());
@@ -195,7 +195,9 @@ public class SurveyController {
 		model.addAttribute("survey", survey);
 		model.addAttribute("paper",paper);
 		model.addAttribute("groups",groups);
+		model.addAttribute("url",configProperties.getProperty(APPPATH)+request.getContextPath()+configProperties.getProperty(SURVEYPATH)+id);
 		model.addAttribute("isPublish", true);
+		
 		return "survey/publishSurvey";
 	}
 	
@@ -211,9 +213,10 @@ public class SurveyController {
 	
 	@RequestMapping(value = "surveyAction/{id}", method = RequestMethod.POST)
 	public String publishAndSaveSurvey(@ModelAttribute Survey survey,@PathVariable("id") String id,RedirectAttributes redirectAttributes,HttpSession session,HttpServletRequest request){
+		User user = (User) session.getAttribute("user");
 	  if(request.getParameter("act").equalsIgnoreCase("save")){
 			  survey.setStatus("D");
-			  survey.setCreater((User) session.getAttribute("user"));
+			  survey.setCreater(user);
 			  survey.setPaper(paperService.selectPaper(id));
 //			  survey.setPaperURL(ServiceAddr+request.getContextPath()+"/survey/accessSurvey/");
 			  surveyService.createSurvey(survey, "save",null);
@@ -222,8 +225,8 @@ public class SurveyController {
 		  surveyService.updateSurvey(survey);
 		  return "survey/publishOK";
 	  }else{
-		//String isPublish = request.getParameter("isPublish");
-			survey.setCreater((User) session.getAttribute("user"));
+//	     	String isPublish = request.getParameter("isPublish");
+			survey.setCreater(user);
 			survey.setPaper(paperService.selectPaper(id));
 //			survey.setPaperURL(ServiceAddr+request.getContextPath()+"/survey/accessSurvey/");
 			
@@ -234,10 +237,19 @@ public class SurveyController {
 				survey.setStatus("P");
 				surveyService.saveSurvey(survey);
 			}
+			
+			if(survey.getSurveyGroup().equals("")||survey.getSurveyGroup()==null){
+				redirectAttributes.addFlashAttribute("message", "发布成功，调查地址："
+			+configProperties.getProperty(APPPATH)+request.getContextPath()+configProperties.getProperty(SURVEYPATH));
+				return "redirect:/survey/myLaunch";
+			}
+			
 			if(surveyService.createSurvey(survey,"publish",configProperties.getProperty(APPPATH)+request.getContextPath()+configProperties.getProperty(SURVEYPATH))){
-				return "survey/publishOK";
+				redirectAttributes.addFlashAttribute("message", "发布成功！");
+				return "redirect:/survey/myLaunch";
 			} else {
-				return "survey/publishFail";
+				redirectAttributes.addFlashAttribute("message", "发布失败，请重试。");
+				return "redirect:/paper/list?search_userId="+user.getId();
 			}
 		
 	  }
@@ -342,8 +354,8 @@ public class SurveyController {
 	}
 	
 	@RequestMapping(value = "sendNoti", method = RequestMethod.POST)
-	public String sendNoti(RedirectAttributes redirectAttributes,HttpSession session,ServletRequest request){
-		if(surveyService.sendNotification(request.getParameter("receivers"),request.getParameter("subject"),request.getParameter("surveyId") ,request.getParameter("desctription")  ,request.getParameter("URL")))
+	public String sendNoti(RedirectAttributes redirectAttributes,HttpSession session,HttpServletRequest request){
+		if(surveyService.sendNotification(request.getParameter("receivers"),request.getParameter("subject"),request.getParameter("surveyId") ,request.getParameter("desctription")  ,configProperties.getProperty(APPPATH)+request.getContextPath()+configProperties.getProperty(SURVEYPATH)))
 		  return "survey/publishOK";
 		else {
 		  return "survey/publishFail";

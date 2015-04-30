@@ -71,11 +71,11 @@
 		        $("#ddateEmptyError").hide();
 		        $("#ddateInvalidError").hide();
 		        $("#groupError").hide();
-		    }else if(_surveyGroup==""){
-		        $("#subjectError").hide();
-		        $("#ddateEmptyError").hide();
-		        $("#ddateInvalidError").hide();
-		        $("#groupError").show();
+// 		    }else if(_surveyGroup==""){
+// 		        $("#subjectError").hide();
+// 		        $("#ddateEmptyError").hide();
+// 		        $("#ddateInvalidError").hide();
+// 		        $("#groupError").show();
 		    }else{
 		        $("#subjectError").hide();
 		        $("#ddateEmptyError").hide();
@@ -247,6 +247,8 @@
 					</div>
 				</div>	
 				<div class="control-group">
+				<c:choose>
+				<c:when test="${survey.groupsString!=''}">
 				<label for="question" class="control-label formlabel"><spring:message code="survey.publishsurvey.groups"/></label>		
 				<c:if test="${survey.status=='P' || survey.status=='F'}"><div class="controls"><input type="text" disabled="disabled" value="${survey.groupsString }"></div></c:if>
 				 <c:if test="${survey.status!='P' && survey.status!='F'}">
@@ -257,6 +259,14 @@
 					 </div>
 					 <span id="groupError" class="error" style="display:none"><spring:message code="survey.publishsurvey.groups.error"/></span>
 					 </c:if>
+				</c:when>
+				<c:otherwise>
+				<label for="question" class="control-label formlabel"><spring:message code="survey.publishsurvey.url"/></label>
+				    <div class="controls" style="width:550px">
+				   ${url}
+				    </div>
+				</c:otherwise>
+				</c:choose>	 
 				</div>
 				<input type="text" name="surveyGroup" id="surveyGroup" style="display:none;">
 				<input type="hidden" name="isPublish" id="isPublish" value="${isPublish }">

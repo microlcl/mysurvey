@@ -93,6 +93,9 @@
 				<button type="submit" class="btn" id="search_btn_test"><i class="icon-search"></i></button>
 			</form>
 		</div>
+		<c:if test="${not empty message}">
+		   <div id="message" style="margin-left:20px;margin-top:20px;" class="alert alert-error input-medium controls"><button data-dismiss="alert" class="close">×</button>${message}</div>
+		</c:if>
 		<div  style="padding:20px;">
 			<table id="contentTable" class="table table-striped table-bordered table-condensed">
 				<thead>

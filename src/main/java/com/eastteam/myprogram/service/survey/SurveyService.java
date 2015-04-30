@@ -115,12 +115,14 @@ public class SurveyService extends PageableService {
 			
 			String[] groupsid = survey.getGroupsId().trim().split(",");
 			String groupString = "";
-			for (String s : groupsid) {
-				Group g = myGroupMybatisDao.getSelectedGroup(Long.parseLong(s.trim()));
-				groupString += g.getGroupName() + ",";
+			if(groupsid.length>1){
+				for (String s : groupsid) {
+					Group g = myGroupMybatisDao.getSelectedGroup(Long.parseLong(s.trim()));
+					groupString += g.getGroupName() + ",";
+				}
+				groupString = groupString.substring(0, groupString.length() - 1);
 			}
 			
-			groupString = groupString.substring(0, groupString.length() - 1);
 			survey.setGroupsString(groupString);
 		}
 		return surveys;
@@ -135,12 +137,14 @@ public class SurveyService extends PageableService {
 		Survey survey = this.surveyMybatisDao.selectSurvey(Long.parseLong(surveyId));
 		String[] groupsid = survey.getGroupsId().trim().split(",");
 		String groupString = "";
-		for (String s : groupsid) {
-			Group g = myGroupMybatisDao.getSelectedGroup(Long.parseLong(s.trim()));
-			groupString += g.getGroupName() + ",";
+		if (groupsid.length > 1) {
+			for (String s : groupsid) {
+				Group g = myGroupMybatisDao.getSelectedGroup(Long.parseLong(s
+						.trim()));
+				groupString += g.getGroupName() + ",";
+			}
+			groupString = groupString.substring(0, groupString.length() - 1);
 		}
-		
-		groupString = groupString.substring(0, groupString.length() - 1);
 		survey.setGroupsString(groupString);
 		survey.setGroupIds(survey.getGroupsId().trim().split(","));
 		return survey;
@@ -188,28 +192,33 @@ public class SurveyService extends PageableService {
 	
 	public boolean createSurvey(Survey survey,String act,String surveyPath){
 		if(act.equalsIgnoreCase("update")){
+			
 			this.updateSurvey(survey);
+			
 		}else if(act.equalsIgnoreCase("save")){
+			
 			this.saveSurvey(survey);
+			
 		}else if (act.equalsIgnoreCase("publish")) {
-			HashSet<String> _receiver=new HashSet<String>();
-			HashSet<String[]> _receiversInfo=new HashSet<String[]>();
 			String[] groupsId=survey.getSurveyGroup().split("\\,");
-			List<SurveyReceiver> surveyReceivers=new ArrayList<SurveyReceiver>();
-			List<Group> groups=new ArrayList<Group>();
-			for(String groupId : groupsId){
-				groups.add(myGroupMybatisDao.getSelectedGroup(Long.parseLong(groupId)));
-			}
-			for(Group group : groups){
-				group.setGitems();
-				for(String[] gitems : group.getGitems()){
-					_receiver.add(gitems[1]);
-					_receiversInfo.add(gitems);
+			if(groupsId.length>0){
+				HashSet<String> _receiver=new HashSet<String>();
+				HashSet<String[]> _receiversInfo=new HashSet<String[]>();
+				List<SurveyReceiver> surveyReceivers=new ArrayList<SurveyReceiver>();
+				List<Group> groups=new ArrayList<Group>();
+				for(String groupId : groupsId){
+					groups.add(myGroupMybatisDao.getSelectedGroup(Long.parseLong(groupId)));
 				}
-			}
-			if(act.equalsIgnoreCase("publish")){
-				for(String[] recInfoItem : _receiversInfo){
-					SurveyReceiver surveyReceiver=new SurveyReceiver();
+				for(Group group : groups){
+					group.setGitems();
+					for(String[] gitems : group.getGitems()){
+						_receiver.add(gitems[1]);
+						_receiversInfo.add(gitems);
+					}
+				}
+				
+				for (String[] recInfoItem : _receiversInfo) {
+					SurveyReceiver surveyReceiver = new SurveyReceiver();
 					surveyReceiver.setNickName(recInfoItem[0]);
 					surveyReceiver.setUserId(recInfoItem[1]);
 					surveyReceiver.setStatus("0");
@@ -217,34 +226,44 @@ public class SurveyService extends PageableService {
 					surveyReceiver.setSurveyId(survey.getId());
 					surveyReceivers.add(surveyReceiver);
 				}
-				Map<String, Object> map=new HashMap<String, Object>();
+				Map<String, Object> map = new HashMap<String, Object>();
 				map.put("surveyReceivers", surveyReceivers);
 				surveyReceiverMybatisDao.save(map);
-				logger.info("save new survey :"+ survey.getSubject()+" by user:"+survey.getCreater().getEmail()+",asscoiated survey receivers:");
-				for(SurveyReceiver _surveyReceiver : surveyReceivers){
+				logger.info("save new survey :" + survey.getSubject() + " by user:"
+						+ survey.getCreater().getEmail()
+						+ ",asscoiated survey receivers:");
+				for (SurveyReceiver _surveyReceiver : surveyReceivers) {
 					logger.info(_surveyReceiver.getUserId());
 				}
 				logger.info("===>receiver list over");
-				logger.info("===>SurveyUrl:"+surveyPath+survey.getId());
-			    return new EmailSender().sendmail(configProperties.getProperty(EMAIL_SYS),
-			    		configProperties.getProperty(EMAIL_SYS_PSW),
-			    		configProperties.getProperty(EMAIL_SYS_STMP),
-			    		survey.getSubject(),_receiver.toArray(), survey.getDescription(),surveyPath+survey.getId(), "text/html;charset=gb2312");
-				//return true;
+				logger.info("===>SurveyUrl:" + surveyPath + survey.getId());
+				return new EmailSender().sendmail(
+						configProperties.getProperty(EMAIL_SYS),
+						configProperties.getProperty(EMAIL_SYS_PSW),
+						configProperties.getProperty(EMAIL_SYS_STMP),
+						survey.getSubject(), _receiver.toArray(),
+						survey.getDescription(), surveyPath + survey.getId(),
+						"text/html;charset=gb2312");
+				// return true;
+				// return false;
 			}
 		}
-		return true;
+		return false;
 	}
 	
 	
 	public boolean sendNotification(String receivers,String subject,String surveyId,String desctription,String URL){
 		String _receiver[] = receivers.split("\\,");
 		logger.info("send notification");
-	    return new EmailSender().sendmail(configProperties.getProperty(EMAIL_SYS),
+	    return new EmailSender().sendmail(
+	    		configProperties.getProperty(EMAIL_SYS),
 	    		configProperties.getProperty(EMAIL_SYS_PSW),
 	    		configProperties.getProperty(EMAIL_SYS_STMP),
-	    		subject,_receiver, desctription, URL+surveyId, "text/html;charset=gb2312");
-		//return true;
+	    		subject,_receiver,
+	    		desctription, 
+	    		URL+surveyId, 
+	    		"text/html;charset=gb2312");
+//		return true;
 	}
 	
 	public List<SurveyReceiver> getAssociatedReceivers(Map<String, Object> map){
