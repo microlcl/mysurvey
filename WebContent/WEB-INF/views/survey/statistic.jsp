@@ -3,6 +3,7 @@
 <%@ taglib prefix="tags" tagdir="/WEB-INF/tags" %>
 <%@ taglib uri="http://com.eastteam.myprogram/mytaglib" prefix="mytag" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
 <html>
 <head>
@@ -40,17 +41,17 @@ function groupBy(obj){
 }
 
 </script>
-<title>答案统计</title>
+<title><spring:message code="survey.statistic.title"/></title>
 </head>
 <body>
 <div class="form">
-	<h1>答案统计： ${survey.subject} 
-	   <br> 发起人：${survey.userId} &nbsp&nbsp&nbsp 截止日期：<fmt:formatDate value="${survey.deadlineTimestamp}" pattern="yyyy年MM月dd日   HH:mm"/>
+	<h1><spring:message code="survey.statistic.statistic"/> ${survey.subject} 
+	   <br> <spring:message code="survey.statistic.initiator"/>${survey.userId} &nbsp&nbsp&nbsp <spring:message code="survey.statistic.deadline"/><fmt:formatDate value="${survey.deadlineTimestamp}" pattern="yyyy年MM月dd日   HH:mm"/>
 	</h1>
 	<div  style="padding:20px;">
 		<ul class="nav nav-tabs" id="titleTab">
-		    <li class="active"><a href="#statistic" data-toggle="tab">答案统计</a></li>
-		    <li><a href="#submitted" data-toggle="tab">参与问卷查看</a></li>
+		    <li class="active"><a href="#statistic" data-toggle="tab"><spring:message code="survey.statistic.statistictab"/></a></li>
+		    <li><a href="#submitted" data-toggle="tab"><spring:message code="survey.statistic.seeparticipation"/></a></li>
 	    </ul>
 	    
 	    <div id="titleTabContent" class="tab-content" style="padding:20px;">
@@ -82,7 +83,7 @@ function groupBy(obj){
 									${option.content}
 								</label>
 							    <div class="${barClass }">
-							    	<div class="bar" style="width: ${option.percent * 100}%"><fmt:formatNumber type="number" value="${option.percent * 100}" maxFractionDigits="2"/>%(${option.count}次)</div>
+							    	<div class="bar" style="width: ${option.percent * 100}%"><fmt:formatNumber type="number" value="${option.percent * 100}" maxFractionDigits="2"/>%(${option.count}<spring:message code="survey.statistic.count"/>)</div>
 							    </div>
 							</c:forEach>
 						</c:if>
@@ -97,7 +98,7 @@ function groupBy(obj){
 		   		<c:if test="${survey.status=='P' || survey.status=='F'}">
 				<form id="SendNotification" action="${ctx}/survey/sendNoti" method="post" class="form-horizontal">
 					<div class="control-group">
-						<label for="question" class="control-label formlabel">问卷完成状况:</label>
+						<label for="question" class="control-label formlabel"><spring:message code="survey.statistic.finishcondition"/></label>
 						<div class="controls">
 							<div class="accordion-group" style="width: 500px;">
 								<div class="accordion-heading">
@@ -105,16 +106,16 @@ function groupBy(obj){
 										<a href="#collapse" data-toggle="collapse"
 											class="accordion-toggle"
 											style="display: inline-block; word-wrap: break-word; text-decoration: none;">
-											点击查看问卷完成状况 </a>
+											<spring:message code="survey.statistic.finishcondition.button"/> </a>
 									</center>
 
 								</div>
 								<div class="accordion-body collapse" id="collapse">
 								<div class="accordion-inner" style="padding-left: 260px">
 									<select onchange="groupBy(this)" >
-										<option value="1">显示全部</option>
-										<option value="2">未完成</option>
-										<option value="3">已完成</option>
+										<option value="1"><spring:message code="survey.statistic.groupby1"/></option>
+										<option value="2"><spring:message code="survey.statistic.groupby2"/></option>
+										<option value="3"><spring:message code="survey.statistic.groupby3"/></option>
 									</select>
 								</div>
 									<c:forEach items="${surveyReceivers}" var="surveyReceiver" varStatus="status">
@@ -167,22 +168,22 @@ function groupBy(obj){
 									 </c:choose>
 									 <c:choose>
 									   <c:when test="${surveyReceiver.status==0}">
-									      <span  class="error" style="float:right;margin-right:140px">未完成</span>
+									      <span  class="error" style="float:right;margin-right:140px"><spring:message code="survey.statistic.unfinished"/></span>
 									   </c:when >
 									   <c:otherwise>
-									      <span style="float:right;padding-right:10px"><i class="icon-ok"></i><font color="green" style="font-weight:bold;">已操作于</font>-- <fmt:formatDate value="${surveyReceiver.update_timeStamp}" pattern="yyyy/MM/dd  HH:mm"/></span>
+									      <span style="float:right;padding-right:10px"><i class="icon-ok"></i><font color="green" style="font-weight:bold;"><spring:message code="survey.statistic.operationtime"/></font>-- <fmt:formatDate value="${surveyReceiver.update_timeStamp}" pattern="yyyy/MM/dd  HH:mm"/></span>
 									   </c:otherwise>
 									   </c:choose>
 									</div>
 								</c:forEach>
 									<c:if test="${(survey.status=='P')&& receivers!=''}">
 									<input type="text" name="surveyId" value="${survey.id }" style="display:none;">
-				                    <input type="text" name="subject" value="来自${survey.userId}的问卷调查：${survey.subject}的提醒" style="display:none;"> 
+				                    <input type="text" name="subject" value="<spring:message code="survey.statistic.subject1"/>${survey.userId}<spring:message code="survey.statistic.subject2"/>${survey.subject}<spring:message code="survey.statistic.subject3"/>" style="display:none;"> 
 				                    <input type="text" name="receivers" value="${receivers }" style="display:none;">
 				                    <input type="text" name="URL" value="${survey.paperURL }" style="display:none;">
 									<div class="accordion-inner" id="0_sender">
-									   <textarea name="desctription" style="width:340px;height:80px">Hi Dear<br>    请尽快完成调查，点击下方链接或将地址复制到浏览器地址栏中打开。<br>调查截止日期：   <fmt:formatDate value="${survey.deadlineTimestamp}" pattern="yyyy年MM月dd日   HH:mm"/></textarea>
-									   <input type="button" id="sendbtn" value="点击发送提醒" class="btn btn-warning" onclick="sendNoti()" style="height:80px">
+									   <textarea name="desctription" style="width:340px;height:80px">Hi Dear<br>    <spring:message code="survey.statistic.description"/><br><spring:message code="survey.statistic.surveydeadline"/>   <fmt:formatDate value="${survey.deadlineTimestamp}" pattern="yyyy年MM月dd日   HH:mm"/></textarea>
+									   <input type="button" id="sendbtn" value="<spring:message code="survey.statistic.sendbtn"/>" class="btn btn-warning" onclick="sendNoti()" style="height:80px">
 									</div>
 									</c:if>
 								</div>
