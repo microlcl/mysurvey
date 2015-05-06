@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %> 
+<%@taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
 <html>
 <head>
@@ -18,7 +19,7 @@
 
 	<form id="inputForm" action="${ctx}/account/save/profile" method="post" class="form-horizontal">
 		<fieldset>
-			<legend><small>个人信息修改</small></legend>
+			<legend><small><spring:message code="updateuserinfo.title"/></small></legend>
 			<c:if test="${not empty message}">
 				<div id="message" class="alert alert-success input-medium controls">				
 					<button data-dismiss="alert" class="close">×</button>
@@ -26,67 +27,67 @@
 				</div>
 			</c:if>
 			<div class="control-group">
-				<label for="id" class="control-label">登录名：</label>
+				<label for="id" class="control-label"><spring:message code="updateuserinfo.loginname"/></label>
 				<div class="controls">
 					<input type="text" id="id" name="id"  value="${updateUser.id}" class="input-large" readonly/>
 				</div>
 			</div>	
 			<div class="control-group">
-				<label for="name" class="control-label">用户名：</label>
+				<label for="name" class="control-label"><spring:message code="updateuserinfo.name"/></label>
 				<div class="controls">
 					<input type="text" id="name" name="name"  value="${updateUser.name}" maxlength="64" class="input-large required" />
 				</div>
 			</div>	
  			<div class="control-group">
-				<label for="plainPassword" class="control-label">密码:</label>
+				<label for="plainPassword" class="control-label"><spring:message code="updateuserinfo.password"/></label>
 				<div class="controls">
 					<input type="password" id="plainPassword" name="plainPassword" maxlength="32" class="input-large required"/>
 				</div>
 			</div>
 			<div class="control-group">
-				<label for="confirmPassword" class="control-label">确认密码:</label>
+				<label for="confirmPassword" class="control-label"><spring:message code="updateuserinfo.confirmpassword"/></label>
 				<div class="controls">
 					<input type="password" id="confirmPassword" name="confirmPassword" class="input-large required" equalTo="#plainPassword"/>
 				</div>
 			</div>
 
 			<div class="control-group">
-				<label for="sex" class="control-label required">性别:</label>
+				<label for="sex" class="control-label required"><spring:message code="updateuserinfo.sex"/></label>
 				<div class="controls">
 					<label class="radio inline">
-						<input type="radio" name="sex" id="sex" value="男" >男
+						<input type="radio" name="sex" id="sex" value="男" ><spring:message code="updateuserinfo.male"/>
 					</label>
 					<label class="radio inline">
-						<input type="radio" name="sex" id="sex" value="女" >女
+						<input type="radio" name="sex" id="sex" value="女" ><spring:message code="updateuserinfo.female"/>
 					</label>
 				</div>
 			</div>	
             <div class="control-group">
-  				  <label class="control-label" for="email">邮箱:</label>
+  				  <label class="control-label" for="email"><spring:message code="updateuserinfo.email"/></label>
   				  <div class="controls">
    				     <input type="email" id="email" name="email" required="" value="${updateUser.email}" maxlength="64" class="input-large">
                   </div>
             </div>	
 			<div class="control-group">
-				<label for="phoneNum" class="control-label">电话号码:</label>
+				<label for="phoneNum" class="control-label"><spring:message code="updateuserinfo.phonenum"/></label>
 				<div class="controls">
 					<input type="text" id="phoneNum" name="phoneNum" class="input-large " maxlength="20" value="${updateUser.phoneNum}" />
 				</div>
 			</div>
 			<div class="control-group">
-				<label for="address" class="control-label">联系地址:</label>
+				<label for="address" class="control-label"><spring:message code="updateuserinfo.address"/></label>
 				<div class="controls">
 					<input type="text" id="address" name="address" class="input-large " maxlength="64" value="${updateUser.address}" />
 				</div>
 			</div>			
 		    <div class="control-group">
-				<label for="hometown" class="control-label">籍贯:</label>
+				<label for="hometown" class="control-label"><spring:message code="updateuserinfo.hometown"/></label>
 				<div class="controls">
 					<input type="text" id="hometown" name="hometown" class="input-large " maxlength="64" value="${updateUser.hometown}" />
 				</div>
 			</div>			
 			<div class="control-group">
-                <label for="userBirthday" class="control-label">出身日期:</label>
+                <label for="userBirthday" class="control-label"><spring:message code="updateuserinfo.birthday"/></label>
                 <div class="input-append date form_date" style="margin-left:20px" >
                     <input size="16" type="text" id="userBirthday" name="userBirthday" style="width:160px" value="<fmt:formatDate value='${updateUser.birthday}' pattern='yyyy-MM-dd'/>" readonly>
                     <span class="add-on"><i class="icon-remove"></i></span>
@@ -96,7 +97,7 @@
 				
             </div>				
 			<div class="control-group">
-				<label for="status" class="control-label">目前情况:</label>
+				<label for="status" class="control-label"><spring:message code="updateuserinfo.status"/></label>
 				<div class="controls">
 					<label style="padding-top: 5px;color:#A1A1A1">
 						${updateUser.status}
@@ -104,14 +105,14 @@
 				</div>
 			</div>	
 			<div class="control-group">
-				<label for="department_id" class="control-label">所在部门:</label>
+				<label for="department_id" class="control-label"><spring:message code="updateuserinfo.dept"/></label>
 				<div class="controls">
 					<label style="padding-top: 5px;color:#A1A1A1">${updateUser.department.name}</label>
 				</div>
 			</div>	
 	
 			<div class="control-group">
-				<label for="role" class="control-label required">当前角色:</label>
+				<label for="role" class="control-label required"><spring:message code="updateuserinfo.role"/></label>
 				<div class="controls" style="width:500px">
 					<c:forEach items="${updateUser.roles}" var="userRole">
 						<label class="checkbox inline" style="width:80px;margin-left:0">
@@ -122,15 +123,15 @@
 			</div>	
 					
 			<div class="control-group">
-				<label for="comment" class="control-label">备注:</label>
+				<label for="comment" class="control-label"><spring:message code="updateuserinfo.comment"/></label>
 				<div class="controls">
 					<textarea id="comment" name="comment" maxlength="128" class="input-large" >${updateUser.comment}</textarea>
 				</div>
 			</div>	
 			
 			<div class="form-actions">
-				<input id="submit_btn" class="btn btn-primary" type="submit" value="提交"/>&nbsp;	
-				<input id="cancel_btn" class="btn" type="button" value="返回" onclick="history.back()"/>
+				<input id="submit_btn" class="btn btn-primary" type="submit" value="<spring:message code="updateuserinfo.submit"/>"/>&nbsp;	
+				<input id="cancel_btn" class="btn" type="button" value="<spring:message code="updateuserinfo.back"/>" onclick="history.back()"/>
 			</div>
 		</fieldset>
 	</form>

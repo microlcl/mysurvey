@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
+<%@taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <c:set var="ctx" value="${pageContext.request.contextPath}" />
 
 
@@ -23,19 +23,19 @@
 	<div class="modal-header">
 		<button type="button" class="close" data-dismiss="modal"
 			aria-hidden="true">&times;</button>
-		<h4>调查问卷选择</h4>
+		<h4><spring:message code="paperpopupwindow.title"/></h4>
 	</div>
 	<div class="modal-body">
 		<!-- 模态对话框begin -->
 		<div class="search-panel">
 			<form class="form-search form-inline" action="#">
-				<label>类别：</label> 
+				<label><spring:message code="paperpopupwindow.type"/></label> 
 		
 				<input id="paperPupup_businessType"
 				class="span1 easyui-combobox"
 				data-options="url:'${ctx}/category/api/getChildren/getBusinessType',method:'get',valueField:'id',textField:'text'" value="${businessTypeId}" <c:if test="${not empty businessTypeId}">readonly</c:if>>
 	
-				<label>表单：</label> 
+				<label><spring:message code="paperpopupwindow.form"/></label> 
 		
 				<input id="paperPupup_formType"
 				class="span1 easyui-combobox"
@@ -43,7 +43,7 @@
 	
 				
 				<div class="input-append">
-				    <input class="span2" id="searchKeyword" type="text" placeholder="问卷名称/描述">
+				    <input class="span2" id="searchKeyword" type="text" placeholder="<spring:message code="paperpopupwindow.searchkeyword"/>">
 				    <button class="btn" style="border-radius:0px 4px 4px 0" type="button" onclick="search()" id="search_btn">Go!</button>
 				</div>
 			</form>
@@ -52,13 +52,13 @@
 		<div class="accordion" style="border-color: transparent" id="myaccordion"></div>
 
 		<div id="loadMore" class="pagination pagination-centered">
-			<button class="btn btn-link" type="button" onclick="loadMore()">加载更多...</button>
+			<button class="btn btn-link" type="button" onclick="loadMore()"><spring:message code="paperpopupwindow.loadmore"/></button>
 		</div>
 		<!-- 模态对话框end -->
 	</div>
 	<div class="modal-footer">
-		<a href="#" class="btn" data-dismiss="modal" aria-hidden="true"">关闭</a> 
-		<a href="#" class="btn btn-primary"	data-dismiss="modal" aria-hidden="true" onclick="getSelectedValue()">确定</a>
+		<a href="#" class="btn" data-dismiss="modal" aria-hidden="true""><spring:message code="paperpopupwindow.close"/></a> 
+		<a href="#" class="btn btn-primary"	data-dismiss="modal" aria-hidden="true" onclick="getSelectedValue()"><spring:message code="paperpopupwindow.ok"/></a>
 	</div>
 </div>
 

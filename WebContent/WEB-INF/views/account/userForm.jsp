@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %> 
+<%@taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
 <html>
 <head>
@@ -18,57 +19,57 @@
 <body>
 	<form id="inputForm" action="${ctx}/account/update" method="post" class="form-horizontal">
 		<div class="form">
-			<h1>用户管理</h1>
+			<h1><spring:message code="userform.title"/></h1>
 			<div class="control-group">
-				<label for="id" class="control-label formlabel">登录名：</label>
+				<label for="id" class="control-label formlabel"><spring:message code="userform.loginname"/></label>
 				<div class="controls">
 					<input type="text" id="id" name="id"  value="${formUser.id}" class="input-large" readonly/>
 				</div>
 			</div>	
 			<div class="control-group">
-				<label for="name" class="control-label formlabel">用户名：</label>
+				<label for="name" class="control-label formlabel"><spring:message code="userform.name"/></label>
 				<div class="controls">
 					<input type="text" id="name" name="name"  value="${formUser.name}" class="input-large required" maxlength="64"/>
 				</div>
 			</div>	
 
 			<div class="control-group">
-				<label for="sex" class="control-label required formlabel">性别:</label>
+				<label for="sex" class="control-label required formlabel"><spring:message code="userform.sex"/></label>
 				<div class="controls">
 					<label class="radio inline">
-						<input type="radio" name="sex" id="sex" value="男" >男
+						<input type="radio" name="sex" id="sex" value="男" ><spring:message code="userform.sex.male"/>
 					</label>
 					<label class="radio inline">
-						<input type="radio" name="sex" id="sex" value="女" >女
+						<input type="radio" name="sex" id="sex" value="女" ><spring:message code="userform.sex.female"/>
 					</label>
 				</div>
 			</div>	
             <div class="control-group">
-  				  <label class="control-label formlabel" for="email">邮箱:</label>
+  				  <label class="control-label formlabel" for="email"><spring:message code="userform.email"/></label>
   				  <div class="controls">
    				     <input type="email" id="email" name="email" required="" value="${formUser.email}" maxlength="64" class="input-large">
                   </div>
             </div>	
 			<div class="control-group">
-				<label for="phoneNum" class="control-label formlabel">电话号码:</label>
+				<label for="phoneNum" class="control-label formlabel"><spring:message code="userform.phonenum"/></label>
 				<div class="controls">
 					<input type="text" id="phoneNum" name="phoneNum" class="input-large " value="${formUser.phoneNum}" maxlength="20"/>
 				</div>
 			</div>
 			<div class="control-group">
-				<label for="address" class="control-label formlabel">联系地址:</label>
+				<label for="address" class="control-label formlabel"><spring:message code="userform.address"/></label>
 				<div class="controls">
 					<input type="text" id="address" name="address" class="input-large " value="${formUser.address}" maxlength="64" />
 				</div>
 			</div>			
 		    <div class="control-group"> 
-				<label for="hometown" class="control-label formlabel">籍贯:</label>
+				<label for="hometown" class="control-label formlabel"><spring:message code="userform.hometown"/></label>
 				<div class="controls">
 					<input type="text" id="hometown" name="hometown" class="input-large " value="${formUser.hometown}" maxlength="64" />
 				</div>
 			</div>			
 			<div class="control-group">
-                <label for="userBirthday" class="control-label formlabel">出身日期:</label>
+                <label for="userBirthday" class="control-label formlabel"><spring:message code="userform.birthday"/></label>
                 <div class="input-append date form_date" style="margin-left:20px" >
                     <input size="16" type="text" id="userBirthday" name="userBirthday" style="width:160px" value="<fmt:formatDate value='${formUser.birthday}' pattern='yyyy-MM-dd'/>" readonly>
                     <span class="add-on"><i class="icon-remove"></i></span>
@@ -78,28 +79,28 @@
 				
             </div>				
 			<div class="control-group">
-				<label for="status" class="control-label formlabel">目前情况:</label>
+				<label for="status" class="control-label formlabel"><spring:message code="userform.status"/></label>
 				<div class="controls">
 					<label class="radio inline">
-						<input type="radio" name="status" id="status" value="在职" >在职
+						<input type="radio" name="status" id="status" value="在职" ><spring:message code="userform.status.onjob"/>
 					</label>
 					<label class="radio inline">
-						<input type="radio" name="status" id="status" value="离职" >离职
+						<input type="radio" name="status" id="status" value="离职" ><spring:message code="userform.status.leavejob"/>
 					</label>
 					<label class="radio inline">
-						<input type="radio" name="status" id="status" value="停薪留职" >停薪留职
+						<input type="radio" name="status" id="status" value="停薪留职" ><spring:message code="userform.status.leavewithoutpay"/>
 					</label>									
 				</div>
 			</div>	
 			<div class="control-group">
-				<label for="department_id" class="control-label formlabel">所在部门:</label>
+				<label for="department_id" class="control-label formlabel"><spring:message code="userform.dept"/></label>
 				<div class="controls">
 				    <input id="department_id" name="department.id" value="${formUser.department.id}" class="easyui-combotree" data-options="url:'${ctx}/department/api/get',method:'get',required:false">
 				</div>
 			</div>	
 	
 			<div class="control-group">
-				<label for="role" class="control-label required formlabel">当前角色:</label>
+				<label for="role" class="control-label required formlabel"><spring:message code="userform.role"/></label>
 				<div class="controls onefield" style="width:500px">
 					<c:forEach items="${allRoles}" var="allRole">
 						<label class="checkbox inline" style="margin-left:10px;width:80px;">
@@ -111,15 +112,15 @@
 			</div>	
 					
 			<div class="control-group">
-				<label for="comment" class="control-label formlabel">备注:</label>
+				<label for="comment" class="control-label formlabel"><spring:message code="userform.comment"/></label>
 				<div class="controls">
 					<textarea id="comment" name="comment" maxlength="128" class="input-large">${formUser.comment}</textarea>
 				</div>
 			</div>	
 			
 			<div class="form-actions">
-				<input id="submit_btn" class="btn btn-warning" type="submit" value="提交"/>&nbsp;	
-				<input id="cancel_btn" class="btn" type="button" value="返回" onclick="history.back()"/>
+				<input id="submit_btn" class="btn btn-warning" type="submit" value="<spring:message code="userform.submit"/>"/>&nbsp;	
+				<input id="cancel_btn" class="btn" type="button" value="<spring:message code="userform.back"/>" onclick="history.back()"/>
 			</div>
 		</div>
 	</form>

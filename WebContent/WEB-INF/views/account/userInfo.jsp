@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %> 
+<%@taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
 <html>
 <head>
@@ -12,48 +13,48 @@
 
 <body>
 	<div class="form">
-		<h1>用户信息</h1>
+		<h1><spring:message code="userinfo.title"/></h1>
 		<div style="padding:20px;">
 		<table class="table table-striped table-bordered table-condensed">
 			<tbody>
 				<tr>
-					<td style="width:80px" class="formlabel">用户名：</td>
+					<td style="width:80px" class="formlabel"><spring:message code="userinfo.loginname"/></td>
 					<td style="color:#A1A1A1">${infoUser.name}</td>
 				</tr>
 				<tr>
-					<td class="formlabel" >性别：</td>
+					<td class="formlabel" ><spring:message code="userinfo.sex"/></td>
 					<td style="color:#A1A1A1">${infoUser.sex}</td>
 				</tr>
 				<tr>
-					<td class="formlabel">邮箱：</td>
+					<td class="formlabel"><spring:message code="userinfo.email"/></td>
 					<td style="color:#A1A1A1">${infoUser.email}</td>
 				</tr>
 				<tr>
-					<td class="formlabel">电话号码：</td>
+					<td class="formlabel"><spring:message code="userinfo.phonenum"/></td>
 					<td style="color:#A1A1A1">${infoUser.phoneNum}</td>
 				</tr>
 				<tr>
-					<td class="formlabel">联系地址：</td>
+					<td class="formlabel"><spring:message code="userinfo.address"/></td>
 					<td style="color:#A1A1A1">${infoUser.address}</td>
 				</tr>
 				<tr>
-					<td class="formlabel">籍贯：</td>
+					<td class="formlabel"><spring:message code="userinfo.hometown"/></td>
 					<td style="color:#A1A1A1">${infoUser.hometown}</td>
 				</tr>
 				<tr>
-					<td class="formlabel">出身日期：</td>
+					<td class="formlabel"><spring:message code="userinfo.birthday"/></td>
 					<td style="color:#A1A1A1"><fmt:formatDate value="${infoUser.birthday}" pattern="yyyy-MM-dd"/> </td>
 				</tr>
 				<tr>
-					<td class="formlabel">目前情况：</td>
+					<td class="formlabel"><spring:message code="userinfo.status"/></td>
 					<td style="color:#A1A1A1">${infoUser.status}</td>
 				</tr>
 				<tr>
-					<td class="formlabel">所在部门：</td>
+					<td class="formlabel"><spring:message code="userinfo.dept"/></td>
 					<td style="color:#A1A1A1">${infoUser.department.name}</td>
 				</tr>
 				<tr>
-					<td style="padding-top: 13px;" class="formlabel">当前角色：</td>
+					<td style="padding-top: 13px;" class="formlabel"><spring:message code="userinfo.role"/></td>
 					<td style="color:#A1A1A1">
 					<div class="controls" style="width:500px">
 					<c:forEach items="${infoUser.roles}" var="userRole">
@@ -65,14 +66,14 @@
 					</td>
 				</tr>
 				<tr>
-					<td class="formlabel">备注：</td>
+					<td class="formlabel"><spring:message code="userinfo.comment"/></td>
 					<td style="color:#A1A1A1">${infoUser.comment}</td>
 				</tr>
 			</tbody>
 		</table>
 		</div>
 			<div class="form-actions">
-				<input id="cancel_btn" class="btn" type="button" value="返回" onclick="history.back()"/>
+				<input id="cancel_btn" class="btn" type="button" value="<spring:message code="userinfo.back"/>" onclick="history.back()"/>
 			</div>
    </div>
 

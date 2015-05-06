@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
 
 <html>
@@ -18,68 +19,68 @@
 <body>
 	<form id="inputForm" action="${ctx}/account/register" method="post" class="form-horizontal">
 		<fieldset>
-			<legend><small>用户注册</small></legend>
+			<legend><small><spring:message code="register.title"/></small></legend>
 			<div class="control-group">
-				<label for="loginName" class="control-label">登录名:</label>
+				<label for="loginName" class="control-label"><spring:message code="register.loginname"/></label>
 				<div class="controls">
 					<input type="text" id="id" name="id" maxlength="64" class="input-large required"/>
 				</div>
 			</div>
 			<div class="control-group">
-				<label for="name" class="control-label">用户名:</label>
+				<label for="name" class="control-label"><spring:message code="register.name"/></label>
 				<div class="controls">
 					<input type="text" id="name" name="name" maxlength="64" class="input-large required"/>
 				</div>
 			</div>
 			<div class="control-group">
-				<label for="plainPassword" class="control-label">密码:</label>
+				<label for="plainPassword" class="control-label"><spring:message code="register.password"/></label>
 				<div class="controls">
 					<input type="password" id="plainPassword" name="plainPassword" maxlength="32" class="input-large required"/>
 				</div>
 			</div>
 			<div class="control-group">
-				<label for="confirmPassword" class="control-label">确认密码:</label>
+				<label for="confirmPassword" class="control-label"><spring:message code="register.confirmpassword"/></label>
 				<div class="controls">
 					<input type="password" id="confirmPassword" name="confirmPassword" class="input-large required" equalTo="#plainPassword"/>
 				</div>
 			</div>
 			<div class="control-group">
-				<label for="sex" class="control-label">性别:</label>
+				<label for="sex" class="control-label"><spring:message code="register.sex"/></label>
 				<div class="controls">
 					<label class="radio inline">
-						<input type="radio" name="sex" id="sex" value="男" checked>男
+						<input type="radio" name="sex" id="sex" value="男" checked><spring:message code="register.sex.male"/>
 					</label>
 					<label class="radio inline">
-						<input type="radio" name="sex" id="sex" value="女" >女
+						<input type="radio" name="sex" id="sex" value="女" ><spring:message code="register.sex.female"/>
 					</label>
 				</div>
 			</div>	
             <div class="control-group">
-  				  <label class="control-label" for="email">邮箱:</label>
+  				  <label class="control-label" for="email"><spring:message code="register.email"/></label>
   				  <div class="controls">
    				     <input type="email" id="email" name="email" required="" maxlength="64" placeholder="abc@gmail.com" class="input-large">
                   </div>
             </div>	
 			<div class="control-group">
-				<label for="phoneNum" class="control-label">电话号码:</label>
+				<label for="phoneNum" class="control-label"><spring:message code="register.phonenum"/></label>
 				<div class="controls">
 					<input type="text" id="phoneNum" name="phoneNum" maxlength="20" class="input-large" />
 				</div>
 			</div>
 						<div class="control-group">
-				<label for="address" class="control-label">联系地址:</label>
+				<label for="address" class="control-label"><spring:message code="register.address"/></label>
 				<div class="controls">
 					<input type="text" id="address" name="address"  maxlength="64"class="input-large" />
 				</div>
 			</div>			
 		    <div class="control-group">
-				<label for="hometown" class="control-label">籍贯:</label>
+				<label for="hometown" class="control-label"><spring:message code="register.hometown"/></label>
 				<div class="controls">
 					<input type="text" id="hometown" name="hometown" class="input-large"  maxlength="64"/>
 				</div>
 			</div>			
 			<div class="control-group">
-                <label for="userBirthday" class="control-label">出身日期:</label>
+                <label for="userBirthday" class="control-label"><spring:message code="register.birthday"/></label>
                 <div class="input-append date form_date" style="margin-left:20px" >
                     <input size="16" type="text" id="userBirthday" name="userBirthday" style="width:160px"  readonly>
                     <span class="add-on"><i class="icon-remove"></i></span>
@@ -89,8 +90,8 @@
 				
             </div>	
 			<div class="form-actions">
-				<input id="submit_btn" class="btn btn-primary" type="submit" value="提交"/>&nbsp;	
-				<input id="cancel_btn" class="btn" type="button" value="返回" onclick="history.back()"/>
+				<input id="submit_btn" class="btn btn-primary" type="submit" value="<spring:message code="register.submit"/>"/>&nbsp;	
+				<input id="cancel_btn" class="btn" type="button" value="<spring:message code="register.back"/>" onclick="history.back()"/>
 			</div>
 		</fieldset>
 	</form>

@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
+<%@taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <c:set var="ctx" value="${pageContext.request.contextPath}" />
 
 
@@ -20,13 +20,13 @@
 	<div class="modal-header">
 		<button type="button" class="close" data-dismiss="modal"
 			aria-hidden="true">&times;</button>
-		<h4>问题选择</h4>
+		<h4><spring:message code="questionpopupwindow.title"/></h4>
 	</div>
 	<div class="modal-body">
 		<!-- 模态对话框begin -->
 		<div class="search-panel">
 			<form class="form-search form-inline" action="#">
-					<label>类别：</label> 
+					<label><spring:message code="questionpopupwindow.type"/></label> 
 					<input id="categorySelector" name="search_categoryId" class="easyui-combotree" multiple data-options="url:'${ctx}/category/api/getAll/getBusinessType',method:'get',required:false" style="width:200px;">	
 						
 					<div class="input-append">
@@ -39,13 +39,13 @@
 		<div class="accordion" style="border-color: transparent" id="myaccordion"></div>
 
 		<div id="loadMore" class="pagination pagination-centered">
-			<button class="btn btn-link" type="button" onclick="loadMore()">加载更多...</button>
+			<button class="btn btn-link" type="button" onclick="loadMore()"><spring:message code="questionpopupwindow.loadmore"/></button>
 		</div>
 		<!-- 模态对话框end -->
 	</div>
 	<div class="modal-footer">
-		<a href="#" class="btn" data-dismiss="modal" aria-hidden="true"">关闭</a> 
-		<a href="#" class="btn btn-primary"	data-dismiss="modal" aria-hidden="true" onclick="getSelectedValue()">确定</a>
+		<a href="#" class="btn" data-dismiss="modal" aria-hidden="true""><spring:message code="questionpopupwindow.close"/></a> 
+		<a href="#" class="btn btn-primary"	data-dismiss="modal" aria-hidden="true" onclick="getSelectedValue()"><spring:message code="questionpopupwindow.ok"/></a>
 	</div>
 </div>
 
