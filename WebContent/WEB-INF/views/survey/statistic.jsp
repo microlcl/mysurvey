@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="tags" tagdir="/WEB-INF/tags" %>
 <%@ taglib uri="http://com.eastteam.myprogram/mytaglib" prefix="mytag" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>1-0-3-1
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
 <html>
@@ -95,7 +95,7 @@ function groupBy(obj){
 		      </c:forEach>
 		   </div>
 		   <div class="tab-pane fade" id="submitted">
-		   		<c:if test="${survey.status=='P' || survey.status=='F'}">
+		   		<c:if test="${survey.status=='1-0-3-1' || survey.status=='1-0-3-2'}">
 				<form id="SendNotification" action="${ctx}/survey/sendNoti" method="post" class="form-horizontal">
 					<div class="control-group">
 						<label for="question" class="control-label formlabel"><spring:message code="survey.statistic.finishcondition"/></label>
@@ -176,7 +176,7 @@ function groupBy(obj){
 									   </c:choose>
 									</div>
 								</c:forEach>
-									<c:if test="${(survey.status=='P')&& receivers!=''}">
+									<c:if test="${(survey.status=='1-0-3-1')&& receivers!=''}">
 									<input type="text" name="surveyId" value="${survey.id }" style="display:none;">
 				                    <input type="text" name="subject" value="<spring:message code="survey.statistic.subject1"/>${survey.userId}<spring:message code="survey.statistic.subject2"/>${survey.subject}<spring:message code="survey.statistic.subject3"/>" style="display:none;"> 
 				                    <input type="text" name="receivers" value="${receivers }" style="display:none;">

@@ -43,7 +43,7 @@ $(document).ready(function() {
 			<form style="padding-left:10px;">
 				<span  style="float:left;">
 					<spring:message code="survey.mylaunch.status"/>
-					<input id="cc" class="easyui-combotree" data-options="url:'${ctx}/category/api/getSurveyStatus',method:'get',required:false" style="width:200px;" name="search_surveyStatus" value="${param.search_surveyStatus}" />
+					<input id="cc" class="easyui-combotree" data-options="url:'${ctx}/category/api/getAll/surveyStatus',method:'get',required:false" style="width:200px;" name="search_surveyStatus" value="${param.search_surveyStatus}" />
 					&nbsp; &nbsp; &nbsp; &nbsp;<spring:message code="survey.mylaunch.name"/><input type="text" name="search_keyword" value="${param.search_keyword}" style="width:400px;margin-bottom: 0px;margin-left:10px;" placeholder="<spring:message code="survey.mylaunch.name.placeholder"/>">
 					<button type="submit" class="btn" id="search_btn_test"><i class="icon-search"></i></button>
 				</span>
@@ -75,10 +75,10 @@ $(document).ready(function() {
 						<td><a href="${ctx}/myGroup/list"> ${survey.groupsString}</a>&nbsp;</td>
 						<td><fmt:formatDate value="${survey.deadlineTimestamp}" pattern="yyyy年MM月dd日   HH:mm"/>&nbsp;</td>
 						<td>
-							<c:if test="${survey.status!='R'}">	
+							<c:if test="${survey.status!='1-0-3-0'}">	
 							<mytag:PermssionTag functionId="F8-6"><a href="${ctx}/survey/surveyDetail/${survey.id}" id="showLink-${survey.id}"><i class="icon-folder-open"></i> <spring:message code="survey.mylaunch.show"/></a>&nbsp;&nbsp;</mytag:PermssionTag>
 							</c:if>
-							<c:if test="${survey.status=='R'}">	
+							<c:if test="${survey.status=='1-0-3-0'}">	
 							<mytag:PermssionTag functionId="F8-3"><a href="${ctx}/survey/surveyDetail/${survey.id}" id="editLink-${survey.id}"><i class="icon-edit"></i> <spring:message code="survey.mylaunch.show"/><spring:message code="survey.mylaunch.canpublish"/></a>&nbsp;&nbsp;</mytag:PermssionTag>
 							</c:if>
 							<%-- <c:if test="${survey.status=='P' || survey.status=='F'}"> --%>	

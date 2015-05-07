@@ -1,7 +1,7 @@
 package com.eastteam.myprogram.web.survey;
 
-import java.util.Date;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Value;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -215,7 +214,7 @@ public class SurveyController {
 	public String publishAndSaveSurvey(@ModelAttribute Survey survey,@PathVariable("id") String id,RedirectAttributes redirectAttributes,HttpSession session,HttpServletRequest request){
 		User user = (User) session.getAttribute("user");
 	  if(request.getParameter("act").equalsIgnoreCase("save")){
-			  survey.setStatus("D");
+			  survey.setStatus("1-0-3-0"); //D draft
 			  survey.setCreater(user);
 			  survey.setPaper(paperService.selectPaper(id));
 //			  survey.setPaperURL(ServiceAddr+request.getContextPath()+"/survey/accessSurvey/");
@@ -230,11 +229,11 @@ public class SurveyController {
 			survey.setPaper(paperService.selectPaper(id));
 //			survey.setPaperURL(ServiceAddr+request.getContextPath()+"/survey/accessSurvey/");
 			
-			if(survey.getStatus().equalsIgnoreCase("D")){
-				survey.setStatus("P");
+			if(survey.getStatus().equalsIgnoreCase("1-0-3-0")){ // D draft
+				survey.setStatus("1-0-3-1"); //P published
 				surveyService.updateSurvey(survey);
 			}else {
-				survey.setStatus("P");
+				survey.setStatus("1-0-3-1"); //P published
 				surveyService.saveSurvey(survey);
 			}
 			

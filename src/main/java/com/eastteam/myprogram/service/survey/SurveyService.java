@@ -7,8 +7,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
-import javax.persistence.criteria.Path;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,12 +25,9 @@ import com.eastteam.myprogram.dao.SurveyMybatisDao;
 import com.eastteam.myprogram.dao.SurveyReceiverMybatisDao;
 import com.eastteam.myprogram.entity.Answer;
 import com.eastteam.myprogram.entity.Group;
-import com.eastteam.myprogram.entity.Paper;
-import com.eastteam.myprogram.entity.Question;
 import com.eastteam.myprogram.entity.Survey;
 import com.eastteam.myprogram.entity.SurveyReceiver;
 import com.eastteam.myprogram.service.PageableService;
-import com.eastteam.myprogram.service.myGroup.MyGroupService;
 import com.eastteam.myprogram.utils.EmailSender;
 import com.google.common.collect.Maps;
 
@@ -108,11 +103,11 @@ public class SurveyService extends PageableService {
 			//调查状态：D - 草稿(可发布), P - 已发布, F - 已完成
 			survey.setStatus(survey.getStatus().trim()); 
 			
-			if (survey.getStatus().trim().equals("D"))
+			if (survey.getStatus().trim().equals("1-0-3-0"))
 				survey.setStatusString("草稿");
-			if (survey.getStatus().trim().equals("P"))
+			if (survey.getStatus().trim().equals("1-0-3-1"))
 				survey.setStatusString("已发布");
-			if (survey.getStatus().trim().equals("F"))
+			if (survey.getStatus().trim().equals("1-0-3-2"))
 				survey.setStatusString("已完成");
 			
 			logger.debug("Transforming status :" + survey.getStatus() + " to " + survey.getStatusString());

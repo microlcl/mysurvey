@@ -215,7 +215,7 @@
 				<div class="control-group">
 					<label for="question" class="control-label formlabel"><spring:message code="survey.publishsurvey.subject"/></label>
 					<div class="controls">						
-						<input type="text" id="surveySubject" name="subject"  maxlength="128" class="input-large required" placeholder="<spring:message code="survey.publishsurvey.subject.placeholder"/>" <c:if test="${survey.status=='P' || survey.status=='F'}">disabled="disabled"</c:if> <c:if test="${survey.subject!=null }">value="${survey.subject }"</c:if> />
+						<input type="text" id="surveySubject" name="subject"  maxlength="128" class="input-large required" placeholder="<spring:message code="survey.publishsurvey.subject.placeholder"/>" <c:if test="${survey.status=='1-0-3-1' || survey.status=='1-0-3-2'}">disabled="disabled"</c:if> <c:if test="${survey.subject!=null }">value="${survey.subject }"</c:if> />
 						 <span id="subjectError" class="error" style="display:none"><spring:message code="survey.publishsurvey.subject.error"/></span>
 					</div>
 				</div>
@@ -228,14 +228,14 @@
 				<div class="control-group">
 					<label for="question" class="control-label formlabel"><spring:message code="survey.publishsurvey.anonymous"/></label>
 					<div class="controls">
-					   <input type="checkbox" <c:if test="${survey.status=='P' || survey.status=='F'}">disabled="disabled"</c:if> <c:if test="${survey.isAnonymous=='T' }">checked="checked"</c:if> id="isAnonymousCheck" onclick="checkAnonymous()" >
+					   <input type="checkbox" <c:if test="${survey.status=='1-0-3-1' || survey.status=='1-0-3-2'}">disabled="disabled"</c:if> <c:if test="${survey.isAnonymous=='T' }">checked="checked"</c:if> id="isAnonymousCheck" onclick="checkAnonymous()" >
 					   <input type="text" id="isAnonymous" <c:if test="${survey.isAnonymous=='T' }">value="T"</c:if><c:if test="${survey.isAnonymous=='F' }">value="F"</c:if> name="isAnonymous" style="display:none;">
 					</div>
 				</div>
 				<div class="control-group">
 					<label for="question" class="control-label formlabel"><spring:message code="survey.publishsurvey.deadline"/></label>
 					<div class="controls">
-					   <input type="text" <c:if test="${survey.status=='P' || survey.status=='F'}">disabled="disabled"</c:if> id="datetimepicker7" <c:if test="${survey.deadlineTimestamp!=null }"> value="<fmt:formatDate value="${survey.deadlineTimestamp}" pattern="yyyy/MM/dd HH:mm"/>"</c:if> name="deadlineTimestamp" readonly="readonly" placeholder="<spring:message code="survey.publishsurvey.deadline.placeholder"/>" onclick="getDeadline()"  />
+					   <input type="text" <c:if test="${survey.status=='1-0-3-1' || survey.status=='1-0-3-2'}">disabled="disabled"</c:if> id="datetimepicker7" <c:if test="${survey.deadlineTimestamp!=null }"> value="<fmt:formatDate value="${survey.deadlineTimestamp}" pattern="yyyy/MM/dd HH:mm"/>"</c:if> name="deadlineTimestamp" readonly="readonly" placeholder="<spring:message code="survey.publishsurvey.deadline.placeholder"/>" onclick="getDeadline()"  />
 					   <span id="ddateEmptyError" class="error" style="display:none"><spring:message code="survey.publishsurvey.deadline.emptyerror"/></span>
 					   <span id="ddateInvalidError" class="error" style="display:none"><spring:message code="survey.publishsurvey.deadline.invaliderror"/></span>
 					</div>
@@ -243,13 +243,13 @@
 				<div class="control-group">
 					<label for="question" class="control-label formlabel"><spring:message code="survey.publishsurvey.description"/></label>					
 					<div class="controls">
-					    <textarea id="description" <c:if test="${survey.status=='P' || survey.status=='F'}">disabled="disabled"</c:if> name="description" style="width:440px" maxlength="128"><c:if test="${survey.description!=null }">${survey.description }</c:if><c:if test="${survey.description==null }">Hi Dear:<br>    <spring:message code="survey.publishsurvey.description.text"/></c:if></textarea>
+					    <textarea id="description" <c:if test="${survey.status=='1-0-3-1' || survey.status=='1-0-3-2'}">disabled="disabled"</c:if> name="description" style="width:440px" maxlength="128"><c:if test="${survey.description!=null }">${survey.description }</c:if><c:if test="${survey.description==null }">Hi Dear:<br>    <spring:message code="survey.publishsurvey.description.text"/></c:if></textarea>
 					</div>
 				</div>	
 				<div class="control-group">
 				<label for="question" class="control-label formlabel"><spring:message code="survey.publishsurvey.groups"/></label>		
-				<c:if test="${survey.status=='P' || survey.status=='F'}"><div class="controls"><input type="text" disabled="disabled" value="${survey.groupsString }"></div></c:if>
-				 <c:if test="${survey.status!='P' && survey.status!='F'}">
+				<c:if test="${survey.status=='1-0-3-1' || survey.status=='1-0-3-2'}"><div class="controls"><input type="text" disabled="disabled" value="${survey.groupsString }"></div></c:if>
+				 <c:if test="${survey.status!='1-0-3-1' && survey.status!='1-0-3-2'}">
 					 <div class="controls" style="width:550px">
 					  <c:forEach items="${groups}"  var="group" varStatus="status">
 					    <div class="btn" onclick="markGroup(this)" style="margin-top:5px" id="group_${group.id }">${group.groupName}<i class="icon-ok" style="width:20px;display:${group.flagString};"></i><input type="text" value="${group.id }" id="groupid" name="groupid" style="display:none;"></div>
@@ -259,7 +259,7 @@
 					 </c:if>
 				</div>
 				<div class="control-group">
-			    <c:if test="${survey.status=='P'}">
+			    <c:if test="${survey.status=='1-0-3-1'}">
 				<label for="question" class="control-label formlabel"><spring:message code="survey.publishsurvey.url"/></label>
 				    <div class="controls" style="width:550px">
 				   ${url}
@@ -277,7 +277,7 @@
 			<input id="submit_btn" class="btn btn-warning"  type="button" value="<spring:message code="survey.publishsurvey.send"/>" onclick="formatAndCheckAndSend();" />&nbsp;&nbsp;&nbsp;
 			<input id="submit_btn" class="btn btn-success"  type="button" value="<spring:message code="survey.publishsurvey.save"/>" onclick="formatAndCheckAndSave();" />	
 			</c:if>
-			<c:if test="${survey.status=='D'}">
+			<c:if test="${survey.status=='1-0-3-0'}">
 			<input id="submit_btn" class="btn btn-warning"  type="button" value="<spring:message code="survey.publishsurvey.send"/>" onclick="formatAndCheckAndSend();" />&nbsp;&nbsp;&nbsp;
 			<input id="submit_btn" class="btn btn-success"  type="button" value="<spring:message code="survey.publishsurvey.saveupdate"/>" onclick="formatAndCheckAndSaveUpdate();" />	
 			</c:if>

@@ -145,7 +145,7 @@ insert into category(id, pid, name, created_date, trashed, comment) values('1-0-
 insert into category(id, pid, name, created_date, trashed, comment) values('1-0-3','1-0','Survey Status','2014-12-28 02:00:00','F','survey management');
 insert into category(id, pid, name, created_date, trashed, comment) values('1-0-3-0','1-0-3','Draft','2014-12-28 02:00:00','F','survey management');
 insert into category(id, pid, name, created_date, trashed, comment) values('1-0-3-1','1-0-3','Published','2014-12-28 02:00:00','F','survey management');
-insert into category(id, pid, name, created_date, trashed, comment) values('1-0-3-2','1-0-3','Trashed','2014-12-28 02:00:00','F','survey management');
+insert into category(id, pid, name, created_date, trashed, comment) values('1-0-3-2','1-0-3','Completed','2014-12-28 02:00:00','F','survey management');
 
 
 -- 系统参数 end

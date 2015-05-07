@@ -44,7 +44,7 @@ $(document).ready(function() {
 			<form style="padding-left:10px;">
 				<span  style="float:left;">
 					<spring:message code="survey.myparticipation.status"/>
-					<input id="cc" class="easyui-combotree" data-options="url:'${ctx}/category/api/getSurveyStatus',method:'get',required:false" style="width:200px;" name="search_surveyStatus" value="${param.search_surveyStatus}" />
+					<input id="cc" class="easyui-combotree" data-options="url:'${ctx}/category/api/getAll/surveyStatus',method:'get',required:false" style="width:200px;" name="search_surveyStatus" value="${param.search_surveyStatus}" />
 					&nbsp; &nbsp; &nbsp; &nbsp;<spring:message code="survey.myparticipation.name"/><input type="text" name="search_keyword" value="${param.search_keyword}" style="width:400px;margin-bottom: 0px;margin-left:10px;" placeholder="<spring:message code="survey.myparticipation.name.placeholder"/>">
 					<button type="submit" class="btn" id="search_btn_test"><i class="icon-search"></i></button>
 				</span>
