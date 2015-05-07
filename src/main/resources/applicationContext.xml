@@ -62,8 +62,30 @@
 	<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
 	    <property name="basename" value="messages"></property>
 	    <property name="useCodeAsDefaultMessage" value="true"></property>
-	</bean>	
+	</bean>
+	<beans profile="staging">
+		<bean id="configProperties"
+			class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+			<property name="ignoreResourceNotFound" value="true" />
+			<property name="locations">
+				<list>
+					<value>classpath*:/application.properties</value>
+					<value>classpath*:/application.staging.properties</value>
+				</list>
+			</property>
+		</bean>
 
+		<context:property-placeholder
+			ignore-resource-not-found="true" properties-ref="configProperties" />
+
+		<bean id="dataSource"
+			class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
+			<property name="driverClass" value="${jdbc.driver}" />
+			<property name="url" value="${jdbc.url}" />
+			<property name="username" value="${jdbc.username}" />
+			<property name="password" value="${jdbc.password}" />
+		</bean>
+	</beans>
 		<!-- production环境 -->
  	<beans profile="production">
  		<!--context:property-placeholder ignore-unresolvable="true"
@@ -101,29 +123,9 @@
 		<!--jee:jndi-lookup id="dataSource" jndi-name="java:comp/env/jdbc/mysurvey" /-->
 	</beans>
 
- 			<!-- staging环境 -->
- 	<beans profile="staging">
- 		<!--context:property-placeholder ignore-unresolvable="true"
-			location="classpath*:application.properties" /-->
-		<bean id="configProperties" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
-		  <property name="ignoreResourceNotFound" value="true"/>
-		  <property name="locations">
-		    <list>
-		      <value>classpath*:/application.properties</value>
-		      <value>classpath*:/application.staging.properties</value>	
-		    </list>
-		  </property>
-		</bean>
-	
-		<context:property-placeholder ignore-resource-not-found="true" properties-ref="configProperties" />		
-		
-		<bean id="dataSource" class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
-			<property name="driverClass" value="${jdbc.driver}" />
-			<property name="url" value="${jdbc.url}" />
-			<property name="username" value="${jdbc.username}" />
-			<property name="password" value="${jdbc.password}" />	
-		</bean> 		
-	</beans>
+
+ 		
+
 	
 	<!-- unit test环境 -->
 	<beans profile="test">

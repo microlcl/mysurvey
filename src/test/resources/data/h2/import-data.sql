@@ -127,30 +127,31 @@ insert into role_function(role_id, function_id, description) values('R9','F8-6',
 
 
 -- category数据：
-insert into category(id, pid, name, created_date, trashed, comment) values('1','','类别','2012-06-04 02:00:00','F','分类根节点');
+insert into category(id, pid, name, created_date, trashed, comment) values('1','','category','2012-06-04 02:00:00','F','category root');
 -- 系统参数 start
-insert into category(id, pid, name, created_date, trashed, comment) values('1-0','1','系统参数','2014-12-28 02:00:00','F','系统参数');
+insert into category(id, pid, name, created_date, trashed, comment) values('1-0','1','system setting','2014-12-28 02:00:00','F','system setting');
 -- 问卷管理：问卷状态
-insert into category(id, pid, name, created_date, trashed, comment) values('1-0-1','1-0','问卷状态','2014-12-28 02:00:00','F','问卷管理');
-insert into category(id, pid, name, created_date, trashed, comment) values('1-0-1-0','1-0-1','草稿','2014-12-28 02:00:00','F','问卷管理');
-insert into category(id, pid, name, created_date, trashed, comment) values('1-0-1-1','1-0-1','发布','2014-12-28 02:00:00','F','问卷管理');
-insert into category(id, pid, name, created_date, trashed, comment) values('1-0-1-2','1-0-1','废弃','2014-12-28 02:00:00','F','问卷管理');
+insert into category(id, pid, name, created_date, trashed, comment) values('1-0-1','1-0','Paper Status','2014-12-28 02:00:00','F','paper management');
+insert into category(id, pid, name, created_date, trashed, comment) values('1-0-1-0','1-0-1','Draft','2014-12-28 02:00:00','F','paper management');
+insert into category(id, pid, name, created_date, trashed, comment) values('1-0-1-1','1-0-1','Published','2014-12-28 02:00:00','F','paper management');
+insert into category(id, pid, name, created_date, trashed, comment) values('1-0-1-2','1-0-1','Trashed','2014-12-28 02:00:00','F','paper management');
 
 -- business Type
-insert into category(id, pid, name, created_date, trashed, comment) values('1-0-2','1-0','问卷类别','2014-12-28 02:00:00','F','通用系统参数');
-insert into category(id, pid, name, created_date, trashed, comment) values('1-0-2-0','1-0-2','工作调查','2014-12-28 02:00:00','F','通用系统参数');
-insert into category(id, pid, name, created_date, trashed, comment) values('1-0-2-1','1-0-2','环境调查','2014-12-28 02:00:00','F','通用系统参数');
-insert into category(id, pid, name, created_date, trashed, comment) values('1-0-2-2','1-0-2','生活调查','2014-12-28 02:00:00','F','通用系统参数');
+insert into category(id, pid, name, created_date, trashed, comment) values('1-0-2','1-0','Survey Type','2014-12-28 02:00:00','F','system parameters');
+insert into category(id, pid, name, created_date, trashed, comment) values('1-0-2-0','1-0-2','Job','2014-12-28 02:00:00','F','system parameters');
+insert into category(id, pid, name, created_date, trashed, comment) values('1-0-2-1','1-0-2','Life','2014-12-28 02:00:00','F','system parameters');
+insert into category(id, pid, name, created_date, trashed, comment) values('1-0-2-2','1-0-2','Other','2014-12-28 02:00:00','F','system parameters');
+-- survey status
+insert into category(id, pid, name, created_date, trashed, comment) values('1-0-3','1-0','Survey Status','2014-12-28 02:00:00','F','survey management');
+insert into category(id, pid, name, created_date, trashed, comment) values('1-0-3-0','1-0-3','Draft','2014-12-28 02:00:00','F','survey management');
+insert into category(id, pid, name, created_date, trashed, comment) values('1-0-3-1','1-0-3','Published','2014-12-28 02:00:00','F','survey management');
+insert into category(id, pid, name, created_date, trashed, comment) values('1-0-3-2','1-0-3','Trashed','2014-12-28 02:00:00','F','survey management');
 
-insert into category(id, pid, name, created_date, trashed, comment) values('1-0-12','1-0','表单类别','2012-06-04 02:00:00','F','表单类别');
-insert into category(id, pid, name, created_date, trashed, comment) values('1-0-12-1','1-0-12','表单1','2012-06-04 02:00:00','F','表单1');
-insert into category(id, pid, name, created_date, trashed, comment) values('1-0-12-2','1-0-12','表单2','2012-06-04 02:00:00','F','表单2');
-insert into category(id, pid, name, created_date, trashed, comment) values('1-0-12-3','1-0-12','表单3','2012-06-04 02:00:00','F','表单3');
 
 -- 系统参数 end
 insert into function_category(function_id,category_id) values('getBusinessType','1-0-2');
 insert into function_category(function_id,category_id) values('paperStatus','1-0-1');
-insert into function_category(function_id,category_id) values('getFormType', '1-0-12');
+insert into function_category(function_id,category_id) values('surveyStatus','1-0-3');
 
 		
 insert into questions (question_id,question, question_type, question_options, business_type, trashed, user_id, creat_timestamp) values(1,'你是通过什么途径知道我们的产品的1？','1','网上搜索^朋友分享^无意间了解','1-0-2-0','F','ydq',now());

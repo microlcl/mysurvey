@@ -17,7 +17,7 @@ drop table if exists survey;
 
 CREATE TABLE `survey` (
   `survey_id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `status` varchar(1) DEFAULT NULL,  --调查状态： N - 新建, D - 草稿, R - 可发布, P - 已发布, F - 已完成, C - 作废 
+  `status` varchar(64) DEFAULT NULL,  --调查状态： N - 新建, D - 草稿, R - 可发布, P - 已发布, F - 已完成, C - 作废 
   `update_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,  --更新时间
   `user_id` varchar(64) NOT NULL, -- 调查发起人
   `paper_id` bigint(20) NOT NULL,  -- 一次调查只包含一个paper
