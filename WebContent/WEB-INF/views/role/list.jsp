@@ -20,8 +20,8 @@
 	<h1><spring:message code="role.title"/></h1>
 	
 	<div style="padding-left:30px;padding-top:20px">
-	<a href="#newUserRole" role="button" class="btn" data-toggle="modal" style="margin-bottom:30px"><spring:message code="role.newrole"/></a>
-	<div id="newUserRole" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<a href="#newUserRole" role="button" class="btn" data-backdrop="false" data-toggle="modal" style="margin-bottom:30px"><spring:message code="role.newrole"/></a>
+	<div id="newUserRole" class="modal hide fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false">
 		<div class="modal-header">
 			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 			<h3><spring:message code="role.rolegiven"/></h3>
