@@ -6,7 +6,7 @@
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
 <html>
 <head>
-	<title>调查问卷</title>
+	<title><spring:message code="paper.title"/></title>
 	<link rel="stylesheet" type="text/css" href="${ctx}/static/easyui/themes/bootstrap/easyui.css">
 	<link rel="stylesheet" type="text/css" href="${ctx}/static/easyui/themes/icon.css">
 	<link rel="stylesheet" type="text/css" href="${ctx}/static/easyui/mytree.css">

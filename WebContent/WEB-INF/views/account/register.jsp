@@ -5,7 +5,7 @@
 
 <html>
 <head>
-	<title>用户注册</title>
+	<title><spring:message code="register.title"/></title>
 	<link href="${ctx}/static/bootstrap/2.3.2/css/bootstrap-datetimepicker.min.css" type="text/css" rel="stylesheet" />
 	<link rel="stylesheet" type="text/css" href="${ctx}/static/easyui/themes/bootstrap/easyui.css">
 	<link rel="stylesheet" type="text/css" href="${ctx}/static/easyui/themes/icon.css">

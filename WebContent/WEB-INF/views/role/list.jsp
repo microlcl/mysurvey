@@ -13,7 +13,7 @@
 <script src="${ctx}/static/easyui/jquery.easyui.min.js" type="text/javascript"></script>
 <link rel="stylesheet" type="text/css" href="${ctx}/static/easyui/mytree.css">
 
-<title>权限管理</title>
+<title><spring:message code="role.title"/></title>
 </head>
 <body>
 <div class="form">

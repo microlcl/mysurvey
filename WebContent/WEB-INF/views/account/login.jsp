@@ -5,7 +5,7 @@
 
 <html>
 <head>
-<title>登录页</title>
+<title><spring:message code="login.title"/></title>
 </head>
 
 <body>
@@ -18,7 +18,7 @@
 		<c:if test="${not empty user.id}">
 			<div class="alert alert-error input-medium controls">
 				<button class="close" data-dismiss="alert">×</button>
-				${user.name},您已经登陆了。
+				${user.name}<spring:message code="login.alert"/>
 			</div>
 		</c:if>
 		<c:if test="${empty user.id}">

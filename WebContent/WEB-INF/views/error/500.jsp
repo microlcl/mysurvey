@@ -16,7 +16,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>500 - 系统内部错误</title>
+	<title><spring:message code="error.500.title"/></title>
 </head>
 
 <body>

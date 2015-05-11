@@ -35,7 +35,7 @@ $(document).ready(function() {
 });
 </script>
 
-<title>我参与的调查</title>
+<title><spring:message code="survey.myparticipation.title"/></title>
 </head>
 <body>
 	<div class="form">

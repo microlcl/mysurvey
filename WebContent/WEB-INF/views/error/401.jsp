@@ -6,11 +6,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>401 - 未授权</title>
+	<title><spring:message code="error.401.title"/></title>
 </head>
 
 <body>
-	<h2><spring:message code="error.401.title"/></h2>
+	<h2><spring:message code="error.401.subtitle"/></h2>
 	<p><a href="<c:url value="/"/>"><spring:message code="error.401.link"/></a></p>
 </body>
 </html>

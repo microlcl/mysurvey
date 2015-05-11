@@ -8,7 +8,7 @@
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
 <html>
 <head>
-	<title>用户组管理</title>
+	<title><spring:message code="group.title"/></title>
 	<link rel="stylesheet" type="text/css" href="${ctx}/static/easyui/themes/bootstrap/easyui.css">
 	<link rel="stylesheet" type="text/css" href="${ctx}/static/easyui/themes/icon.css">
 	<link rel="stylesheet" type="text/css" href="${ctx}/static/easyui/mytree.css">
@@ -52,16 +52,16 @@
                      <a  href="#collapse_${status.index+1}"  data-toggle="collapse" class="accordion-toggle" style="display: inline-block; word-wrap: break-word; width: 800px;text-decoration: none;">
                   	    <span style="padding-left:8px">Group: 
                   	    <strong>
-                  	    &nbsp ${group.groupName} <c:if test="${fn:length(group.groupMembers) == null }">(空用户组，请编辑用户组)</c:if>
+                  	    &nbsp ${group.groupName} <c:if test="${fn:length(group.groupMembers) == null }"><spring:message code="group.empty"/></c:if>
                   	    </strong>
                   	     &nbsp&nbsp  ${group.comment} 
                   	    <br>
-                  	             &nbsp&nbsp更新时间： <fmt:formatDate value="${group.editDate}" pattern="yyyy-MM-dd HH:mm:ss"/> 
+                  	             &nbsp&nbsp<spring:message code="group.editdate"/> <fmt:formatDate value="${group.editDate}" pattern="yyyy-MM-dd HH:mm:ss"/> 
                   	    </span>
                      </a> 
                     <span style="float: right;padding: 5px;" >
-                    	<button  onclick="location.href='${ctx}/myGroup/toUpdateGroup/${group.id}'"><i class="icon-edit"></i>修改群组</button>
-                    	<button  onclick="groupDeletePopupWindow(${group.id})"><i class="icon-remove"></i>删除本组</button>
+                    	<button  onclick="location.href='${ctx}/myGroup/toUpdateGroup/${group.id}'"><i class="icon-edit"></i><spring:message code="group.edit"/></button>
+                    	<button  onclick="groupDeletePopupWindow(${group.id})"><i class="icon-remove"></i><spring:message code="group.delete"/></button>
                     </span>
                   </div>
                   <div class="accordion-body collapse" id="collapse_${status.index+1}">
@@ -86,11 +86,11 @@
 	<div class="modal-header">
 		<button type="button" class="close" data-dismiss="modal"
 			aria-hidden="true">&times;</button>
-		<h4>确定删除该群组吗？</h4>
+		<h4><spring:message code="group.deletewarning"/></h4>
 	</div>
 	<div class="modal-footer">
-		<a href="#" class="btn" data-dismiss="modal" aria-hidden="true"">关闭</a> 
-		<a id="deleteBtn" href="" class="btn btn-primary">确定</a>
+		<a href="#" class="btn" data-dismiss="modal" aria-hidden="true""><spring:message code="group.close"/></a> 
+		<a id="deleteBtn" href="" class="btn btn-primary"><spring:message code="group.deletebtn"/></a>
 	</div>
 </div>
 </div>

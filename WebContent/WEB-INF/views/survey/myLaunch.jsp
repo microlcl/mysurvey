@@ -34,7 +34,7 @@ $(document).ready(function() {
 });
 </script>
 
-<title>我发起的调查</title>
+<title><spring:message code="survey.mylaunch.title"/></title>
 </head>
 <body>
 	<div class="form">

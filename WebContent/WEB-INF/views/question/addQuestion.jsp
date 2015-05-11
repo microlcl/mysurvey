@@ -14,7 +14,7 @@
 <script src="${ctx}/static/easyui/jquery.easyui.min.js" type="text/javascript"></script>
 <link rel="stylesheet" type="text/css" href="${ctx}/static/easyui/mytree.css">
 <script src="${ctx}/static/nano/nano.js" type="text/javascript"></script>
-<title>创建问题</title>
+<title><spring:message code="addquestion.title"/></title>
 <script type="text/javascript">
 	$(document).ready(function(){
 		$("#question-tab").addClass("active");
@@ -52,13 +52,13 @@
 			}
 			if($('input[name="questionType"]:checked').val() != "3"){
 				if($("input[name='splitOptions']").length < 2){
-					$("#option_error").html('<span class="error">至少填写两个选项!</span>');
+					$("#option_error").html('<span class="error"><spring:message code="addquestion.option.error1"/></span>');
 					$("#option_error").show();
 					result = false;
 				}else{
 					$("input[name='splitOptions']").each(function(){
 						if($(this).val() == ""){
-							$("#option_error").html('<span class="error">请填完所有选项!</span>');
+							$("#option_error").html('<span class="error"><spring:message code="addquestion.option.error2"/></span>');
 							$("#option_error").show();
 							result = false;
 						}
@@ -71,8 +71,8 @@
 	});
 	
 	function addOption(){
-		var optionDiv = '<div class="control-group"><label for="option" class="control-label formlabel" style="color:red">*</label><div class="controls"><input type="text" name="splitOptions" onblur="checkOptions()"  value="" style="width:400px" placeholder="至少填写两个选项"  maxlength="64"/>'
-						+' <a href="javascript:void(0);" onclick="deleteOption(this)" title="删除"><span style="margin:0px 0px -11px 5px" class="iconImg iconImg_delete"></span></a></div></div>';
+		var optionDiv = '<div class="control-group"><label for="option" class="control-label formlabel" style="color:red">*</label><div class="controls"><input type="text" name="splitOptions" onblur="checkOptions()"  value="" style="width:400px" placeholder="<spring:message code="addquestion.splitoption"/>"  maxlength="64"/>'
+						+' <a href="javascript:void(0);" onclick="deleteOption(this)" title="<spring:message code="addquestion.delete"/>"><span style="margin:0px 0px -11px 5px" class="iconImg iconImg_delete"></span></a></div></div>';
 		$("#options").append(optionDiv);
 	}
 	
@@ -98,7 +98,7 @@
 			$("#option_error").hide();
 		}
 		else{
-			$("#option_error").html('<span class="error">请填完所有选项!</span>');
+			$("#option_error").html('<span class="error"><spring:message code="addquestion.option.error2"/></span>');
 			$("#option_error").show();
 		}
 	}

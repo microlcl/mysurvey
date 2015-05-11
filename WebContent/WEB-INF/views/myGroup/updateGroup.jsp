@@ -7,7 +7,7 @@
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
 <html>
 <head>
-	<title>编辑用户组</title>
+	<title><spring:message code="updategroup.title"/></title>
 	<link rel="stylesheet" type="text/css" href="${ctx}/static/easyui/themes/bootstrap/easyui.css">
 	<link rel="stylesheet" type="text/css" href="${ctx}/static/easyui/themes/icon.css">
 	<link rel="stylesheet" type="text/css" href="${ctx}/static/easyui/mytree.css">
@@ -36,7 +36,7 @@
 		var fileName=document.getElementById("CSVfile").value;
 		var type=fileName.substring(fileName.lastIndexOf(".")+1);
 		if(type!="csv"){
-			alert("文件格式不对，请重新选择CSV文件");
+			alert("<spring:message code="updategroup.importcsv.error1"/>");
 		}else{
 			var _content="";
 			var i=0;

@@ -14,7 +14,7 @@
 <script src="${ctx}/static/easyui/jquery.easyui.min.js" type="text/javascript"></script>
 <link rel="stylesheet" type="text/css" href="${ctx}/static/easyui/mytree.css">
 <script src="${ctx}/static/nano/nano.js" type="text/javascript"></script>
-<title>修改问题</title>
+<title><spring:message code="editquestion.title"/></title>
 <script type="text/javascript">
 	$(document).ready(function(){
 		$("#question-tab").addClass("active");

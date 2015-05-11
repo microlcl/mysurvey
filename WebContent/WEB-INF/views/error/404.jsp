@@ -6,11 +6,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>404 - 页面不存在</title>
+	<title><spring:message code="error.404.title"/></title>
 </head>
 
 <body>
-	<h2><spring:message code="error.404.title"/></h2>
+	<h2><spring:message code="error.404.subtitle"/></h2>
 	<p><a href="<c:url value="/"/>"><spring:message code="error.404.link"/></a></p>
 </body>
 </html>

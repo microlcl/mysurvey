@@ -6,7 +6,7 @@
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
 <html>
 <head>
-	<title>修改问卷</title>
+	<title><spring:message code="updatepaper.title"/></title>
 	<link rel="stylesheet" type="text/css" href="${ctx}/static/easyui/themes/bootstrap/easyui.css">
 	<link rel="stylesheet" type="text/css" href="${ctx}/static/easyui/themes/icon.css">
 	<link rel="stylesheet" type="text/css" href="${ctx}/static/easyui/mytree.css">
@@ -30,7 +30,7 @@
 				
 				messages: {
 					paperTitle: {
-						required: "请填写问卷名称"
+						required: "<spring:message code="updatepaper.papername.message"/>"
 					}
 				}
 			});
@@ -102,8 +102,8 @@
 			}
 		}
 		function removeAllQuestions(){
-			if(confirm('确定删除所有问题吗？')){
-				console.log("删除所有问题！");
+			if(confirm('<spring:message code="updatepaper.confirm"/>')){
+				console.log("<spring:message code="updatepaper.deleteallquestion"/>");
 				$('#myaccordion1').empty();
 				$('#selected_questions').hide();
 				$('#submit_btn').hide();
@@ -127,8 +127,8 @@
 				<ul class="inline">
 						<li><input id="myq1_{id}" value="{id}" type="hidden" name="questions[{index}].id"/> </li>
 						<li style="width: 680px;"><a class="accordion-toggle" data-toggle="collapse" data-parent="#myaccordion1" href="#collapse_{id}">Q{id}: {question}</a></li>
-						<li>问题坐标：<input type="text" name="questions[{index}].position"  maxlength="64" class="required" placeholder="数字" style="width: 25px !important; margin-top: 10px;" value="{positionTest}"/></li>
-						<li><a href="javascript:void(0);" onclick="deleteQuestion(this)" title="删除" style=""><span style="margin:0px 0px -11px 5px" class="iconImg iconImg_delete"></span></a></li>
+						<li><spring:message code="updatepaper.questionposition"/><input type="text" name="questions[{index}].position"  maxlength="64" class="required" placeholder="<spring:message code="updatepaper.questionposition.placeholder"/>" style="width: 25px !important; margin-top: 10px;" value="{positionTest}"/></li>
+						<li><a href="javascript:void(0);" onclick="deleteQuestion(this)" title="<spring:message code="updatepaper.deletequestion"/>" style=""><span style="margin:0px 0px -11px 5px" class="iconImg iconImg_delete"></span></a></li>
 				</ul>
 			</div>
 			<div id="collapse_{id}" class="accordion-body collapse">
