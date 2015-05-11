@@ -40,10 +40,10 @@
 			<div class="accordion-group">
                   <div class="accordion-heading">
                   	<span style="padding-left:8px">Q${status.index+1+(pageNumber-1)*5}：</span>
-                    <a href="#collapse_${status.index+1+(pageNumber-1)*5}" data-parent="#questions" data-toggle="collapse" class="accordion-toggle" style="display: inline-block; word-wrap: break-word; width: 800px;text-decoration: none;">
+                    <a href="#collapse_${status.index+1+(pageNumber-1)*5}" data-parent="#questions" data-toggle="collapse" class="accordion-toggle" style="display: inline-block; word-wrap: break-word; width: 700px;text-decoration: none;">
                       	${question.question}<c:if test="${question.paperAnswered}"><span style="color:#FF0000"><spring:message code="question.isusing"/></span></c:if>
-                      	<span><a target="_blank" style="width: 50px" href="${ctx}/account/show/userInfo/${question.creater.id}">${question.creater.name}</a></span>
                     </a>
+                    <span><a target="_blank" style="display: inline-block; word-wrap: break-word; width: 150px " href="${ctx}/account/show/userInfo/${question.creater.id}">${question.creater.name}</a></span>
                     <span style="float: right; padding: 8px 20px 8px 10px;">
                     	
                     	<mytag:PermssionTag functionId="F7-3"><a href="${ctx}/question/editQuestion/question_${question.id}"><i class="icon-edit"></i><spring:message code="question.edit"/></a></mytag:PermssionTag>
