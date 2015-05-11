@@ -131,7 +131,8 @@
 			     <span id="groupId_error" class="error" style="display:none"><spring:message code="updategroup.groupid.error"/></span><br>
 			</div>   
 		    <input style="display:none;" name="content">
-			<input type="file" id="CSVfile" name="CSVfile" onchange="importCSV()"style="padding-left:70px;width:60px" />
+		    <input type="button" value="<spring:message code="updategroup.import"/>" style="margin-left:70px;width:60px;" onclick="CSVfile.click()"/>
+			<input type="file" id="CSVfile" name="CSVfile" onchange="importCSV()"style="width:0px;filter:alpha(opacity=0);-moz-opacity:0;opacity:0;" size="0"  />
 		<div id="option_error" style="padding-left:170px;display:none"></div>
 		</td>
 	  </tr>	
