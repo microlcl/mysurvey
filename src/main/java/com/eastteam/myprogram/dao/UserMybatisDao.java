@@ -1,5 +1,7 @@
 package com.eastteam.myprogram.dao;
 
+import com.eastteam.myprogram.entity.User;
+
 
 
 
@@ -11,4 +13,6 @@ package com.eastteam.myprogram.dao;
 @MyBatisRepository
 public interface UserMybatisDao {
 	String getRoleId(String userId);	
+	void save(User user);
+	User findByLoginName(String loginName);
 }

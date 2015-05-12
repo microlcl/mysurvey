@@ -23,7 +23,7 @@
 			<div class="control-group">
 				<label for="loginName" class="control-label"><spring:message code="register.loginname"/></label>
 				<div class="controls">
-					<input type="text" id="id" name="id" maxlength="64" class="input-large required"/>
+					<input type="email" id="id" name="id" maxlength="64" placeholder="abc@gmail.com" class="input-large required"/>
 				</div>
 			</div>
 			<div class="control-group">
@@ -44,51 +44,8 @@
 					<input type="password" id="confirmPassword" name="confirmPassword" class="input-large required" equalTo="#plainPassword"/>
 				</div>
 			</div>
-			<div class="control-group">
-				<label for="sex" class="control-label"><spring:message code="register.sex"/></label>
-				<div class="controls">
-					<label class="radio inline">
-						<input type="radio" name="sex" id="sex" value="男" checked><spring:message code="register.sex.male"/>
-					</label>
-					<label class="radio inline">
-						<input type="radio" name="sex" id="sex" value="女" ><spring:message code="register.sex.female"/>
-					</label>
-				</div>
-			</div>	
-            <div class="control-group">
-  				  <label class="control-label" for="email"><spring:message code="register.email"/></label>
-  				  <div class="controls">
-   				     <input type="email" id="email" name="email" required="" maxlength="64" placeholder="abc@gmail.com" class="input-large">
-                  </div>
-            </div>	
-			<div class="control-group">
-				<label for="phoneNum" class="control-label"><spring:message code="register.phonenum"/></label>
-				<div class="controls">
-					<input type="text" id="phoneNum" name="phoneNum" maxlength="20" class="input-large" />
-				</div>
-			</div>
-						<div class="control-group">
-				<label for="address" class="control-label"><spring:message code="register.address"/></label>
-				<div class="controls">
-					<input type="text" id="address" name="address"  maxlength="64"class="input-large" />
-				</div>
-			</div>			
-		    <div class="control-group">
-				<label for="hometown" class="control-label"><spring:message code="register.hometown"/></label>
-				<div class="controls">
-					<input type="text" id="hometown" name="hometown" class="input-large"  maxlength="64"/>
-				</div>
-			</div>			
-			<div class="control-group">
-                <label for="userBirthday" class="control-label"><spring:message code="register.birthday"/></label>
-                <div class="input-append date form_date" style="margin-left:20px" >
-                    <input size="16" type="text" id="userBirthday" name="userBirthday" style="width:160px"  readonly>
-                    <span class="add-on"><i class="icon-remove"></i></span>
-					<span class="add-on"><i class="icon-th"></i></span>
-                </div>
-				<input type="hidden" id="dtp_input2" value="" /><br/>
-				
-            </div>	
+	
+	
 			<div class="form-actions">
 				<input id="submit_btn" class="btn btn-primary" type="submit" value="<spring:message code="register.submit"/>"/>&nbsp;	
 				<input id="cancel_btn" class="btn" type="button" value="<spring:message code="register.back"/>" onclick="history.back()"/>
@@ -115,16 +72,7 @@
 					plainPassword: {
 						required: true,
 						rangelength: [5,32]
-					},
-					phoneNum: {
-						rangelength: [2,20]
-					},
-					address: {
-						rangelength: [2,64]
-					},
-					hometown: {
-						rangelength: [2,64]
-					},
+					}
 				},
 				messages: {
 					id: {
@@ -136,32 +84,11 @@
 					},
 					plainPassword: {
 						rangelength: jQuery.validator.format("密码长度必须在 {0} 和 {1} 个字符之间")
-					},
-					phoneNum: {
-						rangelength: jQuery.validator.format("号码长度必须在 {0} 和 {1} 个字符之间")
-					},
-					address: {
-						rangelength: jQuery.validator.format("地址长度必须在 {0} 和 {1} 个字符之间")
-					},
-					hometown: {
-						rangelength: jQuery.validator.format("籍贯长度必须在 {0} 和 {1} 个字符之间")
 					}
 				}
 			});
 		});
-		
-	$('.form_date').datetimepicker({
-        language:  'zh-CN',
-        weekStart: 1,
-        todayBtn:  true,
-		autoclose: 1,
-		todayHighlight: 1,
-		startView: 2,
-		minView: 2,
-		forceParse: 0,
-		format: 'yyyy-mm-dd',
-		pickerPosition: "top-right"
-    });
+
 	</script>
 </body>
 </html>

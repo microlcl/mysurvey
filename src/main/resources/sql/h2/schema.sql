@@ -44,17 +44,9 @@ create table survey_receivers(
 
 create table users (
 	id varchar(64) not null unique,
-	name varchar(32) not null,
+	name varchar(32),
 	password varchar(255) not null,
-	sex varchar(2),
-	department_id varchar(64),
-	email varchar(64),
-	phone_num varchar(20),
-	address varchar(64),
-	hometown varchar(64),
-	birthday date,
 	register_date timestamp,
-	status varchar(20),
 	comment varchar(128),
 	primary key (id)
 );

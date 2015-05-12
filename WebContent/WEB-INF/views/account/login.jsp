@@ -42,6 +42,7 @@
 					<label class="checkbox" for="rememberMe"><input
 						type="checkbox" id="rememberMe" name="rememberMe" /> <spring:message code="login.rememberme"/></label> <input
 						id="submit_btn" class="btn btn-primary" type="submit" value='<spring:message code="login.signin"/>' />
+						<a class="btn" href="${ctx}/account/register">Sign Up</a>
 				</div>
 			</div>
 		</c:if>

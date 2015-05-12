@@ -28,7 +28,8 @@ public class AuthFilter implements Filter {
 			"/category/api/getAll/getBusinessType","/question/api/search",
 			"/category/api/getAll/paperStatus",
 			"/paper/api/search","/category/api/getChildren/getCaseStatus","/category/api/getChildren/getBusinessType","/paper/api/getQuestions",
-			"/paper/api/searchAll"
+			"/paper/api/searchAll",
+			"/account/register"
 		};
 	
 	private final String[] IGNORED_REG = {"/paper/api/getQuestions"};

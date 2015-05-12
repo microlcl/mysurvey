@@ -81,5 +81,6 @@ public class LoginController {
 			return "redirect:" + lastUri;
 		}
 		return "redirect:/index.jsp";
-	}
+	}	
+
 }

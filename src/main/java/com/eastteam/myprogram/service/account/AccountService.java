@@ -16,6 +16,8 @@ import com.eastteam.myprogram.dao.UserMybatisDao;
 import com.eastteam.myprogram.entity.Function;
 import com.eastteam.myprogram.entity.Role;
 import com.eastteam.myprogram.entity.User;
+import com.eastteam.myprogram.utils.Digests;
+import com.eastteam.myprogram.utils.Encodes;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import com.ibm.swat.password.ReturnCode;
@@ -26,6 +28,7 @@ import com.ibm.swat.password.cwa2;
 public class AccountService{
 	
 	public static final String DEFAULT_ROLE_ID = "R9"; 
+	public static final int HASH_INTERATIONS = 1024;
 
 	@Autowired
 	private UserMybatisDao userDao;
@@ -106,6 +109,25 @@ public class AccountService{
 		}		
 		ArrayList<String> functionidList = Lists.newArrayList(functionIdSet);
 		return Collections.unmodifiableList(functionidList);
+	}
+
+	public void registerUser(User user) {
+		String pwd = entryptPassword(user.getPlainPassword());
+		user.setPassword(pwd);
+		userDao.save(user);
+	}
+
+	/**
+	 * 设定安全的密码，生成随机的salt并经过1024次 sha-1 hash
+	 */
+	public String entryptPassword(String plainPassword) {
+//		byte[] salt = Digests.generateSalt(SALT_SIZE);
+		byte[] hashPassword = Digests.sha1(plainPassword.getBytes(), null, HASH_INTERATIONS);
+		return Encodes.encodeHex(hashPassword);
+	}
+	
+	public User findUserByLoginName(String loginName) {
+		return userDao.findByLoginName(loginName);
 	}
 
 }
