@@ -27,7 +27,7 @@ CREATE TABLE `survey` (
   `sent_timestamp` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00', -- 调查发送时间
   `deadline_timestamp` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00', -- 本次调查的最后期限
   `is_anonymous` varchar(1) DEFAULT NULL,  -- 是否是匿名调查: T - True, F - False
-  `description` varchar(128) DEFAULT NULL, -- 描述性文字，作为group的user收到的邮件内容
+  `description` varchar(1280) DEFAULT NULL, -- 描述性文字，作为group的user收到的邮件内容
   `receivers` text DEFAULT NULL,  -- 调查对象名单，包括其完成状态，单个结构为  昵称^ID^0/1(是否作答)^作答时间
   PRIMARY KEY (`survey_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

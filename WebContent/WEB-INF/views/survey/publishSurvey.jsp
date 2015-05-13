@@ -111,11 +111,11 @@
 		        $("#ddateEmptyError").hide();
 		        $("#ddateInvalidError").hide();
 		        $("#groupError").hide();
-		    }else if(_surveyGroup==""){
-		        $("#subjectError").hide();
-		        $("#ddateEmptyError").hide();
-		        $("#ddateInvalidError").hide();
-		        $("#groupError").show();
+// 		    }else if(_surveyGroup==""){
+// 		        $("#subjectError").hide();
+// 		        $("#ddateEmptyError").hide();
+// 		        $("#ddateInvalidError").hide();
+// 		        $("#groupError").show();
 		    }else{
 		        $("#subjectError").hide();
 		        $("#ddateEmptyError").hide();
@@ -152,11 +152,11 @@
 		        $("#ddateEmptyError").hide();
 		        $("#ddateInvalidError").hide();
 		        $("#groupError").hide();
-		    }else if(_surveyGroup==""){
-		        $("#subjectError").hide();
-		        $("#ddateEmptyError").hide();
-		        $("#ddateInvalidError").hide();
-		        $("#groupError").show();
+// 		    }else if(_surveyGroup==""){
+// 		        $("#subjectError").hide();
+// 		        $("#ddateEmptyError").hide();
+// 		        $("#ddateInvalidError").hide();
+// 		        $("#groupError").show();
 		    }else{
 		        $("#subjectError").hide();
 		        $("#ddateEmptyError").hide();
@@ -248,8 +248,24 @@
 				</div>	
 				<div class="control-group">
 				<label for="question" class="control-label formlabel"><spring:message code="survey.publishsurvey.groups"/></label>		
-				<c:if test="${survey.status=='1-0-3-1' || survey.status=='1-0-3-2'}"><div class="controls"><input type="text" disabled="disabled" value="${survey.groupsString }"></div></c:if>
-				 <c:if test="${survey.status!='1-0-3-1' && survey.status!='1-0-3-2'}">
+<%-- 				<c:if test="${survey.status=='1-0-3-1' || survey.status=='1-0-3-2'}"><div class="controls"><input type="text" disabled="disabled" value="${survey.groupsString }"></div></c:if> --%>
+					<c:if test="${survey.status=='1-0-3-1' || survey.status=='1-0-3-2'}">
+						<c:choose>
+							<c:when test="${survey.groupsString==''}">
+								<div class="controls">
+									<input type="text" disabled="disabled"
+										value="<spring:message code="survey.publishsurvey.nullGroup"/>">
+								</div>
+							</c:when>
+							<c:otherwise>
+								<div class="controls">
+									<input type="text" disabled="disabled"
+										value="${survey.groupsString }">
+								</div>
+							</c:otherwise>
+						</c:choose>
+					</c:if>
+					<c:if test="${survey.status!='1-0-3-1' && survey.status!='1-0-3-2'}">
 					 <div class="controls" style="width:550px">
 					  <c:forEach items="${groups}"  var="group" varStatus="status">
 					    <div class="btn" onclick="markGroup(this)" style="margin-top:5px" id="group_${group.id }">${group.groupName}<i class="icon-ok" style="width:20px;display:${group.flagString};"></i><input type="text" value="${group.id }" id="groupid" name="groupid" style="display:none;"></div>
@@ -259,7 +275,7 @@
 					 </c:if>
 				</div>
 				<div class="control-group">
-			    <c:if test="${survey.status=='1-0-3-1'}">
+			    <c:if test="${survey.status=='1-0-3-1' && survey.groupsString==''}">
 				<label for="question" class="control-label formlabel"><spring:message code="survey.publishsurvey.url"/></label>
 				    <div class="controls" style="width:550px">
 				   ${url}

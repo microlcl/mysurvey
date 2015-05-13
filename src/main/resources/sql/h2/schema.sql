@@ -27,7 +27,7 @@ create table survey(
 	sent_timestamp timestamp,  -- 调查发送时间
 	deadline_timestamp timestamp, -- 本次调查的最后期限
 	is_anonymous varchar(1), -- 是否是匿名调查: T - True, F - False
-	description varchar(128), -- 描述性文字，作为group的user收到的邮件内容
+	description varchar(1280), -- 描述性文字，作为group的user收到的邮件内容
 	receivers varchar, -- 调查对象名单，包括其完成状态，单个结构为  昵称^ID^0/1(是否作答)^作答时间|
 	primary key (survey_id)	
 );
