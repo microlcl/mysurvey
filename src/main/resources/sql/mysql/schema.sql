@@ -47,18 +47,10 @@ CREATE TABLE `survey_receivers` (
 
 CREATE TABLE `users` (
   `id` varchar(64) NOT NULL,
-  `name` varchar(32) NOT NULL,
+  `name` varchar(32),
   `password` varchar(255) NOT NULL,
-  `sex` varchar(2) DEFAULT NULL,
-  `department_id` varchar(64) DEFAULT NULL,
-  `email` varchar(64) DEFAULT NULL,
-  `phone_num` varchar(20) DEFAULT NULL,
-  `address` varchar(64) DEFAULT NULL,
-  `hometown` varchar(64) DEFAULT NULL,
-  `birthday` date DEFAULT NULL,
-  `register_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `status` varchar(20) DEFAULT NULL,
-  `comment` varchar(128) DEFAULT NULL,
+   `register_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+   `comment` varchar(128) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
