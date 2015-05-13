@@ -43,9 +43,9 @@ public class QuestionController {
 	
 	private static Map<String, String> sortTypes = Maps.newLinkedHashMap();
 	static {
-		sortTypes.put("question", "问题名称");
-		sortTypes.put("question_id", "默认顺序");
-		sortTypes.put("creat_timestamp DESC","创建时间");
+		sortTypes.put("question", "Question Name");
+		sortTypes.put("question_id", "Default Order");
+		sortTypes.put("creat_timestamp DESC","Create Date");
 	}
 	
 	private static Logger logger = LoggerFactory.getLogger(QuestionController.class);
