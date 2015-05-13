@@ -54,18 +54,16 @@ insert into functions(function_id, module_id, name, description, path) values('F
 insert into functions(function_id, module_id, name, description, path) values('F21','M2-1','管理菜单','能看见管理菜单','');
 
 
-insert into users(id, name, password, email, register_date, department_id) values('admin','admin','a94d5cd0079cfc8db030e1107de1addd1903a01b','530460414@qq.com','2012-06-04 01:00:00','D1-1');
-insert into users(id, name, password, email, register_date, department_id) values('lichlei@cn.ibm.com','lichlei@cn.ibm.com','a94d5cd0079cfc8db030e1107de1addd1903a01b','lichlei@cn.ibm.com','2012-06-04 01:00:00','D1-1');
-insert into users(id, name, password, email, register_date, department_id) values('wangxhdl@cn.ibm.com','wangxhdl@cn.ibm.com','a94d5cd0079cfc8db030e1107de1addd1903a01b','wangxhdl@cn.ibm.com','2012-06-04 01:00:00','D1-1');
-insert into users(id, name, password, email, register_date, department_id) values('gongbf@cn.ibm.com','gongbf@cn.ibm.com','a94d5cd0079cfc8db030e1107de1addd1903a01b','gongbf@cn.ibm.com','2012-06-04 02:00:00','D1-1');
-insert into users(id, name, password, email, register_date, department_id) values('zhangfd@cn.ibm.com','zhangfd@cn.ibm.com','a94d5cd0079cfc8db030e1107de1addd1903a01b','zhangfd@cn.ibm.com','2012-06-04 02:00:00','D1-1');
-insert into users(id, name, password, email, register_date, department_id) values('liush@cn.ibm.com','liush@cn.ibm.com','a94d5cd0079cfc8db030e1107de1addd1903a01b','liush@cn.ibm.com','2012-06-04 02:00:00','D1-1');
-insert into users(id, name, password, email, register_date, department_id) values('ldlxiao@cn.ibm.com','ldlxiao@cn.ibm.com','a94d5cd0079cfc8db030e1107de1addd1903a01b','ldlxiao@cn.ibm.com','2012-06-04 02:00:00','D1-1');
-insert into users(id, name, password, email, register_date, department_id) values('maoyeye@qq.com','LiChunlei','a94d5cd0079cfc8db030e1107de1addd1903a01b','maoyeye@qq.com','2012-06-04 02:00:00','D1-1');
+insert into users(id, name, password, register_date) values('admin','admin','a94d5cd0079cfc8db030e1107de1addd1903a01b','2012-06-04 01:00:00','D1-1');
+insert into users(id, name, password, register_date) values('lichlei@cn.ibm.com','lichlei@cn.ibm.com','a94d5cd0079cfc8db030e1107de1addd1903a01b','2012-06-04 01:00:00');
+insert into users(id, name, password, register_date) values('wangxhdl@cn.ibm.com','wangxhdl@cn.ibm.com','a94d5cd0079cfc8db030e1107de1addd1903a01b','2012-06-04 01:00:00');
+insert into users(id, name, password, register_date) values('gongbf@cn.ibm.com','gongbf@cn.ibm.com','a94d5cd0079cfc8db030e1107de1addd1903a01b','2012-06-04 02:00:00');
+insert into users(id, name, password, register_date) values('zhangfd@cn.ibm.com','zhangfd@cn.ibm.com','a94d5cd0079cfc8db030e1107de1addd1903a01b','2012-06-04 02:00:00');
+insert into users(id, name, password, register_date) values('liush@cn.ibm.com','liush@cn.ibm.com','a94d5cd0079cfc8db030e1107de1addd1903a01b','2012-06-04 02:00:00');
+insert into users(id, name, password, register_date) values('ldlxiao@cn.ibm.com','ldlxiao@cn.ibm.com','a94d5cd0079cfc8db030e1107de1addd1903a01b','2012-06-04 02:00:00');
+insert into users(id, name, password, register_date) values('maoyeye@qq.com','LiChunlei','a94d5cd0079cfc8db030e1107de1addd1903a01b','2012-06-04 02:00:00');
 
 insert into roles(role_id, name, description) values('R0', '管理员','超级用户');
-insert into roles(role_id, name, description) values('R1', '问题管理员','问题管理员');
-insert into roles(role_id, name, description) values('R2', '问卷管理员','问卷管理员');
 insert into roles(role_id, name, description) values('R9', '普通用户','普通用户');
 
 insert into user_role(user_id, role_id) values('admin','R0');
