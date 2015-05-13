@@ -29,6 +29,7 @@ public class AuthFilter implements Filter {
 			"/category/api/getAll/paperStatus",
 			"/paper/api/search","/category/api/getChildren/getCaseStatus","/category/api/getChildren/getBusinessType","/paper/api/getQuestions",
 			"/paper/api/searchAll",
+			"/account/api/checkLoginName",
 			"/account/register"
 		};
 	

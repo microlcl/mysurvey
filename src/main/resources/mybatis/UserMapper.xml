@@ -7,4 +7,20 @@
 	<select id="getRoleId" resultType="String">
 	    select role_id from user_role where user_id=#{userId}
 	</select>	
+	
+	<select id="getUser" parameterType="User" resultType="User">
+		select r.id
+		from users r
+		where r.id=#{id}
+	</select>
+	<select id="getUserByIdPwd"  resultType="User">
+		select r.id,r.name
+		from users r
+		where r.id=#{id} and password=#{password}
+	</select>
+    	<!-- 插入用户-->
+	<insert id="save" parameterType="User">
+		insert into users (id, name, password, register_date) 
+		values(#{id},#{name},#{password},now());
+	</insert>	
 </mapper> 

@@ -44,7 +44,7 @@ public class LoginController {
 	@RequestMapping(method = RequestMethod.POST)
 	public String login(User loginuser, HttpSession session, HttpServletRequest request,RedirectAttributes redirectAttributes) {
 		logger.debug("in log controller. user " + loginuser.getId() + ",password=" + loginuser.getPlainPassword());
-		User u = accountService.getUser(loginuser.getId(), loginuser.getPlainPassword());
+		User u = accountService.getUserByIdPwd(loginuser.getId(), loginuser.getPlainPassword());
 		RequestContext requestContext = new RequestContext(request);
 		if (u == null) {
 			redirectAttributes.addFlashAttribute("message", requestContext.getMessage("login.error"));

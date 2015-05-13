@@ -14,5 +14,6 @@ import com.eastteam.myprogram.entity.User;
 public interface UserMybatisDao {
 	String getRoleId(String userId);	
 	void save(User user);
-	User findByLoginName(String loginName);
+	User getUser(String id);
+	User getUserByIdPwd(User user);
 }

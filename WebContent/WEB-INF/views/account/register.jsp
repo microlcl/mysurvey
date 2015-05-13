@@ -63,7 +63,7 @@
 					id: {
 						rangelength: [2,64],
 						remote: {
-							url:"${ctx}/account/checkLoginName"
+							url:"${ctx}/account/api/checkLoginName"
 						}
 					},
 					name: {

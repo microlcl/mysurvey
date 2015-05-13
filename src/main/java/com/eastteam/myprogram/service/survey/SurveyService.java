@@ -232,7 +232,7 @@ public class SurveyService extends PageableService {
 				map.put("surveyReceivers", surveyReceivers);
 				surveyReceiverMybatisDao.save(map);
 				logger.info("save new survey :" + survey.getSubject() + " by user:"
-						+ survey.getCreater().getEmail()
+						+ survey.getCreater().getId()
 						+ ",asscoiated survey receivers:");
 				for (SurveyReceiver _surveyReceiver : surveyReceivers) {
 					logger.info(_surveyReceiver.getUserId());

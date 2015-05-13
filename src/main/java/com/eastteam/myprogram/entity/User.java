@@ -2,8 +2,6 @@ package com.eastteam.myprogram.entity;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -22,25 +20,9 @@ public class User extends BaseEntity{
 	@JsonIgnore
 	private String password;
 	@JsonIgnore
-	private String sex;
-	@JsonIgnore
-	private String email;
-	@JsonIgnore
-	private String phoneNum;
-	@JsonIgnore
-	private String address;
-	@JsonIgnore
-	private String hometown;
-	@JsonIgnore
-	private Date birthday;
-	@JsonIgnore
 	private Date registerDate;
 	@JsonIgnore
-	private String status;	
-	@JsonIgnore
 	private String comment;	
-	@JsonIgnore
-	private Department department;
 	@JsonIgnore
 	private List<Role> roles = Lists.newArrayList();
 	@JsonIgnore
@@ -54,82 +36,18 @@ public class User extends BaseEntity{
 	public User(String id) {
 		this.id = id;
 	}
-
-
+	public User(String id, String password) {
+		this.id = id;
+		this.password = password;
+	}
+	
+	@NotBlank
 	public String getId() {
 		return id;
 	}
 
 	public void setId(String id) {
 		this.id = id;
-	}
-
-	public String getSex() {
-		return sex;
-	}
-
-	public void setSex(String sex) {
-		this.sex = sex;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public String getPhoneNum() {
-		return phoneNum;
-	}
-
-	public void setPhoneNum(String phoneNum) {
-		this.phoneNum = phoneNum;
-	}
-
-	public String getAddress() {
-		return address;
-	}
-
-	public void setAddress(String address) {
-		this.address = address;
-	}
-
-	public String getHometown() {
-		return hometown;
-	}
-
-	public void setHometown(String hometown) {
-		this.hometown = hometown;
-	}
-
-	public Date getBirthday() {
-		return birthday;
-	}
-
-	public void setBirthday(String birthday) {
-		if(birthday != null && birthday != ""){	
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-			Date date = new Date();
-			try {
-				date = sdf.parse(birthday);
-			} catch (ParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			this.birthday = date;
-		}
-		else 
-			this.birthday = null;
-	}
-
-	public String getStatus() {
-		return status;
-	}
-
-	public void setStatus(String status) {
-		this.status = status;
 	}
 
 	public String getComment() {
@@ -140,7 +58,6 @@ public class User extends BaseEntity{
 		this.comment = comment;
 	}
 
-	@NotBlank
 	public String getName() {
 		return name;
 	}
@@ -177,14 +94,6 @@ public class User extends BaseEntity{
 
 	public void setRegisterDate(Date registerDate) {
 		this.registerDate = registerDate;
-	}
-
-	public Department getDepartment() {
-		return department;
-	}
-
-	public void setDepartment(Department department) {
-		this.department = department;
 	}
 
 	public List<Role> getRoles() {

@@ -20,8 +20,6 @@ import com.eastteam.myprogram.utils.Digests;
 import com.eastteam.myprogram.utils.Encodes;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
-import com.ibm.swat.password.ReturnCode;
-import com.ibm.swat.password.cwa2;
 
 @Component
 @Transactional
@@ -43,27 +41,34 @@ public class AccountService{
 
 
 	
-	public User getUser(String id, String password) {
-		if (password.equals("123456")) {
-			return new User(id);
-		}
-		try {
-			// add by1102
-			cwa2 cwa = new cwa2();
-			String ldaphost = "bluepages.ibm.com";
-			ReturnCode rc = cwa.authenticate(id, password, ldaphost);
-
-			if (rc.getCode() == 0) {
-				System.out.println("bluepage authentication successfully:"+rc);
-				return new User(id);
-			} else {
-				System.out.println("bluepage authentication wrong with error: "+rc);
-				return null;
-			}			
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
+//	public User getUser(String id, String password) {
+//		if (password.equals("123456")) {
+//			return new User(id);
+//		}
+//		try {
+//			// add by1102
+//			cwa2 cwa = new cwa2();
+//			String ldaphost = "bluepages.ibm.com";
+//			ReturnCode rc = cwa.authenticate(id, password, ldaphost);
+//
+//			if (rc.getCode() == 0) {
+//				System.out.println("bluepage authentication successfully:"+rc);
+//				return new User(id);
+//			} else {
+//				System.out.println("bluepage authentication wrong with error: "+rc);
+//				return null;
+//			}			
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			return null;
+//		}
+//	}
+	
+	public User getUserByIdPwd(String id, String plainPassword) {
+		String pwd = this.entryptPassword(plainPassword);
+		User user = new User(id, pwd);
+		return userDao.getUserByIdPwd(user);
+		
 	}
 	
 	public List<String> getAuthorizedUriList(User user) {
@@ -126,8 +131,8 @@ public class AccountService{
 		return Encodes.encodeHex(hashPassword);
 	}
 	
-	public User findUserByLoginName(String loginName) {
-		return userDao.findByLoginName(loginName);
+	public User getUser(String id) {
+		return userDao.getUser(id);
 	}
 
 }

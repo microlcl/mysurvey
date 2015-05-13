@@ -49,9 +49,8 @@ public class AccountController {
 	}
 	
 	@RequestMapping(value="register", method = RequestMethod.POST)
-	public String register(@Valid User user, @RequestParam(value="userBirthday") String birthday, RedirectAttributes redirectAttributes) {
+	public String register(@Valid User user, RedirectAttributes redirectAttributes) {
 		logger.info("user=" + user);
-		user.setBirthday(birthday);
 		accountService.registerUser(user);
 		redirectAttributes.addFlashAttribute("username", user.getId());
 		return "redirect:/login";
@@ -60,11 +59,11 @@ public class AccountController {
 	/**
 	 * Ajax请求校验loginName是否唯一。
 	 */
-	@RequestMapping(value="checkLoginName")
+	@RequestMapping(value="api/checkLoginName")
 	@ResponseBody
 	public String checkLoginName(@RequestParam("id") String loginName) {
 		logger.info("检查用户名是否已被注册");
-		if (accountService.findUserByLoginName(loginName) == null) {
+		if (accountService.getUser(loginName) == null) {
 			return "true";
 		} else {
 			return "false";
