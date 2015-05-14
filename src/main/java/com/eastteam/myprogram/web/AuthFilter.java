@@ -52,6 +52,7 @@ public class AuthFilter implements Filter {
 		String uri = WebUtils.getPathWithinApplication(httpServletRequest);
 //		User user = accountService.getUser("userid1");
 		logger.info("in filter: uri=" + uri);
+		logger.info("in filter: uri with queries=" + WebUtils.getRequestUriWithQueries(httpServletRequest));
 		String lastFullURL = WebUtils.getRequestUriWithQueries(httpServletRequest);
 //		logger.info("in filter: full uri=" + httpServletRequest.getHeader("Referer"));
 		

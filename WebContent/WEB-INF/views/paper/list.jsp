@@ -78,9 +78,14 @@
 					<input id="cc1" class="easyui-combotree" data-options="url:'${ctx}/category/api/getAll/paperStatus',method:'get',required:false" style="width:200px;" name="search_categoryId1" value="${param.search_categoryId}" />
 					&nbsp;&nbsp;&nbsp;&nbsp;<spring:message code="paper.type"/>
 					<input id="cc2" class="easyui-combotree" data-options="url:'${ctx}/category/api/getAll/getBusinessType',method:'get',required:false" style="width:200px;" name="search_categoryId2" value="${param.search_categoryId}"/>
-					<label class="checkbox inline" style="margin-left:20px">									
-		   			<spring:message code="paper.mypaper"/><input value="${user.id}" type="checkbox" <c:if test="${!empty param.search_userId}">checked</c:if> name="search_userId"/>
-		   			</label>
+					<mytag:PermssionTag functionId="F8-7">
+						<label class="checkbox inline" style="margin-left:20px">									
+			   			<spring:message code="paper.mypaper"/><input value="${user.id}"  type="checkbox" <c:if test="${!empty param.search_userId}">checked</c:if> name="search_userId"/>
+			   			</label>
+		   			</mytag:PermssionTag>
+		   			<mytag:PermssionTag noFunctionId="F8-7">
+		   				<input type="hidden" name="search_userId" value="${user.id}" />
+		   			</mytag:PermssionTag>
 					<mytag:PermssionTag functionId="F8-2"><button type="button" class="btn btn-success" onclick="location.href='${ctx}/paper/add/'" style="margin-left: 20px;"><i class="icon-plus" style="margin-right: 5px;"></i><spring:message code="paper.create"/></button></mytag:PermssionTag>
 					<!-- 
 					&nbsp;&nbsp;&nbsp;&nbsp;

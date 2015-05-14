@@ -25,9 +25,14 @@
 				<spring:message code="question.type"/><input id="cc" name="search_categoryId" class="easyui-combotree" value="${param.search_categoryId}" multiple data-options="url:'${ctx}/category/api/getAll/getBusinessType',method:'get',required:false" style="width:200px;">	 
 				&nbsp; &nbsp;<input type="text" name="search_keyword" value="${param.search_keyword}" style="width:400px;margin-bottom: 0px;margin-left:10px;" placeholder="<spring:message code="question.searchkeyword"/>">
 				<button type="submit" class="btn" id="search_btn_test"><i class="icon-search"></i></button>
-				<label class="checkbox inline" style="margin-left:20px">									
-		   			<spring:message code="question.myquestion"/><input value="${user.id}" type="checkbox" <c:if test="${!empty param.search_userId}">checked</c:if> name="search_userId"/>
-		   		</label>
+				<mytag:PermssionTag functionId="F7-5">
+					<label class="checkbox inline" style="margin-left:20px">									
+			   			<spring:message code="question.myquestion"/><input value="${user.id}" type="checkbox" <c:if test="${!empty param.search_userId}">checked</c:if> name="search_userId"/>
+			   		</label>
+		   		</mytag:PermssionTag>
+		   		<mytag:PermssionTag noFunctionId="F7-5">
+		   			<input type="hidden" name="search_userId" value="${user.id}" />
+		   		</mytag:PermssionTag>
 			    <mytag:PermssionTag functionId="F7-2"><button type="button" class="btn btn-success" onclick="location.href='${ctx}/question/addQuestion/'" style="margin-left: 20px;"><i class="icon-plus" style="margin-right: 5px;"></i><spring:message code="question.addquestion"/></button></mytag:PermssionTag>
 				<tags:sort/>
 				</span>
