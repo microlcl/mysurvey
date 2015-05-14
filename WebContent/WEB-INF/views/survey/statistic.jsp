@@ -15,7 +15,7 @@
 <link rel="stylesheet" type="text/css" href="${ctx}/static/easyui/mytree.css">
 <script>
 
-function groupBy(obj){
+/* function groupBy(obj){
 		
    $(".accordion-inner").each(function(){
        var id=$(this).attr('id');
@@ -38,7 +38,7 @@ function groupBy(obj){
 	       }
        }
    });
-}
+} */
 
 </script>
 <title><spring:message code="survey.statistic.title"/></title>
