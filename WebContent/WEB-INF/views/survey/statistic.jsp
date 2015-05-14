@@ -96,28 +96,11 @@ function groupBy(obj){
 		   </div>
 		   <div class="tab-pane fade" id="submitted">
 		   		<c:if test="${survey.status=='1-0-3-1' || survey.status=='1-0-3-2'}">
-				<form id="SendNotification" action="${ctx}/survey/sendNoti" method="post" class="form-horizontal">
+				<form id="SendNotification" action="${ctx}/survey/sendNoti" method="post" >
 					<div class="control-group">
-						<label for="question" class="control-label formlabel"><spring:message code="survey.statistic.finishcondition"/></label>
 						<div class="controls">
-							<div class="accordion-group" style="width: 500px;">
-								<div class="accordion-heading">
-									<center>
-										<a href="#collapse" data-toggle="collapse"
-											class="accordion-toggle"
-											style="display: inline-block; word-wrap: break-word; text-decoration: none;">
-											<spring:message code="survey.statistic.finishcondition.button"/> </a>
-									</center>
-
-								</div>
-								<div class="accordion-body collapse" id="collapse">
-								<div class="accordion-inner" style="padding-left: 260px">
-									<select onchange="groupBy(this)" >
-										<option value="1"><spring:message code="survey.statistic.groupby1"/></option>
-										<option value="2"><spring:message code="survey.statistic.groupby2"/></option>
-										<option value="3"><spring:message code="survey.statistic.groupby3"/></option>
-									</select>
-								</div>
+							<div class="accordion-group" class="span9">
+								
 									<c:forEach items="${surveyReceivers}" var="surveyReceiver" varStatus="status">
 									<div id="${surveyReceiver.status}_${status.count}" class="accordion-inner" style="padding-left: 40px">
 									 <c:choose>
@@ -186,7 +169,6 @@ function groupBy(obj){
 									   <input type="button" id="sendbtn" value="<spring:message code="survey.statistic.sendbtn"/>" class="btn btn-warning" onclick="sendNoti()" style="height:80px">
 									</div>
 									</c:if>
-								</div>
 							</div>
 						</div>
 					</div>
