@@ -105,7 +105,7 @@ public class QuestionController {
 		User user = (User)session.getAttribute("user");
 		question.setCreater(user);
 		questionService.saveQuestion(question);
-		
+		redirectAttributes.addAttribute("search_userId", user.getId());
 		return "redirect:/question/list/";
 	}
 	
@@ -121,7 +121,7 @@ public class QuestionController {
 	}
 	
 	@RequestMapping(value = "updateQuestion", method = RequestMethod.POST)
-	public String updateQuestion(@ModelAttribute Question question, RedirectAttributes redirectAttributes){
+	public String updateQuestion(@ModelAttribute Question question, RedirectAttributes redirectAttributes, HttpSession session){
 		if(question.getQuestionType().equals("3"))
 			question.setQuestionOptions("");
 		else{
@@ -137,14 +137,16 @@ public class QuestionController {
 		}
 		
 		questionService.updateQuestion(question);
-		
+		User user = (User)session.getAttribute("user");
+		redirectAttributes.addAttribute("search_userId", user.getId());
 		return "redirect:/question/list/";
 	}
 	
 	@RequestMapping(value = "deleteQuestion/question_{id}", method = RequestMethod.GET)
-	public String deleteQuestion(@PathVariable("id") String id,  RedirectAttributes redirectAttributes){
+	public String deleteQuestion(@PathVariable("id") String id,  RedirectAttributes redirectAttributes,HttpSession session){
 		questionService.deleteQuestion(Long.parseLong(id));
-		
+		User user = (User)session.getAttribute("user");
+		redirectAttributes.addAttribute("search_userId", user.getId());
 		return "redirect:/question/list/";
 	}
 	

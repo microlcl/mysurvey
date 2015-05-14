@@ -67,7 +67,7 @@ insert into roles(role_id, name, description) values('R0', '管理员','超级�
 insert into roles(role_id, name, description) values('R9', '普通用户','普通用户');
 
 insert into user_role(user_id, role_id) values('admin','R0');
-insert into user_role(user_id, role_id) values('lichlei@cn.ibm.com','R9');
+insert into user_role(user_id, role_id) values('lichlei@cn.ibm.com','R0');
 insert into user_role(user_id, role_id) values('wangxhdl@cn.ibm.com','R0');
 insert into user_role(user_id, role_id) values('gongbf@cn.ibm.com','R0');
 insert into user_role(user_id, role_id) values('zhangfd@cn.ibm.com','R0');

@@ -10,7 +10,6 @@ import java.util.Map;
 import java.util.Properties;
 
 import javax.servlet.ServletRequest;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang3.StringUtils;
@@ -27,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springside.modules.web.Servlets;
 
 import com.eastteam.myprogram.entity.Paper;
@@ -110,36 +110,39 @@ public class PaperController {
 	}
 	
 	@RequestMapping(value = "delete/{id}", method = RequestMethod.GET)
-	public String delete(@PathVariable("id") String id, Model model) {
+	public String delete(@PathVariable("id") String id, RedirectAttributes redirectAttributes, HttpSession session) {
 		this.paperService.deletePaper(id);
-		
+		User user = (User)session.getAttribute("user");
+		redirectAttributes.addAttribute("search_userId", user.getId());		
 		return "redirect:/paper/list/";
 	}
 	
 	@RequestMapping(value = "publish/{id}", method = RequestMethod.GET)
-	public String publish(@PathVariable("id") String id, Model model) {
+	public String publish(@PathVariable("id") String id, RedirectAttributes redirectAttributes, HttpSession session) {
 		logger.info("in paper control publish");
 		this.paperService.publishPaper(id);
-		
+		User user = (User)session.getAttribute("user");
+		redirectAttributes.addAttribute("search_userId", user.getId());		
 		return "redirect:/paper/list/";
 	}
 	
 	@RequestMapping(value = "update", method = RequestMethod.POST)
-	public String update(Model model, Paper paperBean, HttpServletRequest request){
+	public String update(Paper paperBean, RedirectAttributes redirectAttributes, HttpSession session){
 		logger.info("=====in paper Controller update parper");
 		this.paperService.updatePaper(paperBean);
-		
+		User user = (User)session.getAttribute("user");
+		redirectAttributes.addAttribute("search_userId", user.getId());	
 		return "redirect:/paper/list/";
 	}
 	
 	@RequestMapping(value = "save", method = RequestMethod.POST)
-	public String save(Model model, Paper paper, HttpServletRequest request, HttpSession session){
+	public String save(Paper paper, RedirectAttributes redirectAttributes, HttpSession session){
 		logger.info("in paper Controller save parper");
 		
 		User user = (User)session.getAttribute("user");
 		paper.setCreater(user);
 		this.paperService.saveQuestions(paper);
-		
+		redirectAttributes.addAttribute("search_userId", user.getId());	
 		return "redirect:/paper/list/";
 	}
 	
