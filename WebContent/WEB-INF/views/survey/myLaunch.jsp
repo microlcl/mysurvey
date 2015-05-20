@@ -82,7 +82,7 @@ $(document).ready(function() {
 							<mytag:PermssionTag functionId="F8-3"><a href="${ctx}/survey/surveyDetail/${survey.id}" id="editLink-${survey.id}"><i class="icon-edit"></i> <spring:message code="survey.mylaunch.show"/><spring:message code="survey.mylaunch.canpublish"/></a>&nbsp;&nbsp;</mytag:PermssionTag>
 							</c:if>
 							<%-- <c:if test="${survey.status=='P' || survey.status=='F'}"> --%>	
-							<mytag:PermssionTag functionId="F8-4"><a href="${ctx}/survey/statistic/${survey.id}" id="deleteLink-${paper.id}"><i class="icon-remove"></i> <spring:message code="survey.mylaunch.answers"/></a></mytag:PermssionTag>
+							<mytag:PermssionTag functionId="F8-4"><a href="${ctx}/survey/statistic/${survey.id}" id="statisticLink-${survey.id}"><i class="icon-tasks"></i> <spring:message code="survey.mylaunch.answers"/></a></mytag:PermssionTag>
 							<%-- </c:if> --%>
 						</td>
 					</tr>
