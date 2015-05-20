@@ -37,8 +37,9 @@
 				and (p.paper_name like '%${keyword}%' or q.question like '%${keyword}%')
 			</if>
 		</where>
+			group by p.paper_id
 		<if test="sort != null">
-			order by p.${sort}
+			order by p.${sort},p.paper_id DESC
 		</if>
 		<if test="offset != null">
 			limit #{offset}, #{pageSize}
