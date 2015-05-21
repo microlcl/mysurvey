@@ -299,7 +299,8 @@ public class SurveyController {
 			logger.info("user:"+((User)session.getAttribute("user")).getId()+" sumbitted an answer of survey:"+request.getParameter("surveyId"));
 		}
 			
-		return "survey/submitOk";
+		redirectAttributes.addFlashAttribute("message", "问卷提交成功！");
+		return "redirect:/survey/myParticipation";
 	}
 	
 	@RequestMapping(value = "accessSurvey/{id}", method = RequestMethod.GET)
