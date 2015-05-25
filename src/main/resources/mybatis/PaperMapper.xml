@@ -24,11 +24,12 @@
 		left join paper_questions pq on p.paper_id=pq.paper_id
 		left join questions q on pq.question_id=q.question_id 
 		<where>
+				1=1
 			<if test="status != null">
-		        cs.id = #{status}
+		        and cs.id = #{status}
 			</if>
 			<if test="userId != null">
-		        p.user_id = #{userId}
+		        and p.user_id = #{userId}
 			</if>
 			<if test="businessType != null">
 		        and p.business_type = #{businessType}
@@ -52,11 +53,12 @@
 		left join paper_questions pq on p.paper_id=pq.paper_id
 		left join questions q on pq.question_id=q.question_id 
 		<where>
+				1=1
 			<if test="status != null">
-		        cs.id = #{status}
+		        and cs.id = #{status}
 			</if>
 			<if test="userId != null">
-		        p.user_id = #{userId}
+		        and p.user_id = #{userId}
 			</if>			
 			<if test="businessType != null">
 		        and cb.id = #{businessType}
