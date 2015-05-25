@@ -34,6 +34,7 @@ insert into functions(function_id, module_id, name, description, path) values('F
 insert into functions(function_id, module_id, name, description, path) values('F2-2','M1-2','我发起的调查:查看','有权限查看调查','/survey/surveyDetail/');
 insert into functions(function_id, module_id, name, description, path) values('F2-3','M1-2','我发起的调查:答案统计','有权限查看答案统计','/survey/statistic/,survey/accessSurvey/');
 insert into functions(function_id, module_id, name, description, path) values('F2-4','M1-2','我发起的调查:创建调查','有权限创建调查','/survey/createSurvey/,/survey/surveyAction/');
+insert into functions(function_id, module_id, name, description, path) values('F2-5','M1-2','我发起的调查:发送提醒','有权限发送提醒邮件','/survey/sendNoti');
 
 insert into functions(function_id, module_id, name, description, path) values('F3-1','M1-3','我参与的调查:列表','有权限查看列表','/survey/myParticipation');
 insert into functions(function_id, module_id, name, description, path) values('F3-2','M1-3','我参与的调查:查看','有权限查看调查','/survey/accessSurvey/');
@@ -86,6 +87,7 @@ insert into role_function(role_id, function_id, description) values('R0','F2-1',
 insert into role_function(role_id, function_id, description) values('R0','F2-2','');
 insert into role_function(role_id, function_id, description) values('R0','F2-3','');
 insert into role_function(role_id, function_id, description) values('R0','F2-4','');
+insert into role_function(role_id, function_id, description) values('R0','F2-5','');
 insert into role_function(role_id, function_id, description) values('R0','F3-1','');
 insert into role_function(role_id, function_id, description) values('R0','F3-2','');
 insert into role_function(role_id, function_id, description) values('R0','F3-3','');

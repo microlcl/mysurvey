@@ -355,10 +355,12 @@ public class SurveyController {
 	
 	@RequestMapping(value = "sendNoti", method = RequestMethod.POST)
 	public String sendNoti(RedirectAttributes redirectAttributes,HttpSession session,HttpServletRequest request){
-		if(surveyService.sendNotification(request.getParameter("receivers"),request.getParameter("subject"),request.getParameter("surveyId") ,request.getParameter("desctription")  ,configProperties.getProperty(APPPATH)+request.getContextPath()+configProperties.getProperty(SURVEYPATH)))
-		  return "survey/publishOK";
-		else {
-		  return "survey/publishFail";
+		if(surveyService.sendNotification(request.getParameter("receivers"),request.getParameter("subject"),request.getParameter("surveyId") ,request.getParameter("desctription")  ,configProperties.getProperty(APPPATH)+request.getContextPath()+configProperties.getProperty(SURVEYPATH))){
+			redirectAttributes.addFlashAttribute("message", "提醒发送成功！");
+		    return "redirect:/survey/myLaunch";
+		    }else {
+			redirectAttributes.addFlashAttribute("message", "提醒发送失败,请尝试。");
+		    return "redirect:/survey/myLaunch";
 		}
 	}
 	

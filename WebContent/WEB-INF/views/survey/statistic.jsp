@@ -40,6 +40,12 @@
    });
 } */
 
+function sendNoti(){
+		   $("#sendbtn").val("请稍等...");
+		   $("#sendbtn").attr("disabled","disabled");
+		   $("#SendNotification").submit();
+		}
+
 </script>
 <title><spring:message code="survey.statistic.title"/></title>
 </head>
