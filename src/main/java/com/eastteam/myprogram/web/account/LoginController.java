@@ -80,7 +80,7 @@ public class LoginController {
 			WebUtils.removeLasVistURL(session);
 			return "redirect:" + lastUri;
 		}
-		return "redirect:/index.jsp";
+		return "redirect:/survey/myParticipation";
 	}	
 
 }
