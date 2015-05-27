@@ -73,9 +73,9 @@ $(document).ready(function() {
 					<tr>
 						<td>${survey.subject}&nbsp;</td>
 						<td>${survey.statusString}&nbsp;</td>
-						<td><fmt:formatDate value="${survey.updateTimestamp}" pattern="yyyy年MM月dd日   HH:mm"/>&nbsp;</td>
+						<td><fmt:formatDate value="${survey.updateTimestamp}" pattern="yyyy-MM-dd   HH:mm"/>&nbsp;</td>
 						<td>${survey.userId}&nbsp;</td>
-						<td><fmt:formatDate value="${survey.deadlineTimestamp}" pattern="yyyy年MM月dd日   HH:mm"/>&nbsp;</td>
+						<td><fmt:formatDate value="${survey.deadlineTimestamp}" pattern="yyyy-MM-dd   HH:mm"/>&nbsp;</td>
 						<td>
 							<mytag:PermssionTag functionId="F8-6">
 								<a href="${ctx}/survey/accessSurvey/${survey.id}" id="showLink-${survey.id}"><i class="icon-folder-open"></i><spring:message code="survey.myparticipation.show"/>

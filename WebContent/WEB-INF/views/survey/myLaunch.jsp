@@ -71,9 +71,9 @@ $(document).ready(function() {
 					<tr>
 						<td>${survey.subject}&nbsp;</td>
 						<td>${survey.statusString}&nbsp;</td>
-						<td><fmt:formatDate value="${survey.updateTimestamp}" pattern="yyyy年MM月dd日   HH:mm"/>&nbsp;</td>
+						<td><fmt:formatDate value="${survey.updateTimestamp}" pattern="yyyy-MM-dd   HH:mm"/>&nbsp;</td>
 						<td><a href="${ctx}/myGroup/list"> ${survey.groupsString}</a>&nbsp;</td>
-						<td><fmt:formatDate value="${survey.deadlineTimestamp}" pattern="yyyy年MM月dd日   HH:mm"/>&nbsp;</td>
+						<td><fmt:formatDate value="${survey.deadlineTimestamp}" pattern="yyyy-MM-dd  HH:mm"/>&nbsp;</td>
 						<td>
 							<c:if test="${survey.status!='1-0-3-0'}">	
 							<mytag:PermssionTag functionId="F8-6"><a href="${ctx}/survey/surveyDetail/${survey.id}" id="showLink-${survey.id}"><i class="icon-folder-open"></i> <spring:message code="survey.mylaunch.show"/></a>&nbsp;&nbsp;</mytag:PermssionTag>
