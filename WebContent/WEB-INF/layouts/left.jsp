@@ -6,7 +6,7 @@
 
 <c:if test="${not empty user.id}">
 
-	<div id="leftbar" class="span2">
+	<div id="leftbar" class="span2" style="width:180px;>
 		<h1><spring:message code="menu.mydashboard"/></h1>
 		<div class="submenu">
 			<a id="mygroup-tab" href="${ctx}/myGroup/list"><spring:message code="menu.mygroup"/></a>
