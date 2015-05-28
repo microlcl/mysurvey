@@ -1,11 +1,14 @@
 package com.eastteam.myprogram.service.survey;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+
+import javax.servlet.ServletOutputStream;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,14 +24,18 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.eastteam.myprogram.dao.AnswerMybatisDao;
 import com.eastteam.myprogram.dao.MyGroupMybatisDao;
+import com.eastteam.myprogram.dao.PaperMybatisDao;
 import com.eastteam.myprogram.dao.SurveyMybatisDao;
 import com.eastteam.myprogram.dao.SurveyReceiverMybatisDao;
 import com.eastteam.myprogram.entity.Answer;
 import com.eastteam.myprogram.entity.Group;
+import com.eastteam.myprogram.entity.Paper;
+import com.eastteam.myprogram.entity.Question;
 import com.eastteam.myprogram.entity.Survey;
 import com.eastteam.myprogram.entity.SurveyReceiver;
 import com.eastteam.myprogram.service.PageableService;
 import com.eastteam.myprogram.utils.EmailSender;
+import com.eastteam.myprogram.utils.ExcelHandler;
 import com.google.common.collect.Maps;
 
 @Component
@@ -42,6 +49,8 @@ public class SurveyService extends PageableService {
 	private AnswerMybatisDao answerMybatisDao;
 	@Autowired
 	private SurveyReceiverMybatisDao surveyReceiverMybatisDao;
+	@Autowired
+	private PaperMybatisDao paperMybatisDao;
 	
 	
 	@Autowired
@@ -278,6 +287,27 @@ public class SurveyService extends PageableService {
 	
 	public SurveyReceiver getPointedSurveyReceiver(Map<String, Object> map){
 		return surveyReceiverMybatisDao.getPointedSurveyReceiver(map);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public void exportSurvey(Survey survey, ServletOutputStream out) throws SQLException {
+		//1、取的该survey的全部问题。
+		//2、根据人按顺序获取答案。
+		List<Question> questions = paperMybatisDao.selectQuestions(String.valueOf(survey.getPaperId()));
+		Map<String, Object> parameters = new HashMap<String, Object>();
+		parameters.put("surveyId", survey.getId());
+		Map<String, Object> answers = new HashMap<String, Object>();
+		List<Answer> answerList = answerMybatisDao.search(parameters);
+		
+		for (Answer answer : answerList) {
+			
+			if (!answers.containsKey(answer.getUserId())) 
+				answers.put(answer.getUserId(), new HashMap<Long, Answer>());
+			
+			((HashMap<Long, Answer>)answers.get(answer.getUserId())).put(answer.getQuestionId(), answer);
+		}
+		
+		ExcelHandler.doExprt(questions, answers, out);
 	}
 }
  

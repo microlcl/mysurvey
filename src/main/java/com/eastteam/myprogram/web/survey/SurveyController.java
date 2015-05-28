@@ -10,6 +10,7 @@ import java.util.Set;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang3.StringUtils;
@@ -390,5 +391,16 @@ public class SurveyController {
 		model.addAttribute("survey", survey);
 		model.addAttribute("answerIds", answerIds);
 		return "survey/statistic";
+	}
+	
+	@RequestMapping(value = "export/{id}", method = RequestMethod.GET)
+	public String exportSurvey(@PathVariable("id") String surveyId,HttpServletResponse response,Model model,HttpSession session) {
+		
+		Survey survey = surveyService.selectSurvey(surveyId);
+		
+		response.setHeader("Content-Disposition", "attachment; filename=\"" + survey.getSubject()  + ".xlsx");  
+	    response.setContentType("application/octet-stream; charset=UTF-8");    
+	    
+		return "";
 	}
 }

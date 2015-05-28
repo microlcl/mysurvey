@@ -4,7 +4,11 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
@@ -20,7 +24,8 @@ import com.eastteam.myprogram.entity.Question;
 
 public class ExcelHandler {
 
-static public boolean doExprt(List<Question> questions,List<Answer> answers,OutputStream out) throws SQLException {
+@SuppressWarnings("unchecked")
+static public boolean doExprt(List<Question> questions,Map<String, Object> answers,OutputStream out) throws SQLException {
 		
 		HSSFWorkbook workbook = new HSSFWorkbook();
 		HSSFSheet sheet = workbook.createSheet();
@@ -67,34 +72,35 @@ static public boolean doExprt(List<Question> questions,List<Answer> answers,Outp
         
         int rowIndex = 1;
         HSSFRow bodyRow;
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         
         for(int i = 0; i < answers.size(); i++) {
         	
         	bodyRow = sheet.createRow(rowIndex);
         	rowIndex ++;
         	
-        	/*for (int curCol = 0; curCol < rsmd.getColumnCount(); curCol++) {
+        	Iterator<Object> iterator = answers.values().iterator();
+        	
+        	while (iterator.hasNext()) {
         		
-        		HSSFCell bodyCell = bodyRow.createCell(curCol);
-        		bodyCell.setCellStyle(bodyStyle);
-        		if (rsmd.getColumnName(curCol+1).toLowerCase().contains("date")){
-        			//if date
-        			Date date = resultSet.getDate(curCol + 1);
-        			if (date != null)
-        				bodyCell.setCellValue(simpleDateFormat.format(date));
-        		} else {
-        			String string = (String)resultSet.getObject(curCol + 1);
-        			if (string == null)
-        				string = "N/A";
-        			bodyCell.setCellValue(string.trim());
+        		int curCol = 1;
+        		HashMap<Long, Answer> answerMap = (HashMap<Long, Answer>) iterator.next();
+        		for (Question question : questions) {
+        			if (question.getQuestionType() != Question.OPEN_QUESTION) {
+        			
+	        			Answer questionAnswer = answerMap.get(question.getId());
+	        			HSSFCell bodyCell = bodyRow.createCell(curCol);
+	            		bodyCell.setCellStyle(bodyStyle);
+	            		bodyCell.setCellValue(questionAnswer.getAnswer());
+        			}
+            		curCol ++;
         		}
-        	}*/  	
+        		
+        		
+        	}
         }
 		
         try {
 			workbook.write(out);
-			//where is close method?
 		} catch (IOException e) {
 			e.printStackTrace();
 			return false;
