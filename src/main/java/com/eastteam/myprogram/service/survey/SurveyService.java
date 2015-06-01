@@ -306,7 +306,9 @@ public class SurveyService extends PageableService {
 			answers.get(answer.getUserId()).add(answer);
 		}
 		
-		ExcelHandler.doExprt(questions, answers, out);
+		boolean isAnonymous = survey.getIsAnonymous().endsWith("T");
+		
+		ExcelHandler.doExprt(isAnonymous,questions, answers, out);
 	}
 }
  

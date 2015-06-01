@@ -26,11 +26,8 @@ import com.eastteam.myprogram.entity.Question;
 import com.eastteam.myprogram.web.survey.SurveyController;
 
 public class ExcelHandler {
-
-	private static Logger logger = LoggerFactory.getLogger(SurveyController.class);
 	
-	@SuppressWarnings("unchecked")
-	static public boolean doExprt(List<Question> questions,Map<String, List<Answer>> answers,OutputStream out) throws SQLException {
+	static public boolean doExprt(boolean isAnonymous,List<Question> questions,Map<String, List<Answer>> answers,OutputStream out) throws SQLException {
 	
 		HSSFWorkbook workbook = new HSSFWorkbook();
 		HSSFSheet sheet = workbook.createSheet();
@@ -67,11 +64,16 @@ public class ExcelHandler {
         HSSFRow headRow = sheet.createRow(0);
         HSSFCell cell;
         
+        cell = headRow.createCell(0);
+        cell.setCellStyle(headStyle);
+    	HSSFRichTextString text = new HSSFRichTextString("User ID");
+    	cell.setCellValue(text);
+    	
         //create table head
         for (int i = 0; i < questions.size(); i++) {
-        	cell = headRow.createCell(i);
+        	cell = headRow.createCell(i+1);
         	cell.setCellStyle(headStyle);
-        	HSSFRichTextString text = new HSSFRichTextString(questions.get(i).getQuestion());
+        	text = new HSSFRichTextString(questions.get(i).getQuestion());
         	cell.setCellValue(text);
         }
         
@@ -87,6 +89,11 @@ public class ExcelHandler {
     		HSSFCell bodyCell;
     		int curCol = 0;
     		List<Answer> answerList = iterator.next();
+    		
+    		bodyCell = bodyRow.createCell(curCol);
+    		bodyCell.setCellStyle(bodyStyle);
+    		bodyCell.setCellValue(isAnonymous?"Anonymous":answerList.get(0).getUserId());
+    		curCol ++;
     		
     		for (Question question : questions) {
     			for (Answer answer : answerList) {
