@@ -18,15 +18,20 @@ import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.hssf.util.HSSFColor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.eastteam.myprogram.entity.Answer;
 import com.eastteam.myprogram.entity.Question;
+import com.eastteam.myprogram.web.survey.SurveyController;
 
 public class ExcelHandler {
 
-@SuppressWarnings("unchecked")
-static public boolean doExprt(List<Question> questions,Map<String, Object> answers,OutputStream out) throws SQLException {
-		
+	private static Logger logger = LoggerFactory.getLogger(SurveyController.class);
+	
+	@SuppressWarnings("unchecked")
+	static public boolean doExprt(List<Question> questions,Map<String, List<Answer>> answers,OutputStream out) throws SQLException {
+	
 		HSSFWorkbook workbook = new HSSFWorkbook();
 		HSSFSheet sheet = workbook.createSheet();
 		sheet.setDefaultColumnWidth(15);
@@ -49,14 +54,14 @@ static public boolean doExprt(List<Question> questions,Map<String, Object> answe
         //set body font and body style
         HSSFCellStyle bodyStyle = workbook.createCellStyle();
         HSSFFont bodyFont = workbook.createFont();
-        bodyStyle.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);  
+        /*bodyStyle.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);  
         bodyStyle.setBorderBottom(HSSFCellStyle.BORDER_THIN);  
         bodyStyle.setBorderLeft(HSSFCellStyle.BORDER_THIN);  
         bodyStyle.setBorderRight(HSSFCellStyle.BORDER_THIN);  
         bodyStyle.setBorderTop(HSSFCellStyle.BORDER_THIN);  
         bodyStyle.setAlignment(HSSFCellStyle.ALIGN_CENTER);  
         bodyStyle.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);  
-        bodyFont.setBoldweight(HSSFFont.BOLDWEIGHT_NORMAL);  
+        bodyFont.setBoldweight(HSSFFont.BOLDWEIGHT_NORMAL);  */
         bodyStyle.setFont(bodyFont);
 		
         HSSFRow headRow = sheet.createRow(0);
@@ -72,32 +77,31 @@ static public boolean doExprt(List<Question> questions,Map<String, Object> answe
         
         int rowIndex = 1;
         HSSFRow bodyRow;
-        
-        for(int i = 0; i < answers.size(); i++) {
-        	
-        	bodyRow = sheet.createRow(rowIndex);
+    	Iterator<List<Answer>> iterator = answers.values().iterator();
+    	
+    	while (iterator.hasNext()) {
+    		
+    		bodyRow = sheet.createRow(rowIndex);
         	rowIndex ++;
-        	
-        	Iterator<Object> iterator = answers.values().iterator();
-        	
-        	while (iterator.hasNext()) {
-        		
-        		int curCol = 1;
-        		HashMap<Long, Answer> answerMap = (HashMap<Long, Answer>) iterator.next();
-        		for (Question question : questions) {
-        			if (question.getQuestionType() != Question.OPEN_QUESTION) {
-        			
-	        			Answer questionAnswer = answerMap.get(question.getId());
-	        			HSSFCell bodyCell = bodyRow.createCell(curCol);
-	            		bodyCell.setCellStyle(bodyStyle);
-	            		bodyCell.setCellValue(questionAnswer.getAnswer());
-        			}
-            		curCol ++;
-        		}
-        		
-        		
-        	}
-        }
+    		
+    		HSSFCell bodyCell;
+    		int curCol = 0;
+    		List<Answer> answerList = iterator.next();
+    		
+    		for (Question question : questions) {
+    			for (Answer answer : answerList) {
+    				if (answer.getQuestionId().equals(question.getId())) {
+    					
+    					bodyCell = bodyRow.createCell(curCol);
+                		bodyCell.setCellStyle(bodyStyle);
+                		bodyCell.setCellValue(answer.getAnswer() == null? "" : answer.getAnswer());
+                		
+                		break;
+    				}
+    			}
+    			curCol ++;
+    		}
+    	}
 		
         try {
 			workbook.write(out);

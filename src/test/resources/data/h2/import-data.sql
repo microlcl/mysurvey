@@ -295,20 +295,20 @@ insert into survey(survey_id, status, update_timestamp, user_id, paper_id, subje
 insert into survey(survey_id, status, update_timestamp, user_id, paper_id, subject, groups_id, sent_timestamp, deadline_timestamp, is_anonymous, description,receivers) values(20,'1-0-3-2',null,'lichlei@cn.ibm.com',1,'Testing3','1,2,3',null,now(),'T','just for testing','stan^stan@111.com^0^0|李四^lisi@111.com^0^0|系统测试邮箱^18661014104@163.com^0^0|王五^wangwu@111.com^0^0|张三^zhangsan@111.com^0^0|jack^jack@111.com^0^0|gongbinfeng^530460414@qq.com^0^0|^xxx@111.com^0^0|tom^tom@111.com^0^0|');
 
 insert into paper_answers(survey_id, question_id, answer_user_id, answer) values(2, 4, 'lichlei@cn.ibm.com', 1);
-insert into paper_answers(survey_id, question_id, answer_user_id, answer) values(2, 5, 'lichlei@cn.ibm.com', 1);
+insert into paper_answers(survey_id, question_id, answer_user_id, answer) values(2, 5, 'lichlei@cn.ibm.com', 3);
 insert into paper_answers(survey_id, question_id, answer_user_id, answer) values(2, 6, 'lichlei@cn.ibm.com', 1);
 insert into paper_answers(survey_id, question_id, answer_user_id, answer) values(2, 7, 'lichlei@cn.ibm.com', 1);
 insert into paper_answers(survey_id, question_id, answer_user_id, answer) values(2, 8, 'lichlei@cn.ibm.com', 1);
 insert into paper_answers(survey_id, question_id, answer_user_id, answer) values(2, 9, 'lichlei@cn.ibm.com', '1,2,3');
 insert into paper_answers(survey_id, question_id, answer_user_id, answer) values(2, 4, 'zhang3', 2);
-insert into paper_answers(survey_id, question_id, answer_user_id, answer) values(2, 5, 'zhang3', 1);
-insert into paper_answers(survey_id, question_id, answer_user_id, answer) values(2, 6, 'zhang3', 1);
+insert into paper_answers(survey_id, question_id, answer_user_id, answer) values(2, 5, 'zhang3', 2);
+insert into paper_answers(survey_id, question_id, answer_user_id, answer) values(2, 6, 'zhang3', 3);
 insert into paper_answers(survey_id, question_id, answer_user_id, answer) values(2, 7, 'zhang3', 1);
 insert into paper_answers(survey_id, question_id, answer_user_id, answer) values(2, 8, 'zhang3', 1);
 insert into paper_answers(survey_id, question_id, answer_user_id, answer) values(2, 9, 'zhang3', '1,3');
-insert into paper_answers(survey_id, question_id, answer_user_id, answer) values(2, 4, '18661014104', 2);
+insert into paper_answers(survey_id, question_id, answer_user_id, answer) values(2, 4, '18661014104', 3);
 insert into paper_answers(survey_id, question_id, answer_user_id, answer) values(2, 5, '18661014104', 1);
-insert into paper_answers(survey_id, question_id, answer_user_id, answer) values(2, 6, '18661014104', 1);
+insert into paper_answers(survey_id, question_id, answer_user_id, answer) values(2, 6, '18661014104', 2);
 insert into paper_answers(survey_id, question_id, answer_user_id, answer) values(2, 7, '18661014104', 1);
 insert into paper_answers(survey_id, question_id, answer_user_id, answer) values(2, 8, '18661014104', 1);
 insert into paper_answers(survey_id, question_id, answer_user_id, answer) values(2, 9, '18661014104', '1,2');

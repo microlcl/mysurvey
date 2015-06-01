@@ -291,20 +291,19 @@ public class SurveyService extends PageableService {
 	
 	@SuppressWarnings("unchecked")
 	public void exportSurvey(Survey survey, ServletOutputStream out) throws SQLException {
-		//1、取的该survey的全部问题。
-		//2、根据人按顺序获取答案。
+
 		List<Question> questions = paperMybatisDao.selectQuestions(String.valueOf(survey.getPaperId()));
 		Map<String, Object> parameters = new HashMap<String, Object>();
 		parameters.put("surveyId", survey.getId());
-		Map<String, Object> answers = new HashMap<String, Object>();
+		Map<String, List<Answer>> answers = new HashMap<String, List<Answer>>();
 		List<Answer> answerList = answerMybatisDao.search(parameters);
 		
 		for (Answer answer : answerList) {
 			
 			if (!answers.containsKey(answer.getUserId())) 
-				answers.put(answer.getUserId(), new HashMap<Long, Answer>());
+				answers.put(answer.getUserId(), new ArrayList<Answer>());
 			
-			((HashMap<Long, Answer>)answers.get(answer.getUserId())).put(answer.getQuestionId(), answer);
+			answers.get(answer.getUserId()).add(answer);
 		}
 		
 		ExcelHandler.doExprt(questions, answers, out);
