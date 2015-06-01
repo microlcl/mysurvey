@@ -1,5 +1,7 @@
 package com.eastteam.myprogram.web.survey;
 
+import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -398,9 +400,17 @@ public class SurveyController {
 		
 		Survey survey = surveyService.selectSurvey(surveyId);
 		
-		response.setHeader("Content-Disposition", "attachment; filename=\"" + survey.getSubject()  + ".xlsx");  
-	    response.setContentType("application/octet-stream; charset=UTF-8");    
+		response.setHeader("Content-Disposition", "attachment; filename=\"" + survey.getSubject()  + ".xls");  
+	    response.setContentType("application/octet-stream; charset=UTF-8");
 	    
-		return "";
+	    try {
+			surveyService.exportSurvey(survey, response.getOutputStream());
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	    
+		return null;
 	}
 }

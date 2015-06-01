@@ -101,8 +101,11 @@ function sendNoti(){
 		      </c:forEach>
 		   </div>
 		   <div class="tab-pane fade" id="submitted">
+		   		
+		   		<a class="btn" href="${ctx}/survey/export/${survey.id}">Export</a>
+		   		
 		   		<c:if test="${survey.status=='1-0-3-1' || survey.status=='1-0-3-2'}">
-				<form id="SendNotification" action="${ctx}/survey/sendNoti" method="post" >
+				<form style="margin-top:20px" id="SendNotification" action="${ctx}/survey/sendNoti" method="post" >
 					<div class="control-group">
 						<div class="controls">
 							<div class="accordion-group" class="span9">
