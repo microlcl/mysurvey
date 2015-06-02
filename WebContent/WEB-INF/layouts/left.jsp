@@ -11,8 +11,8 @@
 		<div class="submenu">
 			<a id="mygroup-tab" href="${ctx}/myGroup/list"><spring:message code="menu.mygroup"/></a>
 			<a id="mylaunch-tab" href="${ctx}/survey/myLaunch"><spring:message code="menu.mylaunch"/></a>
-			<a id="" href="${ctx}/survey/myParticipation"><spring:message code="menu.myparticipation"/></a>
-			<a id="myparticipation-tab" href="${ctx}/paper/list?search_userId=${user.id}"><spring:message code="menu.mypaper"/></a>
+			<a id="myparticipation-tab" href="${ctx}/survey/myParticipation"><spring:message code="menu.myparticipation"/></a>
+			<a id="mypaper-tab" href="${ctx}/paper/list?search_userId=${user.id}"><spring:message code="menu.mypaper"/></a>
 			<a id="myquestion-tab" href="${ctx}/question/list?search_userId=${user.id}"><spring:message code="menu.myquestion"/></a>
 		</div>
 		<mytag:PermssionTag functionId="F21">

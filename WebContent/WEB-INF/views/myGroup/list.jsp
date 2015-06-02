@@ -16,6 +16,7 @@
 	
 	<script src="${ctx}/static/easyui/jquery.easyui.min.js" type="text/javascript"></script>
 	<script>
+	
 		 function checkName(){
 		   if($('#groupName').val()==""){
 		      $('#groupName_error').show();
@@ -96,7 +97,7 @@
 </div>
     <script type="text/javascript">
  	   $(document).ready(function() {
-			$("#question-tab").addClass("active");
+			$("#mygroup-tab").addClass("active");
  	   });
     
 		var categoryIds = [];

@@ -108,7 +108,7 @@
 </div>
     <script type="text/javascript">
  	   $(document).ready(function() {
-			$("#question-tab").addClass("active");
+			$("#myquestion-tab").addClass("active");
  	   });
     
 		var categoryIds = [];

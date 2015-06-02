@@ -16,7 +16,7 @@
 <link rel="stylesheet" type="text/css" href="${ctx}/static/easyui/mytree.css">
 <script>
 $(document).ready(function() {
-	
+	$("#myparticipation-tab").addClass("active");
 	var surveyStatus = [];
 	<c:forEach items="${surveyStatus}" var="surveyStatus">
 		surveyStatus.push('${surveyStatus}');

@@ -16,6 +16,7 @@
 	<script src="${ctx}/static/easyui/jquery.easyui.min.js" type="text/javascript"></script>
 	<script type="text/javascript">
 	$(document).ready(function() {
+		$("#mygroup-tab").addClass("active");
 		var message = "${errorMessage}";
 		if(message != "") {
 			alert(message);	
