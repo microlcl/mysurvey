@@ -21,180 +21,187 @@
 	<script src="${ctx}/static/nano/nano.js" type="text/javascript"></script>
 	
 	<script >
+	
+		$(document).ready(function() {
+			$("#mylaunch-tab").addClass("active");
+		});
+
 		function getDeadline() {
 			$('#datetimepicker7').datetimepicker();
 		}
-		
-		function checkAnonymous(){
-		    var  check=document.getElementById("isAnonymousCheck");
-		    var alertInfo="<br><strong><font color='red'><spring:message code="survey.publishsurvey.anonymousalert"/></font></strong>";
-		    if(check.checked){
-		      $('#isAnonymous').val('T');
-		      $('#description').val($('#description').val()+alertInfo);
-		    }else{
-		      $('#isAnonymous').val('F');
-		      $('#description').val($('#description').val().replace(alertInfo,""));
-		    }
+
+		function checkAnonymous() {
+			var check = document.getElementById("isAnonymousCheck");
+			var alertInfo = "<br><strong><font color='red'><spring:message code="survey.publishsurvey.anonymousalert"/></font></strong>";
+			if (check.checked) {
+				$('#isAnonymous').val('T');
+				$('#description').val($('#description').val() + alertInfo);
+			} else {
+				$('#isAnonymous').val('F');
+				$('#description').val(
+						$('#description').val().replace(alertInfo, ""));
+			}
 		}
-		
-		function markGroup(obj){
-		    var tab= $(obj);
-		    var mark=tab.find('i');
-		    if(mark.css("display")=='none'){
-		       mark.css("display","");
-		    }else{
-		        mark.css("display","none");
-		    }
+
+		function markGroup(obj) {
+			var tab = $(obj);
+			var mark = tab.find('i');
+			if (mark.css("display") == 'none') {
+				mark.css("display", "");
+			} else {
+				mark.css("display", "none");
+			}
 		}
-		
-		function formatAndCheckAndSend(){
-		    var _surveyGroup = "";
-		    $("input[name='groupid']").each(function(){
-		       var mark=$(this).parent().find('i');
-		       if(mark.css('display')!='none' && $(this).val()!=""){
-		          _surveyGroup += $(this).val()+",";
- 		       }
-		    });
-		    $("#surveyGroup").val(_surveyGroup);
-		    if($("#datetimepicker7").val()==""){
-		       $("#ddateEmptyError").show();
-		       $("#ddateInvalidError").hide();
-		       $("#subjectError").hide();
-		       $("#groupError").hide();
-		    }else if(deaddateVerification($("#datetimepicker7").val())){
-		        $("#ddateEmptyError").hide();
-		        $("#ddateInvalidError").show();
-		        $("#subjectError").hide();
-		        $("#groupError").hide();
-		    }else if($("#surveySubject").val()==""){
-		        $("#subjectError").show();
-		        $("#ddateEmptyError").hide();
-		        $("#ddateInvalidError").hide();
-		        $("#groupError").hide();
-// 		    }else if(_surveyGroup==""){
-// 		        $("#subjectError").hide();
-// 		        $("#ddateEmptyError").hide();
-// 		        $("#ddateInvalidError").hide();
-// 		        $("#groupError").show();
-		    }else{
-		        $("#subjectError").hide();
-		        $("#ddateEmptyError").hide();
-		        $("#ddateInvalidError").hide();
-		        $("#groupError").hide();
-		        $("#surveyForm").submit();
-		        $("#action-bar").hide();
-		        $("#submitOK").show();
-		    }
+
+		function formatAndCheckAndSend() {
+			var _surveyGroup = "";
+			$("input[name='groupid']").each(function() {
+				var mark = $(this).parent().find('i');
+				if (mark.css('display') != 'none' && $(this).val() != "") {
+					_surveyGroup += $(this).val() + ",";
+				}
+			});
+			$("#surveyGroup").val(_surveyGroup);
+			if ($("#datetimepicker7").val() == "") {
+				$("#ddateEmptyError").show();
+				$("#ddateInvalidError").hide();
+				$("#subjectError").hide();
+				$("#groupError").hide();
+			} else if (deaddateVerification($("#datetimepicker7").val())) {
+				$("#ddateEmptyError").hide();
+				$("#ddateInvalidError").show();
+				$("#subjectError").hide();
+				$("#groupError").hide();
+			} else if ($("#surveySubject").val() == "") {
+				$("#subjectError").show();
+				$("#ddateEmptyError").hide();
+				$("#ddateInvalidError").hide();
+				$("#groupError").hide();
+				// 		    }else if(_surveyGroup==""){
+				// 		        $("#subjectError").hide();
+				// 		        $("#ddateEmptyError").hide();
+				// 		        $("#ddateInvalidError").hide();
+				// 		        $("#groupError").show();
+			} else {
+				$("#subjectError").hide();
+				$("#ddateEmptyError").hide();
+				$("#ddateInvalidError").hide();
+				$("#groupError").hide();
+				$("#surveyForm").submit();
+				$("#action-bar").hide();
+				$("#submitOK").show();
+			}
 		}
-		
-		function formatAndCheckAndSave(){
-		    var _surveyGroup = "";
-		    $("input[name='groupid']").each(function(){
-		       var mark=$(this).parent().find('i');
-		       if(mark.css('display')!='none' && $(this).val()!=""){
-		          _surveyGroup += $(this).val()+",";
- 		       }
-		    });
-		    $("#surveyGroup").val(_surveyGroup);
-		    if($("#datetimepicker7").val()==""){
-		       $("#ddateEmptyError").show();
-		       $("#ddateInvalidError").hide();
-		       $("#subjectError").hide();
-		       $("#groupError").hide();
-		    }else if(deaddateVerification($("#datetimepicker7").val())){
-		        $("#ddateEmptyError").hide();
-		        $("#ddateInvalidError").show();
-		        $("#subjectError").hide();
-		        $("#groupError").hide();
-		    }else if($("#surveySubject").val()==""){
-		        $("#subjectError").show();
-		        $("#ddateEmptyError").hide();
-		        $("#ddateInvalidError").hide();
-		        $("#groupError").hide();
-// 		    }else if(_surveyGroup==""){
-// 		        $("#subjectError").hide();
-// 		        $("#ddateEmptyError").hide();
-// 		        $("#ddateInvalidError").hide();
-// 		        $("#groupError").show();
-		    }else{
-		        $("#subjectError").hide();
-		        $("#ddateEmptyError").hide();
-		        $("#ddateInvalidError").hide();
-		        $("#groupError").hide();
-		        $("#act").val("save");
-		        $("#surveyForm").submit();
-		        $("#action-bar").hide();
-		        $("#submitOK").show();
-		    }
+
+		function formatAndCheckAndSave() {
+			var _surveyGroup = "";
+			$("input[name='groupid']").each(function() {
+				var mark = $(this).parent().find('i');
+				if (mark.css('display') != 'none' && $(this).val() != "") {
+					_surveyGroup += $(this).val() + ",";
+				}
+			});
+			$("#surveyGroup").val(_surveyGroup);
+			if ($("#datetimepicker7").val() == "") {
+				$("#ddateEmptyError").show();
+				$("#ddateInvalidError").hide();
+				$("#subjectError").hide();
+				$("#groupError").hide();
+			} else if (deaddateVerification($("#datetimepicker7").val())) {
+				$("#ddateEmptyError").hide();
+				$("#ddateInvalidError").show();
+				$("#subjectError").hide();
+				$("#groupError").hide();
+			} else if ($("#surveySubject").val() == "") {
+				$("#subjectError").show();
+				$("#ddateEmptyError").hide();
+				$("#ddateInvalidError").hide();
+				$("#groupError").hide();
+				// 		    }else if(_surveyGroup==""){
+				// 		        $("#subjectError").hide();
+				// 		        $("#ddateEmptyError").hide();
+				// 		        $("#ddateInvalidError").hide();
+				// 		        $("#groupError").show();
+			} else {
+				$("#subjectError").hide();
+				$("#ddateEmptyError").hide();
+				$("#ddateInvalidError").hide();
+				$("#groupError").hide();
+				$("#act").val("save");
+				$("#surveyForm").submit();
+				$("#action-bar").hide();
+				$("#submitOK").show();
+			}
 		}
-		
-		function formatAndCheckAndSaveUpdate(){
-		    var _surveyGroup = "";
-		    $("input[name='groupid']").each(function(){
-		       var mark=$(this).parent().find('i');
-		       if(mark.css('display')!='none' && $(this).val()!=""){
-		          _surveyGroup += $(this).val()+",";
- 		       }
-		    });
-		    $("#surveyGroup").val(_surveyGroup);
-		    if($("#datetimepicker7").val()==""){
-		       $("#ddateEmptyError").show();
-		       $("#ddateInvalidError").hide();
-		       $("#subjectError").hide();
-		       $("#groupError").hide();
-		    }else if(deaddateVerification($("#datetimepicker7").val())){
-		        $("#ddateEmptyError").hide();
-		        $("#ddateInvalidError").show();
-		        $("#subjectError").hide();
-		        $("#groupError").hide();
-		    }else if($("#surveySubject").val()==""){
-		        $("#subjectError").show();
-		        $("#ddateEmptyError").hide();
-		        $("#ddateInvalidError").hide();
-		        $("#groupError").hide();
-// 		    }else if(_surveyGroup==""){
-// 		        $("#subjectError").hide();
-// 		        $("#ddateEmptyError").hide();
-// 		        $("#ddateInvalidError").hide();
-// 		        $("#groupError").show();
-		    }else{
-		        $("#subjectError").hide();
-		        $("#ddateEmptyError").hide();
-		        $("#ddateInvalidError").hide();
-		        $("#groupError").hide();
-		        $("#act").val("update");
-		        $("#surveyForm").submit();
-		        $("#action-bar").hide();
-		        $("#submitOK").show();
-		    }
+
+		function formatAndCheckAndSaveUpdate() {
+			var _surveyGroup = "";
+			$("input[name='groupid']").each(function() {
+				var mark = $(this).parent().find('i');
+				if (mark.css('display') != 'none' && $(this).val() != "") {
+					_surveyGroup += $(this).val() + ",";
+				}
+			});
+			$("#surveyGroup").val(_surveyGroup);
+			if ($("#datetimepicker7").val() == "") {
+				$("#ddateEmptyError").show();
+				$("#ddateInvalidError").hide();
+				$("#subjectError").hide();
+				$("#groupError").hide();
+			} else if (deaddateVerification($("#datetimepicker7").val())) {
+				$("#ddateEmptyError").hide();
+				$("#ddateInvalidError").show();
+				$("#subjectError").hide();
+				$("#groupError").hide();
+			} else if ($("#surveySubject").val() == "") {
+				$("#subjectError").show();
+				$("#ddateEmptyError").hide();
+				$("#ddateInvalidError").hide();
+				$("#groupError").hide();
+				// 		    }else if(_surveyGroup==""){
+				// 		        $("#subjectError").hide();
+				// 		        $("#ddateEmptyError").hide();
+				// 		        $("#ddateInvalidError").hide();
+				// 		        $("#groupError").show();
+			} else {
+				$("#subjectError").hide();
+				$("#ddateEmptyError").hide();
+				$("#ddateInvalidError").hide();
+				$("#groupError").hide();
+				$("#act").val("update");
+				$("#surveyForm").submit();
+				$("#action-bar").hide();
+				$("#submitOK").show();
+			}
 		}
-		
-		function deaddateVerification(time){
-		   var enddate=time.replace("/","").replace("/","").replace(" ","").replace(":","");
-		   var year=new Date().getFullYear();
-		   var month=checkNumbers(new Date().getMonth()+1);
-		   var day=checkNumbers(new Date().getDate());
-		   var hour=checkNumbers(new Date().getHours());
-		   var minutes=checkNumbers(new Date().getMinutes());
-		   var now=year.toString()+month.toString()+day.toString()+hour.toString()+minutes.toString();
-		 //  alert(enddate+"    "+now);
-		   return enddate<=now;
+
+		function deaddateVerification(time) {
+			var enddate = time.replace("/", "").replace("/", "").replace(" ",
+					"").replace(":", "");
+			var year = new Date().getFullYear();
+			var month = checkNumbers(new Date().getMonth() + 1);
+			var day = checkNumbers(new Date().getDate());
+			var hour = checkNumbers(new Date().getHours());
+			var minutes = checkNumbers(new Date().getMinutes());
+			var now = year.toString() + month.toString() + day.toString()
+					+ hour.toString() + minutes.toString();
+			//  alert(enddate+"    "+now);
+			return enddate <= now;
 		}
-		
-		function checkNumbers(arg){
-		    if(arg<10){
-		       arg="0"+arg.toString();
-		       return arg;
-		    }
-		    else return arg;
+
+		function checkNumbers(arg) {
+			if (arg < 10) {
+				arg = "0" + arg.toString();
+				return arg;
+			} else
+				return arg;
 		}
-		
-		function sendNoti(){
-		   $("#sendbtn").val("请稍等...");
-		   $("#sendbtn").attr("disabled","disabled");
-		   $("#SendNotification").submit();
+
+		function sendNoti() {
+			$("#sendbtn").val("请稍等...");
+			$("#sendbtn").attr("disabled", "disabled");
+			$("#SendNotification").submit();
 		}
-		
 	</script>
 </head>
 <body>

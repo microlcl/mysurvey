@@ -17,7 +17,7 @@
 	<script>
 		var position = 10;  //新增问题的起始position
 		$(document).ready(function() {
-			$("#paper-tab").addClass("active");
+			$("#mypaper-tab").addClass("active");
 			$("#questionsForm").validate({
 				rules: {
 					paperName: {

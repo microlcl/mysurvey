@@ -15,7 +15,8 @@
 	
 	<script src="${ctx}/static/easyui/jquery.easyui.min.js" type="text/javascript"></script>
 	<script>
-		
+	    $(document).ready(function() {
+	       $("#myparticipation-tab").addClass("active");});
 		function fillData(){
 		   $("div[id='question']").each(function(){
              if($(this).find("input[name='type']").val() == 1){

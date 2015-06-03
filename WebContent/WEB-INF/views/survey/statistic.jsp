@@ -40,6 +40,10 @@
    });
 } */
 
+$(document).ready(function() {
+			$("#mylaunch-tab").addClass("active");
+		});
+
 function sendNoti(){
 		   $("#sendbtn").val("请稍等...");
 		   $("#sendbtn").attr("disabled","disabled");

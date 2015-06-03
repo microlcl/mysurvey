@@ -17,7 +17,7 @@
 <title><spring:message code="editquestion.title"/></title>
 <script type="text/javascript">
 	$(document).ready(function(){
-		$("#question-tab").addClass("active");
+		$("#myquestion-tab").addClass("active");
 		
 		if($('input[name="questionType"]:checked').val() == "3"){
 			$("#options").hide();

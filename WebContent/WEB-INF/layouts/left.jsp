@@ -8,7 +8,7 @@
 
 	<div id="leftbar" class="span2" style="width:180px;">
 		<h1><spring:message code="menu.mydashboard"/></h1>
-		<div class="submenu">
+		<div class="submenu" style="width:120px;margin-left:40px">
 			<a id="mygroup-tab" href="${ctx}/myGroup/list"><spring:message code="menu.mygroup"/></a>
 			<a id="mylaunch-tab" href="${ctx}/survey/myLaunch"><spring:message code="menu.mylaunch"/></a>
 			<a id="myparticipation-tab" href="${ctx}/survey/myParticipation"><spring:message code="menu.myparticipation"/></a>
@@ -17,7 +17,7 @@
 		</div>
 		<mytag:PermssionTag functionId="F21">
 			<h1><spring:message code="menu.admin"/></h1>
-				<div class="submenu">	
+				<div class="submenu"  style="width:120px;margin-left:40px">	
 					<a id="role-tab" href="${ctx}/role/all"><spring:message code="menu.admin.role"/></a>
 					<!-- 		
 					<a id="question-tab" href="${ctx}/question/list"><spring:message code="menu.admin.question"/></a>

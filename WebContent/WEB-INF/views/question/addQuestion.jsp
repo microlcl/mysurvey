@@ -17,7 +17,7 @@
 <title><spring:message code="addquestion.title"/></title>
 <script type="text/javascript">
 	$(document).ready(function(){
-		$("#question-tab").addClass("active");
+		$("#myquestion-tab").addClass("active");
 		$("input[name='questionType'][value=${question.questionType}]").prop("checked", true);
 		
 		if($('input[name="questionType"]:checked').val() == "3"){

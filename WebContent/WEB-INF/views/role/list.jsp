@@ -11,10 +11,10 @@
 <link rel="stylesheet" type="text/css" href="${ctx}/static/styles/form.css">
 
 <script src="${ctx}/static/easyui/jquery.easyui.min.js" type="text/javascript"></script>
-<script type="text/javascript">
+<script >
 $(document).ready(function() {
-	$("#role-tab").addClass("active");
-}
+			$("#role-tab").addClass("active");
+		});
 </script>
 <link rel="stylesheet" type="text/css" href="${ctx}/static/easyui/mytree.css">
 

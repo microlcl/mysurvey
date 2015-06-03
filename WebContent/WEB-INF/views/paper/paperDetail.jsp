@@ -15,7 +15,7 @@
 	<script src="${ctx}/static/easyui/jquery.easyui.min.js" type="text/javascript"></script>
 		<script>
 		$(document).ready(function() {
-			$("#paper-tab").addClass("active");
+			$("#mypaper-tab").addClass("active");
 		});
 	</script>
 

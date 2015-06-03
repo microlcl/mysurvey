@@ -17,7 +17,7 @@
 	<script>
 		var position_question = 100;  //新增问题的起始position
 		$(document).ready(function() {
-			$("#paper-tab").addClass("active");
+			$("#mypaper-tab").addClass("active");
 			
 			var businessTypeId = ['${selectpaper.businessType.id}'];
 
