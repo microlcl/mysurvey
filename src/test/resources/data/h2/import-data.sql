@@ -116,6 +116,8 @@ insert into role_function(role_id, function_id, description) values('R9','F2-1',
 insert into role_function(role_id, function_id, description) values('R9','F2-2','');
 insert into role_function(role_id, function_id, description) values('R9','F2-3','');
 insert into role_function(role_id, function_id, description) values('R9','F2-4','');
+insert into role_function(role_id, function_id, description) values('R9','F2-5','');
+insert into role_function(role_id, function_id, description) values('R9','F2-6','');
 insert into role_function(role_id, function_id, description) values('R9','F3-1','');
 insert into role_function(role_id, function_id, description) values('R9','F3-2','');
 insert into role_function(role_id, function_id, description) values('R9','F3-3','');
