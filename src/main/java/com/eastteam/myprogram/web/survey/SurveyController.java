@@ -29,6 +29,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.support.RequestContext;
 
 import com.eastteam.myprogram.entity.Answer;
 import com.eastteam.myprogram.entity.Group;
@@ -216,6 +217,7 @@ public class SurveyController {
 	@RequestMapping(value = "surveyAction/{id}", method = RequestMethod.POST)
 	public String publishAndSaveSurvey(@ModelAttribute Survey survey,@PathVariable("id") String id,RedirectAttributes redirectAttributes,HttpSession session,HttpServletRequest request){
 		User user = (User) session.getAttribute("user");
+		RequestContext requestContext = new RequestContext(request);
 	  if(request.getParameter("act").equalsIgnoreCase("save")){
 			  survey.setStatus("1-0-3-0"); //D draft
 			  survey.setCreater(user);
@@ -241,16 +243,16 @@ public class SurveyController {
 			}
 			
 			if(survey.getSurveyGroup().equals("")||survey.getSurveyGroup()==null){
-				redirectAttributes.addFlashAttribute("message", "发布成功，调查地址："
+				redirectAttributes.addFlashAttribute("message", requestContext.getMessage("survey.publishsurvey.successURL")
 			+configProperties.getProperty(APPPATH)+request.getContextPath()+configProperties.getProperty(SURVEYPATH));
 				return "redirect:/survey/myLaunch";
 			}
 			
 			if(surveyService.createSurvey(survey,"publish",configProperties.getProperty(APPPATH)+request.getContextPath()+configProperties.getProperty(SURVEYPATH))){
-				redirectAttributes.addFlashAttribute("message", "发布成功！");
+				redirectAttributes.addFlashAttribute("message", requestContext.getMessage("survey.publishsurvey.success"));
 				return "redirect:/survey/myLaunch";
 			} else {
-				redirectAttributes.addFlashAttribute("message", "发布失败，请重试。");
+				redirectAttributes.addFlashAttribute("message", requestContext.getMessage("survey.publishsurvey.fail"));
 				return "redirect:/paper/list?search_userId="+user.getId();
 			}
 		
@@ -273,11 +275,12 @@ public class SurveyController {
 	}
 	*/
 	@RequestMapping(value = "saveAction", method = RequestMethod.POST)
-	public String saveAction(RedirectAttributes redirectAttributes,HttpSession session,ServletRequest request){
+	public String saveAction(RedirectAttributes redirectAttributes,HttpSession session,HttpServletRequest request){
 		
 		Map<String, Object> answerQuestionId = Servlets.getParametersStartingWith(request, "questionId_");
 		Map<String, Object> answerAnswer = Servlets.getParametersStartingWith(request, "answer_");
 		String isUpdate = request.getParameter("isUpdate");
+		RequestContext requestContext = new RequestContext(request);
 		logger.info("current operation is update : " + isUpdate);
 		List<Answer> answers =new ArrayList<Answer>();
 		for(String key : answerQuestionId.keySet()){
@@ -302,7 +305,7 @@ public class SurveyController {
 			logger.info("user:"+((User)session.getAttribute("user")).getId()+" sumbitted an answer of survey:"+request.getParameter("surveyId"));
 		}
 			
-		redirectAttributes.addFlashAttribute("message", "问卷提交成功！");
+		redirectAttributes.addFlashAttribute("message", requestContext.getMessage("survey.publishsurvey.savesuccess"));
 		return "redirect:/survey/myParticipation";
 	}
 	
@@ -358,11 +361,12 @@ public class SurveyController {
 	
 	@RequestMapping(value = "sendNoti", method = RequestMethod.POST)
 	public String sendNoti(RedirectAttributes redirectAttributes,HttpSession session,HttpServletRequest request){
+		RequestContext requestContext = new RequestContext(request);
 		if(surveyService.sendNotification(request.getParameter("receivers"),request.getParameter("subject"),request.getParameter("surveyId") ,request.getParameter("desctription")  ,configProperties.getProperty(APPPATH)+request.getContextPath()+configProperties.getProperty(SURVEYPATH))){
-			redirectAttributes.addFlashAttribute("message", "提醒发送成功！");
+			redirectAttributes.addFlashAttribute("message", requestContext.getMessage("survey.publishsurvey.remindsuccess"));
 		    return "redirect:/survey/myLaunch";
 		    }else {
-			redirectAttributes.addFlashAttribute("message", "提醒发送失败,请尝试。");
+			redirectAttributes.addFlashAttribute("message", requestContext.getMessage("survey.publishsurvey.remindfail"));
 		    return "redirect:/survey/myLaunch";
 		}
 	}
