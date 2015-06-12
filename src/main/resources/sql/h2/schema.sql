@@ -48,6 +48,7 @@ create table users (
 	password varchar(255) not null,
 	register_date timestamp,
 	comment varchar(128),
+	temp_code varchar(255), -- temp token for forgetting & resetting  password 
 	primary key (id)
 );
 
