@@ -74,11 +74,11 @@ public class SurveyService extends PageableService {
 			//调查状态： N - 新建, D - 草稿, R - 可发布, P - 已发布, F - 已完成, C - 作废
 			survey.setStatus(survey.getStatus().trim()); 
 			if (survey.getStatus().trim().equals("D"))
-				survey.setStatusString("草稿");
+				survey.setStatusString("Draft");
 			if (survey.getStatus().trim().equals("P"))
-				survey.setStatusString("已发布");
+				survey.setStatusString("Published");
 			if (survey.getStatus().trim().equals("F"))
-				survey.setStatusString("已完成");
+				survey.setStatusString("Completed");
 			logger.debug("Transforming status :" + survey.getStatus() + " to " + survey.getStatusString());
 			
 			String[] groupsid = survey.getGroupsId().trim().split(",");
@@ -113,11 +113,11 @@ public class SurveyService extends PageableService {
 			survey.setStatus(survey.getStatus().trim()); 
 			
 			if (survey.getStatus().trim().equals("1-0-3-0"))
-				survey.setStatusString("草稿");
+				survey.setStatusString("Draft");
 			if (survey.getStatus().trim().equals("1-0-3-1"))
-				survey.setStatusString("已发布");
+				survey.setStatusString("Published");
 			if (survey.getStatus().trim().equals("1-0-3-2"))
-				survey.setStatusString("已完成");
+				survey.setStatusString("Completed");
 			
 			logger.debug("Transforming status :" + survey.getStatus() + " to " + survey.getStatusString());
 			
