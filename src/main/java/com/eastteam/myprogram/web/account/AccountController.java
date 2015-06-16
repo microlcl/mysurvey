@@ -56,6 +56,11 @@ public class AccountController {
 		return "redirect:/login";
 	}
 	
+	@RequestMapping(value="reset", method = RequestMethod.GET)
+	public String reset() {
+		return "account/reset";
+	}
+	
 	/**
 	 * Ajax请求校验loginName是否唯一。
 	 */
