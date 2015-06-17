@@ -3,6 +3,7 @@ package com.eastteam.myprogram.web.account;
 import java.util.Map;
 import java.util.Properties;
 
+import javax.servlet.ServletRequest;
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
@@ -61,6 +62,13 @@ public class AccountController {
 		return "account/reset";
 	}
 	
+	
+	@RequestMapping(value="sendResetMail", method = RequestMethod.POST)
+	public String sendResetMail(ServletRequest request, RedirectAttributes redirectAttributes) {
+		String email = request.getParameter("id");
+		logger.info("email=" + email);
+		return "account/resetMessage";
+	}
 	/**
 	 * Ajax请求校验loginName是否唯一。
 	 */

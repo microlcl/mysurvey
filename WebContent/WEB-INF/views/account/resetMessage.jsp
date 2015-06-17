@@ -22,14 +22,8 @@
 			<legend><small><spring:message code="forgot.title"/></small></legend>
 					<div class="alert alert-info  controls">
 			<button class="close" data-dismiss="alert">×</button>
-			<spring:message code="forget.tips"/>
+			<spring:message code="forget.resetConfirmMsg"/>
 		</div>
-			<div class="control-group">
-				<label for="id" class="control-label"><spring:message code="register.loginname"/></label>
-				<div class="controls">
-					<input type="email" id="id" name="id" maxlength="64" placeholder="abc@gmail.com" class="input-large required"/>
-				</div>
-			</div>
 	
 			<div class="form-actions">
 				<input id="submit_btn" class="btn btn-primary" type="submit" value="<spring:message code="forgot.submit"/>"/>&nbsp;	
