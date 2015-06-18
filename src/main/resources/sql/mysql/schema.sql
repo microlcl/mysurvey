@@ -51,6 +51,7 @@ CREATE TABLE `users` (
   `password` varchar(255) NOT NULL,
    `register_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
    `comment` varchar(128) DEFAULT NULL,
+   `resetToken` varchar(255),
   PRIMARY KEY (`id`),
   UNIQUE KEY `id` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
