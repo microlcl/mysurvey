@@ -62,7 +62,6 @@ insert into functions(function_id, module_id, name, description, path) values('F
 insert into functions(function_id, module_id, name, description, path) values('F21','M2-1','管理菜单','能看见管理菜单','');
 
 
-insert into users(id, name, password, register_date) values('admin','admin','a94d5cd0079cfc8db030e1107de1addd1903a01b','2012-06-04 01:00:00','D1-1');
 insert into users(id, name, password, register_date) values('lichlei@cn.ibm.com','lichlei@cn.ibm.com','a94d5cd0079cfc8db030e1107de1addd1903a01b','2012-06-04 01:00:00');
 insert into users(id, name, password, register_date) values('wangxhdl@cn.ibm.com','wangxhdl@cn.ibm.com','a94d5cd0079cfc8db030e1107de1addd1903a01b','2012-06-04 01:00:00');
 insert into users(id, name, password, register_date) values('gongbf@cn.ibm.com','gongbf@cn.ibm.com','a94d5cd0079cfc8db030e1107de1addd1903a01b','2012-06-04 02:00:00');
