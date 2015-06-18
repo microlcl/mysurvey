@@ -135,5 +135,19 @@ public class AccountController extends PropertiesController{
 			return "false";
 		}
 	}
+	
+	/**
+	 * Ajax请求校验loginName是否唯一。
+	 */
+	@RequestMapping(value="api/isExisted")
+	@ResponseBody
+	public String isExisted(@RequestParam("id") String email) {
+		logger.info("检查用户名是否已被注册");
+		if (accountService.getUser(email) == null) {
+			return "false";
+		} else {
+			return "true";
+		}
+	}
 
 }

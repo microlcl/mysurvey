@@ -43,7 +43,20 @@
 			//聚焦第一个输入框
 			$("#loginName").focus();
 			//为inputForm注册validate函数
-			
+			$("#inputForm").validate({
+				rules: {
+					id: {
+						remote: {
+							url:"${ctx}/account/api/isExisted"
+						}
+					},
+				},
+				messages: {
+					id: {
+						remote: "The login name doesn't exist."
+					}
+				}
+			});
 		});
 
 	</script>
