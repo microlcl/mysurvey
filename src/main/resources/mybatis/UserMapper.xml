@@ -23,6 +23,11 @@
 		insert into users (id, name, password, register_date) 
 		values(#{id},#{name},#{password},now());
 	</insert>	
+	<update id="update" parameterType="User">
+		update users set
+		name=#{name}, password=#{password}
+		where id=#{id}
+	</update>	
 	<update id="saveResetToken" parameterType="User">
 		update users set
 		resetToken=#{resetToken}

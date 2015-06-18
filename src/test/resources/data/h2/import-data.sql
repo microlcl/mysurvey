@@ -41,6 +41,10 @@ insert into functions(function_id, module_id, name, description, path) values('F
 insert into functions(function_id, module_id, name, description, path) values('F3-2','M1-3','我参与的调查:查看','有权限查看调查','/survey/accessSurvey/');
 insert into functions(function_id, module_id, name, description, path) values('F3-3','M1-3','我参与的调查：修改','有权限修改答案','/survey/saveAction');
 
+insert into functions(function_id, module_id, name, description, path) values('F4-1','M1-4','my profile：view','view my profile','/account/profile');
+insert into functions(function_id, module_id, name, description, path) values('F4-2','M1-4','my profile：update','update my profile','/account/update');
+
+
 insert into functions(function_id, module_id, name, description, path) values('F7-1','M1-7','我的问题：列表','菜单导航','/question/list');
 insert into functions(function_id, module_id, name, description, path) values('F7-2','M1-7','我的问题：增加','有权限增加','/question/addQuestion,/question/saveQuestion');
 insert into functions(function_id, module_id, name, description, path) values('F7-3','M1-7','我的问题：修改','有权限修改','/question/editQuestion,/question/updateQuestion');
@@ -93,6 +97,8 @@ insert into role_function(role_id, function_id, description) values('R0','F2-6',
 insert into role_function(role_id, function_id, description) values('R0','F3-1','');
 insert into role_function(role_id, function_id, description) values('R0','F3-2','');
 insert into role_function(role_id, function_id, description) values('R0','F3-3','');
+insert into role_function(role_id, function_id, description) values('R0','F4-1','');
+insert into role_function(role_id, function_id, description) values('R0','F4-2','');
 insert into role_function(role_id, function_id, description) values('R0','F7-1','');
 insert into role_function(role_id, function_id, description) values('R0','F7-2','');
 insert into role_function(role_id, function_id, description) values('R0','F7-3','');
@@ -121,6 +127,8 @@ insert into role_function(role_id, function_id, description) values('R9','F2-6',
 insert into role_function(role_id, function_id, description) values('R9','F3-1','');
 insert into role_function(role_id, function_id, description) values('R9','F3-2','');
 insert into role_function(role_id, function_id, description) values('R9','F3-3','');
+insert into role_function(role_id, function_id, description) values('R9','F4-1','');
+insert into role_function(role_id, function_id, description) values('R9','F4-2','');
 insert into role_function(role_id, function_id, description) values('R9','F7-1','');
 insert into role_function(role_id, function_id, description) values('R9','F7-2','');
 insert into role_function(role_id, function_id, description) values('R9','F7-3','');

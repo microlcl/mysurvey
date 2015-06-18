@@ -121,6 +121,12 @@ public class AccountService{
 		user.setPassword(pwd);
 		userDao.save(user);
 	}
+	
+	public void update(User user) {
+		String pwd = entryptPassword(user.getPlainPassword());
+		user.setPassword(pwd);
+		userDao.update(user);
+	}
 
 	/**
 	 * 设定安全的密码，生成随机的salt并经过1024次 sha-1 hash

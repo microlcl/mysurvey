@@ -4,6 +4,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
@@ -54,6 +55,22 @@ public class AccountController extends PropertiesController{
 		accountService.registerUser(user);
 		redirectAttributes.addFlashAttribute("username", user.getId());
 		return "redirect:/login";
+	}
+	
+	@RequestMapping(value="profile", method = RequestMethod.GET)
+	public String register() {	
+		return "account/profileForm";
+	}
+	
+	@RequestMapping(value="update", method = RequestMethod.POST)
+	public String update(User user, RedirectAttributes redirectAttributes, HttpServletRequest request) {
+		logger.info("user=" + user);
+		accountService.update(user);
+		
+		RequestContext requestContext = new RequestContext(request);
+		String message = requestContext.getMessage("profile.update.success");
+		redirectAttributes.addFlashAttribute("message", message);
+		return "redirect:/account/profile";
 	}
 	
 	@RequestMapping(value="reset", method = RequestMethod.GET)
