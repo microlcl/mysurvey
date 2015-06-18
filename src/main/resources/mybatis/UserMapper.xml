@@ -9,7 +9,7 @@
 	</select>	
 	
 	<select id="getUser" parameterType="User" resultType="User">
-		select r.id
+		select r.id, r.name,r.password
 		from users r
 		where r.id=#{id}
 	</select>
