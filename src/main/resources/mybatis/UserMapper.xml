@@ -23,4 +23,21 @@
 		insert into users (id, name, password, register_date) 
 		values(#{id},#{name},#{password},now());
 	</insert>	
+	<update id="saveResetToken" parameterType="User">
+		update users set
+		resetToken=#{resetToken}
+		where id=#{id}
+	</update>
+	<select id="getResetToken" resultType="String">
+		select resetToken
+		from users
+		where id=#{id}
+	</select>
+	<update id="savePassword" parameterType="User">
+		update users set
+		password=#{password}, 
+		resetToken=''
+		where id=#{id}
+	</update>
+	
 </mapper> 

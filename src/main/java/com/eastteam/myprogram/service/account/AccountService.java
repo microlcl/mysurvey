@@ -134,5 +134,17 @@ public class AccountService{
 	public User getUser(String id) {
 		return userDao.getUser(id);
 	}
+	
+	public void saveResetToken(User user) {
+		userDao.saveResetToken(user);
+	}
+	
+	public String getResetToken(String id) {
+		return userDao.getResetToken(id);
+	}
+	
+	public void savePassword(User user) {
+		userDao.savePassword(user);
+	} 
 
 }

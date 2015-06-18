@@ -23,6 +23,8 @@ public class User extends BaseEntity{
 	private Date registerDate;
 	@JsonIgnore
 	private String comment;	
+	
+	private String resetToken;
 	@JsonIgnore
 	private List<Role> roles = Lists.newArrayList();
 	@JsonIgnore
@@ -85,6 +87,14 @@ public class User extends BaseEntity{
 		this.password = password;
 	}
 
+
+	public String getResetToken() {
+		return resetToken;
+	}
+
+	public void setResetToken(String resetToken) {
+		this.resetToken = resetToken;
+	}
 
 	// 设定JSON序列化时的日期格式
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+08:00")

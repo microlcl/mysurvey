@@ -16,4 +16,7 @@ public interface UserMybatisDao {
 	void save(User user);
 	User getUser(String id);
 	User getUserByIdPwd(User user);
+	void saveResetToken(User user);
+	String getResetToken(String id);
+	void savePassword(User user);
 }

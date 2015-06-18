@@ -16,29 +16,21 @@
 </head>
 
 <body>
-	<form id="inputForm" action="${ctx}/account/sendResetMail" method="post" class="form-horizontal">
+	<form id="inputForm" action="" method="post" class="form-horizontal">
 
 		<fieldset>
 			<legend><small><spring:message code="forgot.title"/></small></legend>
 					<div class="alert alert-info  controls">
-			<button class="close" data-dismiss="alert">×</button>
-			<spring:message code="forget.resetConfirmMsg"/>
+			${message}
 		</div>
-	
-			<div class="form-actions">
-				<input id="cancel_btn" class="btn" type="button" value="<spring:message code="forgot.back"/>" onclick="history.back()"/>
+					<div class="control-group">
+				<div class="controls">
+						<a class="btn" href="${ctx}/login">Sign In</a>
+				</div>
 			</div>
+
 		</fieldset>
 	</form>
-	
-	<script type="text/javascript">
-		$(document).ready(function() {
-			//聚焦第一个输入框
-			$("#loginName").focus();
-			//为inputForm注册validate函数
-			
-		});
 
-	</script>
 </body>
 </html>

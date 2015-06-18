@@ -66,4 +66,20 @@ public class PropertiesController {
 		model.addAttribute("largePicBaseURL", getLargePicBaseURL());
 		model.addAttribute("audioBaseURL", getAudioBaseURL());
 	}
+	
+	protected String getAppPath() {
+		return configProperties.getProperty("AppPath");
+	}
+	
+	protected String getEmailSystemName() {
+		return configProperties.getProperty("SystemEmail");
+	}
+	
+	protected String getEmailSystemPassword() {
+		return configProperties.getProperty("SystemEmailPassword");
+	}
+	
+	protected String getEmailSTPM() {
+		return configProperties.getProperty("SystemEmailSTMP");
+	}
 }
