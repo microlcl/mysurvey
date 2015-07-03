@@ -9,6 +9,7 @@ import javax.validation.Valid;
 
 import com.sendgrid.SendGridException;
 
+import org.eclipse.jetty.util.log.Log;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -151,7 +152,10 @@ public class AccountController extends PropertiesController{
 //				content,
 //				loginLink,
 //				"text/html;charset=gb2312");
-		
+		Log.info("emailname:"+getEmailSystemName());
+		Log.info("emailpassword:"+getEmailSystemPassword());
+		Log.info("to:"+to);
+		Log.info("from:"+getEmailFrom());
 		SendGrid sendgrid = new SendGrid(getEmailSystemName(),getEmailSystemPassword());
 		SendGrid.Email sendemail = new SendGrid.Email();
 		sendemail.addTo(to);
