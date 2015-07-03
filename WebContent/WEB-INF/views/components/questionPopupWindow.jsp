@@ -148,6 +148,9 @@
 		result.parameters = parameters;
 		result.questions = [];
 		var selectedQuestions = $('input:checkbox[name="selectedQuestions"]:checked');
+		if(!selectedQuestions.size())
+			return ;
+		
 		$.each(selectedQuestions, function(i, question) {
 			var mydata = $('#' + question.id).data('question');
 			result.questions.push(mydata);
