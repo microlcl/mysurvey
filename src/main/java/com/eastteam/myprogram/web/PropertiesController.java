@@ -82,4 +82,7 @@ public class PropertiesController {
 	protected String getEmailSTPM() {
 		return configProperties.getProperty("SystemEmailSTMP");
 	}
+	protected String getEmailFrom() {
+		return configProperties.getProperty("SystemEmailFrom");
+	}
 }
