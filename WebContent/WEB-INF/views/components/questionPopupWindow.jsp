@@ -67,7 +67,8 @@
 
 <script>
 	var currentPage = 0;
-
+	var synchronizeFlag = true;
+	
 	//调用者输入参数
 	var parameters = {};
 
@@ -88,6 +89,12 @@
 	}
 
 	function loadMore() {
+		if(!synchronizeFlag){
+			alert("当前问题未加载完毕，请稍后再试！");
+			return;
+		}
+		synchronizeFlag = false;
+		
 		var nextPage = currentPage + 1;
 		console.log("next pageNum:" + nextPage);
 		$.ajax({
@@ -119,6 +126,7 @@
 				});
 			}
 		});
+		synchronizeFlag = true;
 
 	}
 	
