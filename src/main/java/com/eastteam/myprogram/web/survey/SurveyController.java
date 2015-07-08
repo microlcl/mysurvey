@@ -362,7 +362,8 @@ public class SurveyController {
 	@RequestMapping(value = "sendNoti", method = RequestMethod.POST)
 	public String sendNoti(RedirectAttributes redirectAttributes,HttpSession session,HttpServletRequest request){
 		RequestContext requestContext = new RequestContext(request);
-		if(surveyService.sendNotification(request.getParameter("receivers"),request.getParameter("subject"),request.getParameter("surveyId") ,request.getParameter("desctription")  ,configProperties.getProperty(APPPATH)+request.getContextPath()+configProperties.getProperty(SURVEYPATH))){
+		User user = (User) session.getAttribute("user");
+		if(surveyService.sendNotification(request.getParameter("receivers"),request.getParameter("subject"),request.getParameter("surveyId") ,request.getParameter("desctription")  ,configProperties.getProperty(APPPATH)+request.getContextPath()+configProperties.getProperty(SURVEYPATH),user)){
 			redirectAttributes.addFlashAttribute("message", requestContext.getMessage("survey.publishsurvey.remindsuccess"));
 		    return "redirect:/survey/myLaunch";
 		    }else {

@@ -143,7 +143,8 @@ public class AccountController extends PropertiesController{
 		String[] to = new String[]{email};			
 		String content = requestContext.getMessage("forgot.success.email.content") + password;
 		String title = requestContext.getMessage("forgot.success.email.title");
-		String loginLink = getAppPath() + "/login";
+		String loginLink = getAppPath();
+		
 //		new EmailSender().sendmail(getEmailSystemName(),
 //				getEmailSystemPassword(),
 //				getEmailSTPM(),
@@ -152,18 +153,17 @@ public class AccountController extends PropertiesController{
 //				content,
 //				loginLink,
 //				"text/html;charset=gb2312");
-		Log.info("emailname:"+getEmailSystemName());
-		Log.info("emailpassword:"+getEmailSystemPassword());
-		Log.info("to:"+to);
-		Log.info("from:"+getEmailFrom());
+		
 		SendGrid sendgrid = new SendGrid(getEmailSystemName(),getEmailSystemPassword());
 		SendGrid.Email sendemail = new SendGrid.Email();
 		sendemail.addTo(to);
 		sendemail.setFrom(getEmailFrom());
 		sendemail.setSubject(title);
 		sendemail.setHtml(content+"<br>"+loginLink);
+		
 		try {
 			SendGrid.Response response = sendgrid.send(sendemail);
+			
 		} catch (SendGridException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
