@@ -90,7 +90,7 @@
 
 	function loadMore() {
 		if(!synchronizeFlag){
-			alert("当前问题未加载完毕，请稍后再试！");
+			alert("<spring:message code="questionpopupwindow.loadmore.error1"/>");
 			return;
 		}
 		synchronizeFlag = false;
