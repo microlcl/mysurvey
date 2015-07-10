@@ -67,8 +67,9 @@ public class AccountController extends PropertiesController{
 	}
 	
 	@RequestMapping(value="update", method = RequestMethod.POST)
-	public String update(User user, RedirectAttributes redirectAttributes, HttpServletRequest request) {
+	public String update(User user, RedirectAttributes redirectAttributes, HttpServletRequest request, HttpSession session) {
 		logger.info("user=" + user);
+		user.setId(((User)session.getAttribute("user")).getId());
 		accountService.update(user);
 		
 		RequestContext requestContext = new RequestContext(request);
