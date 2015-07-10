@@ -105,8 +105,7 @@ function sendNoti(){
 		      </c:forEach>
 		   </div>
 		   <div class="tab-pane fade" id="submitted">
-		   		
-		   		<a class="btn" href="${ctx}/survey/export/${survey.id}">Export</a>
+		   		<a class="btn btn-success" href="${ctx}/survey/export/${survey.id}"><i class="icon-share" style="margin-right: 5px;"></i>Export</a>
 		   		
 		   		<c:if test="${survey.status=='1-0-3-1' || survey.status=='1-0-3-2'}">
 				<form style="margin-top:20px" id="SendNotification" action="${ctx}/survey/sendNoti" method="post" >
@@ -150,7 +149,7 @@ function sendNoti(){
 											   	</c:if>
 										   </c:when >
 										   <c:otherwise>
-										      <a class="btn" href="${ctx}/survey/accessSurvey/${survey.id}?userId=${surveyReceiver.userId}">
+										      <a href="${ctx}/survey/accessSurvey/${survey.id}?userId=${surveyReceiver.userId}">
 											  	<c:if test="${survey.isAnonymous=='T' }">
 											   		*****
 											   	</c:if>

@@ -7,6 +7,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import com.sendgrid.SendGridException;
+
+import org.eclipse.jetty.util.log.Log;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +25,7 @@ import com.eastteam.myprogram.entity.User;
 import com.eastteam.myprogram.service.account.AccountService;
 import com.eastteam.myprogram.service.role.RoleService;
 import com.eastteam.myprogram.utils.EmailSender;
+import com.eastteam.myprogram.utils.SendGrid;
 import com.eastteam.myprogram.web.PropertiesController;
 import com.google.common.collect.Maps;
 
@@ -63,8 +67,9 @@ public class AccountController extends PropertiesController{
 	}
 	
 	@RequestMapping(value="update", method = RequestMethod.POST)
-	public String update(User user, RedirectAttributes redirectAttributes, HttpServletRequest request) {
+	public String update(User user, RedirectAttributes redirectAttributes, HttpServletRequest request, HttpSession session) {
 		logger.info("user=" + user);
+		user.setId(((User)session.getAttribute("user")).getId());
 		accountService.update(user);
 		
 		RequestContext requestContext = new RequestContext(request);
@@ -93,14 +98,27 @@ public class AccountController extends PropertiesController{
 		User user = new User(email);
 		user.setResetToken(resetToken);
 		accountService.saveResetToken(user);
-		new EmailSender().sendmail(getEmailSystemName(),
-				getEmailSystemPassword(),
-				getEmailSTPM(),
-				title,
-				to,
-				content,
-				confirmLink,
-				"text/html;charset=gb2312");
+//		new EmailSender().sendmail(getEmailSystemName(),
+//				getEmailSystemPassword(),
+//				getEmailSTPM(),
+//				title,
+//				to,
+//				content,
+//				confirmLink,
+//				"text/html;charset=gb2312");
+		
+		SendGrid sendgrid = new SendGrid(getEmailSystemName(),getEmailSystemPassword());
+		SendGrid.Email sendemail = new SendGrid.Email();
+		sendemail.addTo(to);
+		sendemail.setFrom(getEmailFrom());
+		sendemail.setSubject(title);
+		sendemail.setHtml(content+"<br>"+confirmLink);
+		try {
+			SendGrid.Response response = sendgrid.send(sendemail);
+		} catch (SendGridException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		return "account/resetMessage";
 	}
@@ -126,15 +144,31 @@ public class AccountController extends PropertiesController{
 		String[] to = new String[]{email};			
 		String content = requestContext.getMessage("forgot.success.email.content") + password;
 		String title = requestContext.getMessage("forgot.success.email.title");
-		String loginLink = getAppPath() + "/login";
-		new EmailSender().sendmail(getEmailSystemName(),
-				getEmailSystemPassword(),
-				getEmailSTPM(),
-				title,
-				to,
-				content,
-				loginLink,
-				"text/html;charset=gb2312");
+		String loginLink = getAppPath();
+		
+//		new EmailSender().sendmail(getEmailSystemName(),
+//				getEmailSystemPassword(),
+//				getEmailSTPM(),
+//				title,
+//				to,
+//				content,
+//				loginLink,
+//				"text/html;charset=gb2312");
+		
+		SendGrid sendgrid = new SendGrid(getEmailSystemName(),getEmailSystemPassword());
+		SendGrid.Email sendemail = new SendGrid.Email();
+		sendemail.addTo(to);
+		sendemail.setFrom(getEmailFrom());
+		sendemail.setSubject(title);
+		sendemail.setHtml(content+"<br>"+loginLink);
+		
+		try {
+			SendGrid.Response response = sendgrid.send(sendemail);
+			
+		} catch (SendGridException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		request.setAttribute("message",  requestContext.getMessage("forgot.success.tip"));
 		return "account/resetConfirmMessage";

@@ -67,7 +67,8 @@
 
 <script>
 	var currentPage = 0;
-
+	var synchronizeFlag = true;
+	
 	//调用者输入参数
 	var parameters = {};
 
@@ -88,6 +89,12 @@
 	}
 
 	function loadMore() {
+		if(!synchronizeFlag){
+			alert("<spring:message code="questionpopupwindow.loadmore.error1"/>");
+			return;
+		}
+		synchronizeFlag = false;
+		
 		var nextPage = currentPage + 1;
 		console.log("next pageNum:" + nextPage);
 		$.ajax({
@@ -119,6 +126,7 @@
 				});
 			}
 		});
+		synchronizeFlag = true;
 
 	}
 	
@@ -148,6 +156,9 @@
 		result.parameters = parameters;
 		result.questions = [];
 		var selectedQuestions = $('input:checkbox[name="selectedQuestions"]:checked');
+		if(!selectedQuestions.size())
+			return ;
+		
 		$.each(selectedQuestions, function(i, question) {
 			var mydata = $('#' + question.id).data('question');
 			result.questions.push(mydata);

@@ -33,10 +33,13 @@ import com.eastteam.myprogram.entity.Paper;
 import com.eastteam.myprogram.entity.Question;
 import com.eastteam.myprogram.entity.Survey;
 import com.eastteam.myprogram.entity.SurveyReceiver;
+import com.eastteam.myprogram.entity.User;
 import com.eastteam.myprogram.service.PageableService;
 import com.eastteam.myprogram.utils.EmailSender;
 import com.eastteam.myprogram.utils.ExcelHandler;
+import com.eastteam.myprogram.utils.SendGrid;
 import com.google.common.collect.Maps;
+import com.sendgrid.SendGridException;
 
 @Component
 @Transactional
@@ -248,13 +251,35 @@ public class SurveyService extends PageableService {
 				}
 				logger.info("===>receiver list over");
 				logger.info("===>SurveyUrl:" + surveyPath + survey.getId());
-				return new EmailSender().sendmail(
-						configProperties.getProperty(EMAIL_SYS),
-						configProperties.getProperty(EMAIL_SYS_PSW),
-						configProperties.getProperty(EMAIL_SYS_STMP),
-						survey.getSubject(), _receiver.toArray(),
-						survey.getDescription(), surveyPath + survey.getId(),
-						"text/html;charset=gb2312");
+				
+				SendGrid sendgrid = new SendGrid(configProperties.getProperty(EMAIL_SYS),configProperties.getProperty(EMAIL_SYS_PSW));
+				SendGrid.Email sendemail = new SendGrid.Email();
+				String[] receivers = _receiver.toArray(new String[_receiver.size()]);
+				for(Object receive : receivers) {
+					int i = 0;
+					receivers[i] = receive.toString();
+					i++;
+				}
+				sendemail.addTo(receivers);
+				sendemail.setFrom(survey.getCreater().getId());
+				sendemail.setSubject(survey.getSubject());
+				sendemail.setHtml(survey.getDescription()+"<br>"+surveyPath + survey.getId());
+				SendGrid.Response response = null;
+				try {
+					response = sendgrid.send(sendemail);
+				} catch (SendGridException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				return response.getStatus();
+				
+//				return new EmailSender().sendmail(
+//						configProperties.getProperty(EMAIL_SYS),
+//						configProperties.getProperty(EMAIL_SYS_PSW),
+//						configProperties.getProperty(EMAIL_SYS_STMP),
+//						survey.getSubject(), _receiver.toArray(),
+//						survey.getDescription(), surveyPath + survey.getId(),
+//						"text/html;charset=gb2312");
 				// return true;
 				// return false;
 			}
@@ -263,17 +288,32 @@ public class SurveyService extends PageableService {
 	}
 	
 	
-	public boolean sendNotification(String receivers,String subject,String surveyId,String desctription,String URL){
+	public boolean sendNotification(String receivers,String subject,String surveyId,String desctription,String URL,User user){
 		String _receiver[] = receivers.split("\\,");
 		logger.info("send notification");
-	    return new EmailSender().sendmail(
-	    		configProperties.getProperty(EMAIL_SYS),
-	    		configProperties.getProperty(EMAIL_SYS_PSW),
-	    		configProperties.getProperty(EMAIL_SYS_STMP),
-	    		subject,_receiver,
-	    		desctription, 
-	    		URL+surveyId, 
-	    		"text/html;charset=gb2312");
+		
+		SendGrid sendgrid = new SendGrid(configProperties.getProperty(EMAIL_SYS),configProperties.getProperty(EMAIL_SYS_PSW));
+		SendGrid.Email sendemail = new SendGrid.Email();
+		sendemail.addTo(_receiver);
+		sendemail.setFrom(user.getId());
+		sendemail.setSubject(subject);
+		sendemail.setHtml(desctription+"<br>"+URL+surveyId);
+		SendGrid.Response response = null;
+		try {
+			response = sendgrid.send(sendemail);			
+		} catch (SendGridException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return response.getStatus();
+//	    return new EmailSender().sendmail(
+//	    		configProperties.getProperty(EMAIL_SYS),
+//	    		configProperties.getProperty(EMAIL_SYS_PSW),
+//	    		configProperties.getProperty(EMAIL_SYS_STMP),
+//	    		subject,_receiver,
+//	    		desctription, 
+//	    		URL+surveyId, 
+//	    		"text/html;charset=gb2312");
 //		return true;
 	}
 	
