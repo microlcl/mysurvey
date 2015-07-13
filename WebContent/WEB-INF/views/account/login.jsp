@@ -7,7 +7,34 @@
 <head>
 <title><spring:message code="login.title"/></title>
 </head>
-
+<%
+String flag="";
+String name = "";
+String password = "";
+try{ 
+    Cookie[] cookies=request.getCookies(); 
+    if(cookies!=null){ 
+    for(int i=0;i<cookies.length;i++){ 
+        if(cookies[i].getName().equals("cookie_user")){ 
+        String value =  cookies[i].getValue();
+        if(value!=null&&!"".equals(value)){
+            name=cookies[i].getValue().split("-")[0]; 
+            if(cookies[i].getValue().split("-")[1]!=null && !cookies[i].getValue().split("-")[1].equals("null")){
+            	password=cookies[i].getValue().split("-")[1]; 
+            	flag="1";
+            }
+                     
+           }
+           } 
+       request.setAttribute("username",name); 
+       request.setAttribute("passward",password); 
+   } 
+   } 
+}catch(Exception e){ 
+   e.printStackTrace(); 
+} 
+%> 	
+            
 <body>
 	<br/><br/><br/><br/>
 	<form id="loginForm" action="${ctx}/login" method="post"
@@ -32,7 +59,7 @@
 			<div class="control-group">
 				<label for="plainPassword" class="control-label"><spring:message code="login.password"/></label>
 				<div class="controls">
-					<input type="password" id="plainPassword" name="plainPassword"
+					<input type="password" id="plainPassword" name="plainPassword" value="<%=password %>"
 						class="input-medium required" />
 				</div>
 			</div>
@@ -40,7 +67,7 @@
 			<div class="control-group">
 				<div class="controls">
 					<label class="checkbox" for="rememberMe"><input
-						type="checkbox" id="rememberMe" name="rememberMe" /> <spring:message code="login.rememberme"/></label> 
+						type="checkbox" id="rememberMe" name="rememberMe" <%if(flag!=null && flag.equals("1") ){%> checked  <%}%> /> <spring:message code="login.rememberme"/></label> 
 						<label><a href="${ctx}/account/reset"">Forgot password</a></label>
 						<input
 						id="submit_btn" class="btn btn-primary" type="submit" value='<spring:message code="login.signin"/>' />
