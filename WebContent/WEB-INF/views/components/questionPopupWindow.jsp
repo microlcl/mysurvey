@@ -44,8 +44,8 @@
 		<!-- 模态对话框end -->
 	</div>
 	<div class="modal-footer">
-		<a href="#" class="btn" data-dismiss="modal" aria-hidden="true""><spring:message code="questionpopupwindow.close"/></a> 
-		<a href="#" class="btn btn-primary"	data-dismiss="modal" aria-hidden="true" onclick="getSelectedValue()"><spring:message code="questionpopupwindow.ok"/></a>
+		<a href="#" id="close_link" class="btn" data-dismiss="modal" aria-hidden="true"><spring:message code="questionpopupwindow.close"/></a> 
+		<a href="#" id="submit_link" class="btn btn-primary"	data-dismiss="modal" aria-hidden="true" onclick="getSelectedValue()"><spring:message code="questionpopupwindow.ok"/></a>
 	</div>
 </div>
 
@@ -67,7 +67,6 @@
 
 <script>
 	var currentPage = 0;
-	var synchronizeFlag = true;
 	
 	//调用者输入参数
 	var parameters = {};
@@ -88,13 +87,24 @@
 
 	}
 
+	function loadBefore(){
+		$("#loadMore").val("<spring:message code="questionpopupwindow.loadmore.loading"/>");
+		$("#search_btn").attr("disabled", "disabled");
+		$("#close_link").attr("disabled", "disabled");
+		$("#submit_link").attr("disabled", "disabled");
+		$("#questionModalWindow").attr("disabled", "disabled");
+	}
+	
+	function loadAfter(){
+		$("#loadMore").val("<spring:message code="questionpopupwindow.loadmore"/>");
+		$("#search_btn").attr("disabled", "false");
+		$("#close_link").attr("disabled", "false");
+		$("#submit_link").attr("disabled", "false");
+		$("#questionModalWindow").attr("disabled", "false");
+	}
+	
 	function loadMore() {
-		if(!synchronizeFlag){
-			alert("<spring:message code="questionpopupwindow.loadmore.error1"/>");
-			return;
-		}
-		synchronizeFlag = false;
-		
+		loadBefore();
 		var nextPage = currentPage + 1;
 		console.log("next pageNum:" + nextPage);
 		$.ajax({
@@ -126,8 +136,7 @@
 				});
 			}
 		});
-		synchronizeFlag = true;
-
+		loadAfter();
 	}
 	
 	function buildOptions(question) {
