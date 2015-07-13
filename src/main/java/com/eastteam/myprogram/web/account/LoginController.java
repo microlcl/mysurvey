@@ -5,7 +5,9 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -42,7 +44,7 @@ public class LoginController {
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
-	public String login(User loginuser, HttpSession session, HttpServletRequest request,RedirectAttributes redirectAttributes) {
+	public String login(User loginuser, HttpSession session, HttpServletRequest request,RedirectAttributes redirectAttributes,HttpServletResponse response) {
 		logger.debug("in log controller. user " + loginuser.getId() + ",password=" + loginuser.getPlainPassword());
 		User u = accountService.getUserByIdPwd(loginuser.getId(), loginuser.getPlainPassword());
 		RequestContext requestContext = new RequestContext(request);
@@ -74,6 +76,16 @@ public class LoginController {
 		List<String> authorizedFunctionIdList = accountService.getAuthorizedFunctionList(u);
 		u.setAuthorizedFunctionList(authorizedFunctionIdList);
 		logger.info(u.getAuthorizedFunctionList().toString());
+		String rememberMe = request.getParameter("rememberMe");
+		if(rememberMe!=null && rememberMe.equals("on")){
+		    Cookie cookie = new Cookie("cookie_user", loginuser.getId()+"-"+loginuser.getPlainPassword());                
+		    cookie.setMaxAge(60*60*24*30); //cookie 保存30天
+		    response.addCookie(cookie);
+		}else{  
+		    Cookie cookie = new Cookie("cookie_user",loginuser.getId()+"-"+null);                
+		    cookie.setMaxAge(60*60*24*30); //cookie 保存30天
+		    response.addCookie(cookie);             
+		}
 		session.setAttribute("user", u);
 		String lastUri = WebUtils.getLastVistURL(session);
 		if( lastUri != null) {
