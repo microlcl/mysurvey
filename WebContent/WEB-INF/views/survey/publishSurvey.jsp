@@ -273,12 +273,20 @@
 						</c:choose>
 					</c:if>
 					<c:if test="${survey.status!='1-0-3-1' && survey.status!='1-0-3-2'}">
-					 <div class="controls" style="width:550px">
-					  <c:forEach items="${groups}"  var="group" varStatus="status">
-					    <div class="btn" onclick="markGroup(this)" style="margin-top:5px" id="group_${group.id }">${group.groupName}<i class="icon-ok" style="width:20px;display:${group.flagString};"></i><input type="text" value="${group.id }" id="groupid" name="groupid" style="display:none;"></div>
-					  </c:forEach>
-					 </div>
-					 <span id="groupError" class="error" style="display:none"><spring:message code="survey.publishsurvey.groups.error"/></span>
+						<div class="controls" style="width: 550px">
+							<c:forEach items="${groups}" var="group" varStatus="status">
+								<c:if test="${group.content!=null }">
+									<div class="btn" onclick="markGroup(this)"
+										style="margin-top: 5px" id="group_${group.id }">
+										${group.groupName}<i class="icon-ok"
+											style="width:20px;display:${group.flagString};"></i><input
+											type="text" value="${group.id }" id="groupid" name="groupid"
+											style="display: none;">
+									</div>
+								</c:if>
+							</c:forEach>
+						</div>
+						<span id="groupError" class="error" style="display:none"><spring:message code="survey.publishsurvey.groups.error"/></span>
 					 </c:if>
 				</div>
 				<div class="control-group">
