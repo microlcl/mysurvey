@@ -74,7 +74,7 @@ public class SurveyService extends PageableService {
 		List<Survey> surveys = surveyMybatisDao.search(param);
 		
 		for (Survey survey : surveys) {
-			//调查状态： N - 新建, D - 草稿, R - 可发布, P - 已发布, F - 已完成, C - 作废
+			//调查状态: D - 草稿,  P - 已发布, F - 已完成
 			survey.setStatus(survey.getStatus().trim()); 
 			if (survey.getStatus().trim().equals("D"))
 				survey.setStatusString("Draft");
@@ -206,40 +206,37 @@ public class SurveyService extends PageableService {
 	
 	public boolean createSurvey(Survey survey,String act,String surveyPath){
 		if(act.equalsIgnoreCase("update")){
-			
+
 			this.updateSurvey(survey);
-			
+
 		}else if(act.equalsIgnoreCase("save")){
-			
+
 			this.saveSurvey(survey);
-			
+
 		}else if (act.equalsIgnoreCase("publish")) {
 			String[] groupsId=survey.getSurveyGroup().split("\\,");
 			if(groupsId.length>0){
-				HashSet<String> _receiver=new HashSet<String>();
+				List<String> recEmails = new ArrayList<String>();
 				HashSet<String[]> _receiversInfo=new HashSet<String[]>();
 				List<SurveyReceiver> surveyReceivers=new ArrayList<SurveyReceiver>();
 				List<Group> groups=new ArrayList<Group>();
 				for(String groupId : groupsId){
-					groups.add(myGroupMybatisDao.getSelectedGroup(Long.parseLong(groupId)));
-				}
-				for(Group group : groups){
+					Group group=myGroupMybatisDao.getSelectedGroup(Long.parseLong(groupId));
 					group.setGitems();
-					for(String[] gitems : group.getGitems()){
-						_receiver.add(gitems[1]);
-						_receiversInfo.add(gitems);
+					for(String[] gitem : group.getGitems()){
+						SurveyReceiver surveyReceiver = new SurveyReceiver();
+						if(!recEmails.contains(gitem[1])){
+							recEmails.add(gitem[1]);
+							surveyReceiver.setNickName(gitem[0]);
+							surveyReceiver.setUserId(gitem[1]);
+							surveyReceiver.setStatus("0");
+							surveyReceiver.setUpdate_timeStamp(null);
+							surveyReceiver.setSurveyId(survey.getId());
+							surveyReceivers.add(surveyReceiver);
+						}
 					}
 				}
-				
-				for (String[] recInfoItem : _receiversInfo) {
-					SurveyReceiver surveyReceiver = new SurveyReceiver();
-					surveyReceiver.setNickName(recInfoItem[0]);
-					surveyReceiver.setUserId(recInfoItem[1]);
-					surveyReceiver.setStatus("0");
-					surveyReceiver.setUpdate_timeStamp(null);
-					surveyReceiver.setSurveyId(survey.getId());
-					surveyReceivers.add(surveyReceiver);
-				}
+
 				Map<String, Object> map = new HashMap<String, Object>();
 				map.put("surveyReceivers", surveyReceivers);
 				surveyReceiverMybatisDao.save(map);
@@ -251,15 +248,11 @@ public class SurveyService extends PageableService {
 				}
 				logger.info("===>receiver list over");
 				logger.info("===>SurveyUrl:" + surveyPath + survey.getId());
-				
+
 				SendGrid sendgrid = new SendGrid(configProperties.getProperty(EMAIL_SYS),configProperties.getProperty(EMAIL_SYS_PSW));
 				SendGrid.Email sendemail = new SendGrid.Email();
-				String[] receivers = _receiver.toArray(new String[_receiver.size()]);
-				for(Object receive : receivers) {
-					int i = 0;
-					receivers[i] = receive.toString();
-					i++;
-				}
+				String[] receivers = recEmails.toArray(new String[recEmails.size()]);
+
 				sendemail.addTo(receivers);
 				sendemail.setFrom(survey.getCreater().getId());
 				sendemail.setSubject(survey.getSubject());
@@ -272,7 +265,7 @@ public class SurveyService extends PageableService {
 					e.printStackTrace();
 				}
 				return response.getStatus();
-				
+
 //				return new EmailSender().sendmail(
 //						configProperties.getProperty(EMAIL_SYS),
 //						configProperties.getProperty(EMAIL_SYS_PSW),
@@ -285,7 +278,7 @@ public class SurveyService extends PageableService {
 			}
 		}
 		return false;
-	}
+	} 
 	
 	
 	public boolean sendNotification(String receivers,String subject,String surveyId,String desctription,String URL,User user){
