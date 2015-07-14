@@ -18,7 +18,7 @@
 </style>
 <div id="questionModalWindow" class="modal hide fade">
 	<div class="modal-header">
-		<button type="button" class="close" data-dismiss="modal"
+		<button id="btn_windowClose" type="button" class="close" data-dismiss="modal"
 			aria-hidden="true">&times;</button>
 		<h4><spring:message code="questionpopupwindow.title"/></h4>
 	</div>
@@ -39,7 +39,7 @@
 		<div class="accordion" style="border-color: transparent" id="myaccordion"></div>
 
 		<div id="loadMore" class="pagination pagination-centered">
-			<button class="btn btn-link" type="button" onclick="loadMore()"><spring:message code="questionpopupwindow.loadmore"/></button>
+			<button id="btn_loadMore" class="btn btn-link" type="button" onclick="loadMore()"><spring:message code="questionpopupwindow.loadmore"/></button>
 		</div>
 		<!-- 模态对话框end -->
 	</div>
@@ -88,19 +88,19 @@
 	}
 
 	function loadBefore(){
-		$("#loadMore").val("<spring:message code="questionpopupwindow.loadmore.loading"/>");
+		$("#btn_loadMore").html("<spring:message code="questionpopupwindow.loadmore.loading"/>");
 		$("#search_btn").attr("disabled", "disabled");
 		$("#close_link").attr("disabled", "disabled");
 		$("#submit_link").attr("disabled", "disabled");
-		$("#questionModalWindow").attr("disabled", "disabled");
+		$("#btn_windowClose").attr("disabled", "disabled");
 	}
 	
 	function loadAfter(){
-		$("#loadMore").val("<spring:message code="questionpopupwindow.loadmore"/>");
-		$("#search_btn").attr("disabled", "false");
-		$("#close_link").attr("disabled", "false");
-		$("#submit_link").attr("disabled", "false");
-		$("#questionModalWindow").attr("disabled", "false");
+		$("#btn_loadMore").html("<spring:message code="questionpopupwindow.loadmore"/>");
+		$("#search_btn").attr("disabled", false);
+		$("#close_link").attr("disabled", false);
+		$("#submit_link").attr("disabled", false);
+		$("#btn_windowClose").attr("disabled", false);
 	}
 	
 	function loadMore() {
