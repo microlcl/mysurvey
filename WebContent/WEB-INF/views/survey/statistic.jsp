@@ -45,7 +45,7 @@ $(document).ready(function() {
 		});
 
 function sendNoti(){
-		   $("#sendbtn").val("请稍等...");
+		   $("#sendbtn").val("Wait...");
 		   $("#sendbtn").attr("disabled","disabled");
 		   $("#SendNotification").submit();
 		}
@@ -105,7 +105,7 @@ function sendNoti(){
 		      </c:forEach>
 		   </div>
 		   <div class="tab-pane fade" id="submitted">
-		   		<a class="btn btn-success" href="${ctx}/survey/export/${survey.id}"><i class="icon-share" style="margin-right: 5px;"></i>Export</a>
+		   		
 		   		
 		   		<c:if test="${survey.status=='1-0-3-1' || survey.status=='1-0-3-2'}">
 				<form style="margin-top:20px" id="SendNotification" action="${ctx}/survey/sendNoti" method="post" >
@@ -178,7 +178,8 @@ function sendNoti(){
 				                    <input type="text" name="URL" value="${survey.paperURL }" style="display:none;">
 									<div class="accordion-inner" id="0_sender">
 									   <textarea name="desctription" style="width:340px;height:80px">Hi Dear<br>    <spring:message code="survey.statistic.description"/><br><spring:message code="survey.statistic.surveydeadline"/>   <fmt:formatDate value="${survey.deadlineTimestamp}" pattern="yyyy年MM月dd日   HH:mm"/></textarea>
-									   <input type="button" id="sendbtn" value="<spring:message code="survey.statistic.sendbtn"/>" class="btn btn-warning" onclick="sendNoti()" style="height:80px">
+									   <input type="button" id="sendbtn" value="<spring:message code="survey.statistic.sendbtn"/>" class="btn btn-warning" onclick="sendNoti()" >
+									   <a class="btn btn-success" href="${ctx}/survey/export/${survey.id}" style="width:70px" ><i class="icon-share" style="margin-right: 5px;"></i>Export</a>
 									</div>
 									</c:if>
 							</div>

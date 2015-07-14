@@ -198,7 +198,7 @@
 		}
 
 		function sendNoti() {
-			$("#sendbtn").val("请稍等...");
+			$("#sendbtn").val("Wait...");
 			$("#sendbtn").attr("disabled", "disabled");
 			$("#SendNotification").submit();
 		}
