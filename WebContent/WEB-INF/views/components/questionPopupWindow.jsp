@@ -44,8 +44,8 @@
 		<!-- 模态对话框end -->
 	</div>
 	<div class="modal-footer">
-		<a href="#" id="close_link" class="btn" data-dismiss="modal" aria-hidden="true"><spring:message code="questionpopupwindow.close"/></a> 
-		<a href="#" id="submit_link" class="btn btn-primary"	data-dismiss="modal" aria-hidden="true" onclick="getSelectedValue()"><spring:message code="questionpopupwindow.ok"/></a>
+		<button id="btn_close" class="btn" data-dismiss="modal" aria-hidden="true"><spring:message code="questionpopupwindow.close"/></button> 
+		<button id="btn_submit" class="btn btn-primary" data-dismiss="modal" aria-hidden="true" onclick="getSelectedValue()"><spring:message code="questionpopupwindow.ok"/></button>
 	</div>
 </div>
 
@@ -90,16 +90,16 @@
 	function loadBefore(){
 		$("#btn_loadMore").html("<spring:message code="questionpopupwindow.loadmore.loading"/>");
 		$("#search_btn").attr("disabled", "disabled");
-		$("#close_link").attr("disabled", "disabled");
-		$("#submit_link").attr("disabled", "disabled");
+		$("#btn_close").attr("disabled", "disabled");
+		$("#btn_submit").attr("disabled", "disabled");
 		$("#btn_windowClose").attr("disabled", "disabled");
 	}
 	
 	function loadAfter(){
 		$("#btn_loadMore").html("<spring:message code="questionpopupwindow.loadmore"/>");
 		$("#search_btn").attr("disabled", false);
-		$("#close_link").attr("disabled", false);
-		$("#submit_link").attr("disabled", false);
+		$("#btn_close").attr("disabled", false);
+		$("#btn_submit").attr("disabled", false);
 		$("#btn_windowClose").attr("disabled", false);
 	}
 	
@@ -134,9 +134,9 @@
 					$('#myaccordion').append(myvalue);
 					$('#myq_' + question.id).data('question', question);
 				});
+				loadAfter();
 			}
 		});
-		loadAfter();
 	}
 	
 	function buildOptions(question) {
