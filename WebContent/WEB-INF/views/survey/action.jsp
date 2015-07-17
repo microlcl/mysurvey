@@ -79,39 +79,38 @@
 	  <input type="hidden" id="isUpdate" name="isUpdate" value="${isUpdate}"/>
 		<div  style="padding:20px;">
 			<c:forEach items="${questions}" var="question" varStatus="status">
-			   <c:if test="${question.trashed == 'F'}">
-			     <div id="question" >
+				<div id="question" >
                   <div class="accordion-heading">
                     <span id="nullAlert" class="error" style="display:none;"><spring:message code="survey.action.alert"/></span>
                   	<span style="padding-left:8px" id="question_${question.id }">Q${status.count}：</span>
-                      	${question.question}
-                   </div>
-                   <input type="text" value="${question.questionType}" name="type" style="display:none;"/>
-                    <div class="accordion-inner" style="padding-left:55px">
-						<c:if test="${question.questionType == '1'}">
-							<c:forEach items="${question.options}" var="option" varStatus="as">
-								<label class="radio">
-									<input type="radio" <c:if test="${expired}">disabled="disabled"</c:if> <c:if test="${option.checked}">checked="checked"</c:if> name="questionOption_${question.id}" value="${as.index}" >
-										${option.content}
-								</label>
-							</c:forEach>
-						</c:if>
-						<c:if test="${question.questionType == '2'}">
-							<c:forEach items="${question.options}" var="option" varStatus="as">
-								<label class="checkbox">
-									<input type="checkbox" <c:if test="${expired}">disabled="disabled"</c:if> <c:if test="${option.checked}">checked="checked"</c:if> name="questionOption_${question.id}" value="${as.index}">
-										${option.content}
-								</label>
-							</c:forEach>
-						</c:if>
-						<c:if test="${question.questionType == '3'}">
-							<textarea id="_answer">${question.openAnswer}</textarea>
-						</c:if>
+                      	${question.question} <c:if test="${question.trashed == 'T'}"><span style="color:#FF0000"><spring:message code="paperdetail.question.trashed"/></span></c:if>
+                  </div>
+                  <input type="text" value="${question.questionType}" name="type" style="display:none;"/>
+                  <div class="accordion-inner" style="padding-left:55px">
+					<c:if test="${question.questionType == '1'}">
+						<c:forEach items="${question.options}" var="option" varStatus="as">
+							<label class="radio">
+								<input type="radio" <c:if test="${expired}">disabled="disabled"</c:if> <c:if test="${option.checked}">checked="checked"</c:if> name="questionOption_${question.id}" value="${as.index}" >
+									${option.content}
+							</label>
+						</c:forEach>
+					</c:if>
+					<c:if test="${question.questionType == '2'}">
+						<c:forEach items="${question.options}" var="option" varStatus="as">
+							<label class="checkbox">
+								<input type="checkbox" <c:if test="${expired}">disabled="disabled"</c:if> <c:if test="${option.checked}">checked="checked"</c:if> name="questionOption_${question.id}" value="${as.index}">
+									${option.content}
+							</label>
+						</c:forEach>
+					</c:if>
+					<c:if test="${question.questionType == '3'}">
+						<textarea id="_answer">${question.openAnswer}</textarea>
+					</c:if>
                     </div>
-	               <input type="text" id="questionId" name="questionId_${question.id}" value="${question.id}" style="display:none;" />
-	               <input type="text"  id="answer" name="answer_${question.id}" style="display:none;"/>
-                   </div>
-                 </c:if>
+	              <input type="text" id="questionId" name="questionId_${question.id}" value="${question.id}" style="display:none;" />
+	              <input type="text"  id="answer" name="answer_${question.id}" style="display:none;"/>
+               	</div>
+                 
 			</c:forEach>
 		</div>
       </form>
