@@ -243,8 +243,8 @@ public class SurveyController {
 			}
 			
 			if(survey.getSurveyGroup().equals("")||survey.getSurveyGroup()==null){
-				redirectAttributes.addFlashAttribute("message", requestContext.getMessage("survey.publishsurvey.successURL")
-			+configProperties.getProperty(APPPATH)+request.getContextPath()+configProperties.getProperty(SURVEYPATH));
+				redirectAttributes.addFlashAttribute("message", requestContext.getMessage("survey.publishsurvey.successURL")+"     "
+			+configProperties.getProperty(APPPATH)+request.getContextPath()+configProperties.getProperty(SURVEYPATH)+survey.getId());
 				return "redirect:/survey/myLaunch";
 			}
 			
