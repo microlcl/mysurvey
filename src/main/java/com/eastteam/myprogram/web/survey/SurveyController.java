@@ -297,10 +297,12 @@ public class SurveyController {
 			Map<String , Object> map=new HashMap<String, Object>();
 			map.put("userId", ((User)session.getAttribute("user")).getId());
 			map.put("surveyId", Long.parseLong(request.getParameter("surveyId")));
-			SurveyReceiver surveyReceiver=surveyService.getPointedSurveyReceiver(map);
-			surveyReceiver.setStatus("1");
-			surveyReceiver.setUpdate_timeStamp(new Date());
-			surveyService.upDateAssociatedReceivers(surveyReceiver);
+			if(surveyService.selectSurvey(request.getParameter("surveyId")).getSurveyGroup()!=null){
+				SurveyReceiver surveyReceiver=surveyService.getPointedSurveyReceiver(map);
+				surveyReceiver.setStatus("1");
+				surveyReceiver.setUpdate_timeStamp(new Date());
+				surveyService.upDateAssociatedReceivers(surveyReceiver);
+			}
 			surveyService.saveAction(answers);
 			logger.info("user:"+((User)session.getAttribute("user")).getId()+" sumbitted an answer of survey:"+request.getParameter("surveyId"));
 		}
