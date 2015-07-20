@@ -407,7 +407,7 @@ public class SurveyController {
 		
 		Survey survey = surveyService.selectSurvey(surveyId);
 		
-		response.setHeader("Content-Disposition", "attachment; filename=\"" + survey.getSubject()  + ".xls");  
+		response.setHeader("Content-Disposition", "attachment; filename=\"" + survey.getSubject()  + ".xls\"");  
 	    response.setContentType("application/octet-stream; charset=UTF-8");
 	    
 	    try {
