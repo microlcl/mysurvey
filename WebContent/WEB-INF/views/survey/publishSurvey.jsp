@@ -3,7 +3,8 @@
 <%@ taglib prefix="tags" tagdir="/WEB-INF/tags" %>
 <%@ taglib uri="http://com.eastteam.myprogram/mytaglib" prefix="mytag" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ page language="java" import="java.util.*,java.text.SimpleDateFormat"%>
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
 <html>
 <head>
@@ -20,7 +21,7 @@
 	<script src="${ctx}/static/easyui/jquery.easyui.min.js" type="text/javascript"></script>
 	<script src="${ctx}/static/nano/nano.js" type="text/javascript"></script>
 	
-	<script >
+	<script>
 	
 		$(document).ready(function() {
 			$("#mylaunch-tab").addClass("active");
@@ -183,9 +184,10 @@
 			var day = checkNumbers(new Date().getDate());
 			var hour = checkNumbers(new Date().getHours());
 			var minutes = checkNumbers(new Date().getMinutes());
-			var now = year.toString() + month.toString() + day.toString()
-					+ hour.toString() + minutes.toString();
-			//  alert(enddate+"    "+now);
+// 			var now = year.toString() + month.toString() + day.toString()
+// 					+ hour.toString() + minutes.toString();
+            var now = $("#serverTime").val().replace("-", "").replace("-", "").replace(" ","").replace(":", "");
+			//alert(enddate+"    "+now);
 			return enddate <= now;
 		}
 
@@ -197,14 +199,18 @@
 				return arg;
 		}
 
-		function sendNoti() {
-			$("#sendbtn").val("Wait...");
-			$("#sendbtn").attr("disabled", "disabled");
-			$("#SendNotification").submit();
-		}
+// 		function sendNoti() {
+// 			$("#sendbtn").val("Wait...");
+// 			$("#sendbtn").attr("disabled", "disabled");
+// 			$("#SendNotification").submit();
+// 		}
+		
 	</script>
 </head>
 <body>
+
+<input type="text" id="serverTime" value="<%=new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new Date())%>" style="display:none;">
+
 	<div class="form">
 		<h1><spring:message code="survey.publishsurvey.title"/>:&nbsp ${paper.paperName }</h1>
 		<div class="alert hide" id="warning-block">
