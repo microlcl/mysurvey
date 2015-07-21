@@ -96,7 +96,7 @@ public class SurveyController {
 	@RequestMapping (value = "myParticipation", method = RequestMethod.GET)
 	public String myParicipation(
 			@RequestParam(value = "page", defaultValue = "1") int pageNumber,
-			@RequestParam(value = "sortType", defaultValue = "paper_id") String sortType,
+			@RequestParam(value = "sortType", defaultValue = "update_timestamp desc") String sortType,
 			Model model, ServletRequest request, HttpSession session) {
 		
 		Map<String, Object> searchParams = Servlets.getParametersStartingWith(
