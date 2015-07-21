@@ -90,7 +90,7 @@
 					<c:if test="${question.questionType == '1'}">
 						<c:forEach items="${question.options}" var="option" varStatus="as">
 							<label class="radio">
-								<input type="radio" <c:if test="${expired}">disabled="disabled"</c:if> <c:if test="${option.checked}">checked="checked"</c:if> name="questionOption_${question.id}" value="${as.index}" >
+								<input type="radio" <c:if test="${expired}">disabled="disabled"</c:if> <c:if test="${option.checked}">checked="checked"</c:if> name="questionOption_${question.id}" value="${as.index+1}" >
 									${option.content}
 							</label>
 						</c:forEach>
@@ -98,7 +98,7 @@
 					<c:if test="${question.questionType == '2'}">
 						<c:forEach items="${question.options}" var="option" varStatus="as">
 							<label class="checkbox">
-								<input type="checkbox" <c:if test="${expired}">disabled="disabled"</c:if> <c:if test="${option.checked}">checked="checked"</c:if> name="questionOption_${question.id}" value="${as.index}">
+								<input type="checkbox" <c:if test="${expired}">disabled="disabled"</c:if> <c:if test="${option.checked}">checked="checked"</c:if> name="questionOption_${question.id}" value="${as.index+1}">
 									${option.content}
 							</label>
 						</c:forEach>
