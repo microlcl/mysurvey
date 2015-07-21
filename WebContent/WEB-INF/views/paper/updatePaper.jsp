@@ -35,6 +35,12 @@
 				}
 			});
 			
+			if(($("input[name^='questions']").length/2) < 2){
+				$('#submit_btn').hide();
+				$('#cancel_btn').hide();
+				$('#delete_questions_button').hide();
+			}
+			
 
 		});
 		
