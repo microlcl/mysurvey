@@ -329,8 +329,9 @@ public class SurveyService extends PageableService {
 		Map<String, Object> parameters = new HashMap<String, Object>();
 		parameters.put("surveyId", survey.getId());
 		Map<String, List<Answer>> answers = new HashMap<String, List<Answer>>();
+		Map<String, Group> receivers = new HashMap<String, Group>();
+		String[] groupsId=survey.getGroupsId().trim().split(",");
 		List<Answer> answerList = answerMybatisDao.search(parameters);
-		
 		for (Answer answer : answerList) {
 			
 			if (!answers.containsKey(answer.getUserId())) 
@@ -339,9 +340,19 @@ public class SurveyService extends PageableService {
 			answers.get(answer.getUserId()).add(answer);
 		}
 		
+		for(String groupId : groupsId) {
+			Group group=myGroupMybatisDao.getSelectedGroup(Long.parseLong(groupId));
+			group.setGitems();
+			for(String[] gitem : group.getGitems()){
+				SurveyReceiver surveyReceiver = new SurveyReceiver();
+				if(!receivers.containsKey(gitem[1])){
+					receivers.put(gitem[1],group);
+				}
+			}
+		}
 		boolean isAnonymous = survey.getIsAnonymous().endsWith("T");
 		
-		ExcelHandler.doExprt(isAnonymous,questions, answers, out);
+		ExcelHandler.doExprt(isAnonymous,questions, answers, out, receivers);
 	}
 }
  
