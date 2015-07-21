@@ -242,6 +242,10 @@ public class SurveyController {
 				surveyService.saveSurvey(survey);
 			}
 			
+			if(!survey.getPaper().getStatus().getId().equals("1-0-1-1")){
+				paperService.publishPaper(survey.getPaper().getId().toString());
+			}
+			
 			if(survey.getSurveyGroup().equals("")||survey.getSurveyGroup()==null){
 				redirectAttributes.addFlashAttribute("message", requestContext.getMessage("survey.publishsurvey.successURL")+"     "
 			+configProperties.getProperty(APPPATH)+request.getContextPath()+configProperties.getProperty(SURVEYPATH)+survey.getId());
