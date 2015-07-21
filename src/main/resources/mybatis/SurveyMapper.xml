@@ -128,8 +128,8 @@
 	</update>
 	
 	<insert id="save" parameterType="Survey" useGeneratedKeys="true" keyProperty="id" >
-		insert into survey (user_id, paper_id, subject, groups_id, sent_timestamp, deadline_timestamp, is_anonymous, description,status,receivers)
-		values (#{creater.id},#{paper.id},#{subject},#{surveyGroup},now(),#{deadlineTimestamp},#{isAnonymous},#{description},#{status},#{receivers});
+		insert into survey (user_id, paper_id, subject, groups_id, sent_timestamp, deadline_timestamp, is_anonymous, description,status,receivers,update_timestamp)
+		values (#{creater.id},#{paper.id},#{subject},#{surveyGroup},now(),#{deadlineTimestamp},#{isAnonymous},#{description},#{status},#{receivers},now());
 	</insert>
 	
 </mapper>
