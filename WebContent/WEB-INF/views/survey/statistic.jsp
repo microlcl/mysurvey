@@ -177,12 +177,16 @@ function sendNoti(){
 				                    <input type="text" name="subject" value="<spring:message code="survey.statistic.subject1"/>${survey.userId}<spring:message code="survey.statistic.subject2"/>${survey.subject}<spring:message code="survey.statistic.subject3"/>" style="display:none;"> 
 				                    <input type="text" name="receivers" value="${receivers }" style="display:none;">
 				                    <input type="text" name="URL" value="${survey.paperURL }" style="display:none;">
+				                    </c:if>
 									<div class="accordion-inner" id="0_sender">
+									  <c:if test="${(survey.status=='1-0-3-1')&& receivers!=''}">
 									   <textarea name="desctription" style="width:340px;height:80px">Hi Dear<br>    <spring:message code="survey.statistic.description"/><br><spring:message code="survey.statistic.surveydeadline"/>   <fmt:formatDate value="${survey.deadlineTimestamp}" pattern="yyyy年MM月dd日   HH:mm"/></textarea>
 									   <input type="button" id="sendbtn" value="<spring:message code="survey.statistic.sendbtn"/>" class="btn btn-warning" onclick="sendNoti()" >
-									   <a class="btn btn-success" href="${ctx}/survey/export/${survey.id}" style="width:70px" ><i class="icon-share" style="margin-right: 5px;"></i>Export</a>
+									  </c:if>
+									    <a class="btn btn-success" href="${ctx}/survey/export/${survey.id}" style="width:70px" >
+									   <i class="icon-share" style="margin-right: 5px;"></i>Export</a>
 									</div>
-									</c:if>
+									
 							</div>
 						</div>
 					</div>

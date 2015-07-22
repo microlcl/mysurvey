@@ -301,7 +301,7 @@ public class SurveyController {
 			Map<String , Object> map=new HashMap<String, Object>();
 			map.put("userId", ((User)session.getAttribute("user")).getId());
 			map.put("surveyId", Long.parseLong(request.getParameter("surveyId")));
-			if(surveyService.selectSurvey(request.getParameter("surveyId")).getSurveyGroup()!=null){
+			if(!surveyService.selectSurvey(request.getParameter("surveyId")).getGroupsId().equals("")){
 				SurveyReceiver surveyReceiver=surveyService.getPointedSurveyReceiver(map);
 				surveyReceiver.setStatus("1");
 				surveyReceiver.setUpdate_timeStamp(new Date());
@@ -347,7 +347,7 @@ public class SurveyController {
 					else {	//如果是非开放性问题
 						String[] answerIndex = answer.getAnswer().trim().split(",");
 						for (String index : answerIndex) {
-							question.getOptions()[Integer.parseInt(index)].setChecked(true);
+							question.getOptions()[Integer.parseInt(index)-1].setChecked(true);
 						}
 					}
 				}
