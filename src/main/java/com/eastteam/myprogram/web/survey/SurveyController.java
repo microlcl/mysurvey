@@ -301,7 +301,8 @@ public class SurveyController {
 			Map<String , Object> map=new HashMap<String, Object>();
 			map.put("userId", ((User)session.getAttribute("user")).getId());
 			map.put("surveyId", Long.parseLong(request.getParameter("surveyId")));
-			if(surveyService.selectSurvey(request.getParameter("surveyId")).getSurveyGroup()!=null){
+			System.out.println(surveyService.selectSurvey(request.getParameter("surveyId")).getGroupsId());
+			if(!surveyService.selectSurvey(request.getParameter("surveyId")).getGroupsId().equals("")){
 				SurveyReceiver surveyReceiver=surveyService.getPointedSurveyReceiver(map);
 				surveyReceiver.setStatus("1");
 				surveyReceiver.setUpdate_timeStamp(new Date());
