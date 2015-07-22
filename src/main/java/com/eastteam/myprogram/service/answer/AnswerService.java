@@ -66,7 +66,7 @@ public class AnswerService {
 			for (Answer answer : allAnswers) {
 				String[] answerIndex = answer.getAnswer().trim().split(",");
 				for (String index : answerIndex) {
-					question.getOptions()[Integer.parseInt(index)].counting();
+					question.getOptions()[Integer.parseInt(index)-1].counting();
 					question.counting();
 				}
 			}
