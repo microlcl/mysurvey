@@ -78,7 +78,6 @@ function sendNoti(){
 								<c:choose>
 									<c:when test="${as.index % 4 == 0 }">
 										<c:set var="barClass" value="progress progress-info"/>
-										
 									</c:when>
 									<c:when test="${as.index % 4 == 1 }">
 										<c:set var="barClass" value="progress progress-success"/>
