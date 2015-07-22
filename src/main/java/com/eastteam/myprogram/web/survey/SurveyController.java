@@ -361,7 +361,6 @@ public class SurveyController {
 		model.addAttribute("expired", expired);
 		model.addAttribute("questions", surveyQuestions);
 		model.addAttribute("survey", survey);
-		
 		return "survey/action";
 	}
 	
