@@ -133,7 +133,10 @@ public class SurveyService extends PageableService {
 						groupString += g.getGroupName() + ",";
 					}
 				}
-			//	groupString = groupString.substring(0, groupString.length() - 1);
+				if (groupString != "") {
+					groupString = groupString.substring(0, groupString.length() - 1);
+				}
+				
 			}
 			survey.setGroupsString(groupString);
 		}
