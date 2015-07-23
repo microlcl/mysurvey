@@ -78,7 +78,6 @@ function sendNoti(){
 								<c:choose>
 									<c:when test="${as.index % 4 == 0 }">
 										<c:set var="barClass" value="progress progress-info"/>
-										
 									</c:when>
 									<c:when test="${as.index % 4 == 1 }">
 										<c:set var="barClass" value="progress progress-success"/>
@@ -94,7 +93,7 @@ function sendNoti(){
 									${option.content}
 								</label>
 							    <div class="${barClass }">
-							    	<div class="bar" style="width: ${option.percent * 100}%"><c:if test="${option.count != 0}"><fmt:formatNumber type="number" value="${option.percent * 100}" maxFractionDigits="2"/>%(${option.count}<spring:message code="survey.statistic.count"/>)</c:if></div>
+							    	<div class="bar" style="width: ${option.percent * 100}%"><c:if test="${option.count != 0}"><fmt:formatNumber type="number" value="${option.percent * 100}" maxFractionDigits="2"/>%(${option.count} <spring:message code="survey.statistic.count"/>)</c:if></div>
 							    </div>
 							</c:forEach>
 						</c:if>
