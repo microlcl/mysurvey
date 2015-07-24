@@ -280,7 +280,7 @@ public class SurveyController {
 	*/
 	@RequestMapping(value = "saveAction", method = RequestMethod.POST)
 	public String saveAction(RedirectAttributes redirectAttributes,HttpSession session,HttpServletRequest request){
-		
+		Survey survey = surveyService.selectSurvey(request.getParameter("surveyId"));
 		Map<String, Object> answerQuestionId = Servlets.getParametersStartingWith(request, "questionId_");
 		Map<String, Object> answerAnswer = Servlets.getParametersStartingWith(request, "answer_");
 		String isUpdate = request.getParameter("isUpdate");
@@ -301,7 +301,7 @@ public class SurveyController {
 			Map<String , Object> map=new HashMap<String, Object>();
 			map.put("userId", ((User)session.getAttribute("user")).getId());
 			map.put("surveyId", Long.parseLong(request.getParameter("surveyId")));
-			if(!surveyService.selectSurvey(request.getParameter("surveyId")).getGroupsId().equals("")){
+			if(!survey.getGroupsId().equals("")){
 				SurveyReceiver surveyReceiver=surveyService.getPointedSurveyReceiver(map);
 				surveyReceiver.setStatus("1");
 				surveyReceiver.setUpdate_timeStamp(new Date());
@@ -325,6 +325,17 @@ public class SurveyController {
 			String[] questionOptions = paperService.splitQuestionOptions(question.getQuestionOptions());
 			question.setSplitOptions(questionOptions);
 		}*/
+		
+		//检查是否有权限参与调查
+		if(!surveyService.selectSurvey(surveyId).getGroupsId().equals("")){
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("userId", ((User)session.getAttribute("user")).getId());
+			map.put("surveyId", surveyId);
+			if(surveyService.getPointedSurveyReceiver(map)==null){
+				return "error/401"; 
+	     	}
+		}
+		
 		
 		String userId = request.getParameter("userId");	//如果是查看别人的的问卷有可能传入userId
 		boolean canMod = false;							//如果是查看别人的问卷则不能修改
