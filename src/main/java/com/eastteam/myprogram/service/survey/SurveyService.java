@@ -156,11 +156,15 @@ public class SurveyService extends PageableService {
 			for (String s : groupsid) {
 				Group g = myGroupMybatisDao.getSelectedGroup(Long
 						.parseLong(s.trim()));
-				groupString += g.getGroupName() + ",";
+				if(g != null){
+					groupString += g.getGroupName() + ",";
+				}
 			}
 
-			groupString = groupString
-					.substring(0, groupString.length() - 1);
+			if(groupString.length() != 0){
+				groupString = groupString
+						.substring(0, groupString.length() - 1);
+			}
 		}
 		survey.setGroupsString(groupString);
 		survey.setGroupIds(survey.getGroupsId().trim().split(","));
