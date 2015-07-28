@@ -1,6 +1,7 @@
 package com.eastteam.myprogram.web.survey;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -417,11 +418,21 @@ public class SurveyController {
 	}
 	
 	@RequestMapping(value = "export/{id}", method = RequestMethod.GET)
-	public String exportSurvey(@PathVariable("id") String surveyId,HttpServletResponse response,Model model,HttpSession session) {
+	public String exportSurvey(@PathVariable("id") String surveyId,HttpServletResponse response,Model model,HttpSession session, HttpServletRequest request) {
 		
 		Survey survey = surveyService.selectSurvey(surveyId);
-		
-		response.setHeader("Content-Disposition", "attachment; filename=\"" + survey.getSubject()  + ".xls\"");  
+		String filename = "";
+		try {
+			if (request.getHeader("User-Agent").toLowerCase().indexOf("firefox")>0) {
+				filename = new String(survey.getSubject().getBytes("UTF-8"),"ISO8859-1");
+			} else{
+				filename =  java.net.URLEncoder.encode(survey.getSubject(),"UTF8");
+			}
+		} catch (UnsupportedEncodingException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		response.setHeader("Content-Disposition", "attachment; filename=\"" + filename  + ".xls\"");  
 	    response.setContentType("application/octet-stream; charset=UTF-8");
 	    
 	    try {
