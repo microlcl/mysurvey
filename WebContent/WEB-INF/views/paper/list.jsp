@@ -65,6 +65,12 @@
 
 		});
 
+		function errorAlert(){
+			var errorDiv = '<div class="alert alert-error" style="width:250px;margin-bottom:-10px;margin-left:20px"><button type="button" class="close" data-dismiss="alert">×</button><strong><spring:message code="paper.erroralert1"/></strong> <spring:message code="paper.erroralert2"/></div>';
+			$("#error-block").empty();
+			$("#error-block").append(errorDiv);
+		};
+
 	</script>
 
 </head>
@@ -101,6 +107,7 @@
 		<c:if test="${not empty message}">
 		   <div id="message" style="margin-left:20px;margin-top:20px;" class="alert alert-error input-medium controls"><button data-dismiss="alert" class="close">×</button>${message}</div>
 		</c:if>
+		<div id="error-block"></div>
 		<div  style="padding:20px;">
 			<table id="contentTable" class="table table-striped table-bordered table-condensed">
 				<thead>
@@ -119,9 +126,16 @@
 						<td>${paper.status.name}&nbsp;</td>
 						<td>
 							<mytag:PermssionTag functionId="F8-6"><a href="${ctx}/paper/show/${paper.id}" id="showLink-${paper.id}"><i class="icon-folder-open"></i> <spring:message code="paper.show"/></a>&nbsp;&nbsp;</mytag:PermssionTag>
+							<c:choose>
+							<c:when test="${paper.status.name == 'Published'}">
+							<mytag:PermssionTag functionId="F8-3"><a href="javascript:void(0);" onclick="errorAlert()"><i class="icon-edit"></i><spring:message code="paper.edit"/></a>&nbsp;&nbsp;&nbsp;</mytag:PermssionTag>
+							</c:when>
+							<c:otherwise>
 							<mytag:PermssionTag functionId="F8-3"><a href="${ctx}/paper/edit/${paper.id}" id="editLink-${paper.id}"><i class="icon-edit"></i> <spring:message code="paper.edit"/></a>&nbsp;&nbsp;</mytag:PermssionTag>
+							</c:otherwise>
+							</c:choose>
 							<c:if test="${paper.status.id!='1-0-1-2'}">	
-							<mytag:PermssionTag functionId="F8-4"><a href="${ctx}/paper/delete/${paper.id}" id="deleteLink-${paper.id}"><i class="icon-remove"></i><spring:message code="paper.delete"/></a></mytag:PermssionTag>
+							<mytag:PermssionTag functionId="F8-4"><a href="${ctx}/paper/delete/${paper.id}" id="deleteLink-${paper.id}"><i class="icon-remove"></i><spring:message code="paper.delete"/></a>&nbsp;&nbsp;</mytag:PermssionTag>
 							</c:if>
 							<c:if test="${paper.status.id!='1-0-1-1'}">
 							<!-- 		<mytag:PermssionTag functionId="F8-5"><button type="button" class="btn btn-danger" id="publishbutton-${paper.id}" onclick="location.href='${ctx}/paper/publish/${paper.id}'" style="padding: 0 12px !important; margin-left: 20px;"><i class="icon-share-alt" style="margin-right: 5px;"></i>发布问卷</button></mytag:PermssionTag> -->
