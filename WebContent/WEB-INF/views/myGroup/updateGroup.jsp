@@ -23,14 +23,14 @@
 		}		
 	})
 	function addOption(){
-		var optionDiv = '<span class="control-group" ><label for="question" class="control-label formlabel"><spring:message code="updategroup.nickname"/></label><input type="text" name="nickName">  &nbsp; &nbsp; <spring:message code="updategroup.id"/><input type="text" placeholder="<spring:message code="updategroup.id.error"/>" name="userId">'
-						+' <a href="javascript:void(0);" onclick="deleteOption(this)" title="<spring:message code="updategroup.deleteoption"/>"><span style="margin:0px 0px -11px 5px" class="iconImg iconImg_delete"></span></a></div></div></span>';
+		var optionDiv = '<div class="control-group" ><label for="question" class="control-label formlabel"><spring:message code="updategroup.nickname"/></label><div class="controls"><input type="text" name="nickName"> &nbsp; <spring:message code="updategroup.id"/> &nbsp; <input type="text" placeholder="<spring:message code="updategroup.id.error"/>" name="userId">'
+						+' <a href="javascript:void(0);" onclick="deleteOption(this)" title="<spring:message code="updategroup.deleteoption"/>"><span style="margin:0px 0px -11px 5px" class="iconImg iconImg_delete"></span></a></div></div>';
 		$("#options").append(optionDiv);
 	}
 	
 	function deleteOption(obj){
 		var _this = $(obj);
-		$(_this).parent().remove();
+		$(_this).parent().parent().remove();
 	}
 	
 	function importCSV() {
@@ -114,14 +114,20 @@
 		</div>
 			<div class="control-group">
                     <label for="option" class="control-label formlabel"><spring:message code="updategroup.comment"/></label>
+                    <div class="controls">
                     <textarea name="comment" style="width:440px" maxlength="128">${group.comment }</textarea>
+					</div>
 			</div>
 <%-- 			<c:if test="${group.content != ''}"> --%>
 			   <c:forEach items="${group.gitems}" var="member" varStatus="status">
-				<span class="control-group" >
-                       <label for="question" class="control-label formlabel"><spring:message code="updategroup.nickname"/></label><input type="text" value="${member[0]}" name="nickName"> &nbsp; &nbsp;  <spring:message code="updategroup.id"/><input type="text" value="${member[1]}" name="userId">
+				<div class="control-group" >
+                       <label for="question" class="control-label formlabel"><spring:message code="updategroup.nickname"/></label>
+  						<div class="controls">
+						<input type="text" value="${member[0]}" name="nickName"> &nbsp;
+						<spring:message code="updategroup.id"/> &nbsp; <input type="text" value="${member[1]}" name="userId">
 						<a href="javascript:void(0);" onclick="deleteOption(this)" title="<spring:message code="updategroup.deleteoption"/>"><span style="margin:0px 0px -11px 5px" class="iconImg iconImg_delete"></span></a>
-				</span>
+						</div>
+				</div>
 			   </c:forEach>
 <%-- 			</c:if>   --%>
 			<div id="options"></div>
@@ -132,7 +138,7 @@
 			     <span id="groupId_error" class="error" style="display:none"><spring:message code="updategroup.groupid.error"/></span><br>
 			</div>   
 		    <input style="display:none;" name="content">
-		    <input type="button" value="<spring:message code="updategroup.import"/>" style="margin-left:70px;width:60px;" onclick="CSVfile.click()"/>
+		    <input title="<spring:message code="updategroup.importnotes"/>" type="button" value="<spring:message code="updategroup.import"/>" style="margin-left:70px;width:60px;" onclick="CSVfile.click()"/>
 			<input type="file" id="CSVfile" name="CSVfile" onchange="importCSV()"style="width:0px;filter:alpha(opacity=0);-moz-opacity:0;opacity:0;" size="0"  />
 		<div id="option_error" style="padding-left:170px;display:none"></div>
 		</td>
