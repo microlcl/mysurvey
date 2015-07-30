@@ -26,7 +26,7 @@
 	<insert id="save" parameterType="java.util.Map" >
 	    insert into survey_receivers(survey_id,user_id,nickName,status,update_timestamp) values
             <foreach collection="surveyReceivers"  item="item" index="index" separator=",">  
-               (#{item.surveyId},#{item.userId},#{item.nickName},#{item.status},#{item.update_timeStamp})
+               (#{item.surveyId},#{item.userId},#{item.nickName},#{item.status},now())
             </foreach>
 	</insert>
 	

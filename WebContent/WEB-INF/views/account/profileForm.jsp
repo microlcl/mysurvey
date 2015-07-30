@@ -24,7 +24,8 @@
 			<div class="control-group">
 				<label for="loginName" class="control-label"><spring:message code="register.loginname"/></label>
 				<div class="controls">
-					<input value="${user.id}" disabled="disabled" type="email" id="id" name="id" class="input-large required"/>
+					<input value="${user.id}" disabled="disabled" type="email" id="id" class="input-large required"/>
+					<input value="${user.id}" type="hidden" id="id" name="id"/>
 				</div>
 			</div>
 			<div class="control-group">
