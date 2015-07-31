@@ -137,10 +137,10 @@
 							<c:if test="${paper.status.id!='1-0-1-2'}">	
 							<mytag:PermssionTag functionId="F8-4"><a href="${ctx}/paper/delete/${paper.id}" id="deleteLink-${paper.id}"><i class="icon-remove"></i><spring:message code="paper.delete"/></a>&nbsp;&nbsp;</mytag:PermssionTag>
 							</c:if>
-							<c:if test="${paper.status.id!='1-0-1-1'}">
+							<%-- <c:if test="${paper.status.id!='1-0-1-1'}"> --%>
 							<!-- 		<mytag:PermssionTag functionId="F8-5"><button type="button" class="btn btn-danger" id="publishbutton-${paper.id}" onclick="location.href='${ctx}/paper/publish/${paper.id}'" style="padding: 0 12px !important; margin-left: 20px;"><i class="icon-share-alt" style="margin-right: 5px;"></i>发布问卷</button></mytag:PermssionTag> -->
 								<mytag:PermssionTag functionId="F8-5"><a href="${ctx}/survey/createSurvey/${paper.id}" id="showLink-${paper.id}"><i class="icon-share-alt"></i> <spring:message code="paper.createsurvey"/></a></mytag:PermssionTag>
-							</c:if>
+							<%-- </c:if> --%>
 						</td>
 					</tr>
 				</c:forEach>
