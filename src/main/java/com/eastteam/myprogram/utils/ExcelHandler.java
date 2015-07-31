@@ -111,8 +111,14 @@ public class ExcelHandler {
     		curCol ++;
     		bodyCell = bodyRow.createCell(curCol);
     		bodyCell.setCellStyle(bodyStyle);
-    		bodyCell.setCellValue(receivers.get(answerList.get(0).getUserId()).getGroupName());
-    		receivers.remove(answerList.get(0).getUserId());
+    		if (receivers != null) {
+    			bodyCell.setCellValue(receivers.get(answerList.get(0).getUserId()).getGroupName());
+    			receivers.remove(answerList.get(0).getUserId());
+    		} else {
+    			bodyCell.setCellValue("None");
+    		}
+    		
+    		
     		curCol ++;
     		
     		for (Question question : questions) {
@@ -129,7 +135,7 @@ public class ExcelHandler {
     			curCol ++;
     		}
     	}
-		if (receivers.size() != 0) {
+		if (receivers != null && receivers.size() != 0) {
 			Iterator it = receivers.keySet().iterator();
 	    	while(it.hasNext()) {
 	    		bodyRow = sheet.createRow(rowIndex);

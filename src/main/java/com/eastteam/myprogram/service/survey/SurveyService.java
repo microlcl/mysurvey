@@ -2,6 +2,7 @@ package com.eastteam.myprogram.service.survey;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -346,20 +347,34 @@ public class SurveyService extends PageableService {
 			
 			answers.get(answer.getUserId()).add(answer);
 		}
-		
-		for(String groupId : groupsId) {
-			Group group=myGroupMybatisDao.getSelectedGroup(Long.parseLong(groupId));
-			group.setGitems();
-			for(String[] gitem : group.getGitems()){
-				SurveyReceiver surveyReceiver = new SurveyReceiver();
-				if(!receivers.containsKey(gitem[1])){
-					receivers.put(gitem[1],group);
+		if (survey.getGroupsId() != null && survey.getGroupsId() !="") {
+			System.out.println(survey.getGroupsId()+"********");
+			for(String groupId : groupsId) {
+				Group group=myGroupMybatisDao.getSelectedGroup(Long.parseLong(groupId));
+				group.setGitems();
+				for(String[] gitem : group.getGitems()){
+					SurveyReceiver surveyReceiver = new SurveyReceiver();
+					if(!receivers.containsKey(gitem[1])){
+						receivers.put(gitem[1],group);
+					}
 				}
 			}
+		} else {
+			receivers = null;
 		}
+		
 		boolean isAnonymous = survey.getIsAnonymous().endsWith("T");
 		
 		ExcelHandler.doExprt(isAnonymous,questions, answers, out, receivers);
+	}
+	
+	public void saveWithoutGroup(Map<String, Object> map) {
+		SurveyReceiver surveyreceiver = new SurveyReceiver();
+		surveyreceiver.setSurveyId(Long.valueOf(map.get("surveyId").toString()));
+		surveyreceiver.setUserId(map.get("userId").toString());
+		surveyreceiver.setUpdate_timeStamp(new Date());
+		surveyreceiver.setStatus("1");
+		surveyReceiverMybatisDao.saveWithoutGroup(surveyreceiver);
 	}
 }
  

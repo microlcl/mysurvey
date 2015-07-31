@@ -30,6 +30,12 @@
             </foreach>
 	</insert>
 	
+	<insert id="saveWithoutGroup" parameterType="SurveyReceiver" >
+	    insert into survey_receivers(survey_id,user_id,status,update_timestamp) values
+         
+               (#{surveyId},#{userId},#{status},now())
+            
+	</insert>
 	
 	<update id="update" parameterType="SurveyReceiver">
 	    update survey_receivers

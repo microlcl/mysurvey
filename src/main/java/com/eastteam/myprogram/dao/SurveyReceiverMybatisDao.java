@@ -12,4 +12,5 @@ public interface SurveyReceiverMybatisDao {
 	public void delete(Map<String, Object> map);
 	public SurveyReceiver getPointedSurveyReceiver(Map<String, Object> map);
 	public List<SurveyReceiver> allSurveysByUser(String userId);
+	public void saveWithoutGroup(SurveyReceiver surveyreceiver);
 }

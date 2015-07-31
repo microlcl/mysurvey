@@ -307,6 +307,8 @@ public class SurveyController {
 				surveyReceiver.setStatus("1");
 				surveyReceiver.setUpdate_timeStamp(new Date());
 				surveyService.upDateAssociatedReceivers(surveyReceiver);
+			} else {
+				surveyService.saveWithoutGroup(map);
 			}
 			surveyService.saveAction(answers);
 			logger.info("user:"+((User)session.getAttribute("user")).getId()+" sumbitted an answer of survey:"+request.getParameter("surveyId"));
@@ -406,6 +408,7 @@ public class SurveyController {
 				receivers += surveyReceiver.getUserId()+",";
 			}
 		}
+		
 		
 		logger.info("receiver numbers:" + surveyReceivers.size());
 		
