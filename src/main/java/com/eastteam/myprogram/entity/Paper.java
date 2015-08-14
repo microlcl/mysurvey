@@ -3,6 +3,7 @@
  */
 package com.eastteam.myprogram.entity;
 
+import java.util.Date;
 import java.util.List;
 
 
@@ -17,8 +18,16 @@ public class Paper extends IdEntity {
 	private Category status;
 	private List<Question> questions;
 	private User creater;
+	private Date createDate;
 	
 	
+	
+	public Date getCreateDate() {
+		return createDate;
+	}
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
+	}
 	public String getPaperName() {
 		return paperName;
 	}

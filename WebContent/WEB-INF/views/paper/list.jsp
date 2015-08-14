@@ -3,6 +3,7 @@
 <%@ taglib prefix="tags" tagdir="/WEB-INF/tags" %>
 <%@ taglib uri="http://com.eastteam.myprogram/mytaglib" prefix="mytag" %>
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
 <html>
 <head>
@@ -114,6 +115,7 @@
 				<tr>
 					<th><spring:message code="paper.papername"/></th>
 					<th><spring:message code="paper.papertype"/></th>
+					<th><spring:message code="paper.create.date"/></th>
 					<th><spring:message code="paper.paperstatus"/></th>
 					<th><spring:message code="paper.operation"/></th>
 				</tr>
@@ -122,7 +124,8 @@
 				<c:forEach items="${papers.content}" var="paper">
 					<tr>
 						<td>${paper.paperName}&nbsp;</td>
-						<td>${paper.businessType.name}&nbsp;</td>						
+						<td>${paper.businessType.name}&nbsp;</td>		
+						<td><fmt:formatDate value="${paper.createDate}" pattern="yyyy/MM/dd  HH:mm:ss"/>&nbsp;</td>				
 						<td>${paper.status.name}&nbsp;</td>
 						<td>
 							<mytag:PermssionTag functionId="F8-6"><a href="${ctx}/paper/show/${paper.id}" id="showLink-${paper.id}"><i class="icon-folder-open"></i> <spring:message code="paper.show"/></a>&nbsp;&nbsp;</mytag:PermssionTag>

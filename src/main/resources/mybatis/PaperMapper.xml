@@ -5,6 +5,7 @@
 	<resultMap id="paperDetailMap" type="Paper">
 		<id property="id" column="paper_id"/>
 		<result property="paperName" column="paper_name"/>
+		<result property="createDate" column="creat_timestamp"/>
 		<association property="businessType" javaType="Category">
 			<id property="id" column="cb_id" />
 			<result property="name" column="cb_name" />
@@ -17,7 +18,7 @@
 		</collection>
 	</resultMap>
 	<select id="search" parameterType="map" resultMap="paperDetailMap">
-		select p.paper_id, p.paper_name, cb.id as cb_id, cb.name as cb_name, cs.id as cs_id, cs.name as cs_name
+		select p.paper_id, p.paper_name, p.creat_timestamp ,cb.id as cb_id, cb.name as cb_name, cs.id as cs_id, cs.name as cs_name
 		from papers p
 		left join category cb on p.business_type=cb.id		
 		left join category cs on p.status=cs.id
