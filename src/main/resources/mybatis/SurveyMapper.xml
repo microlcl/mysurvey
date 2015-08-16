@@ -43,13 +43,13 @@
 		    <if test="groupId != null">
 		        and s.groups_id = #{groupId}
 		    </if>
-		    <if test="sort != null">
-				order by ${sort}
-			</if>
-			<if test="offset != null">
-				limit #{offset}, #{pageSize}
-			</if>
 		</where> 
+		<if test="sort != null">
+			order by ${sort}
+		</if>
+		<if test="offset != null">
+			limit #{offset}, #{pageSize}
+		</if>
 	</select>	
 	<select id="getCount" parameterType="map" resultType="Long">
 		select count(0) from survey s  
