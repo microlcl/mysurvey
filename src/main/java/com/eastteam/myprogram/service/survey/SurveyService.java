@@ -318,8 +318,30 @@ public class SurveyService extends PageableService {
 //		return true;
 	}
 	
-	public List<SurveyReceiver> getAssociatedReceivers(Map<String, Object> map){
-		return surveyReceiverMybatisDao.search(map);
+//	public List<SurveyReceiver> getAssociatedReceivers(Map<String, Object> map){
+//		return surveyReceiverMybatisDao.search(map);
+//	}
+	
+	public List<SurveyReceiver> getAssociatedReceivers(Map<String, Object> map,Pageable pageRequest){
+		Map param = Maps.newHashMap(map);
+		param.put("offset", pageRequest.getOffset());
+		param.put("pageSize", pageRequest.getPageSize());
+		param.put("sort", this.getOrderValue(pageRequest.getSort()));
+		return surveyReceiverMybatisDao.search(param);
+	}
+	
+	public Page getCurrentPageContentInReceivers(Map parameters, int pageNumber, int pageSize, String sort) {
+		Pageable pageRequest = new PageRequest(pageNumber-1, pageSize, new Sort(sort));
+		
+		List list = getAssociatedReceivers(parameters, pageRequest);
+		Long count = getReceiverCount(parameters);
+		Page contents = new PageImpl(list, pageRequest, count);
+		
+		return contents;
+	}
+	
+	public Long getReceiverCount(Map parameters) {
+		return this.surveyReceiverMybatisDao.getCount(parameters);
 	}
 	
 	public void upDateAssociatedReceivers(SurveyReceiver surveyReceiver){
