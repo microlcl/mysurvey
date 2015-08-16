@@ -12,7 +12,25 @@
 	</resultMap>
     
 	<select id="search" parameterType="map" resultMap="surveyReceiverDetailMap">
-		select a.survey_id, a.user_id, a.nickName, a.status ,a.update_timestamp from survey_receivers a where a.survey_id = #{surveyId}
+		select a.survey_id, a.user_id, a.nickName, a.status ,a.update_timestamp from survey_receivers a 
+		<where>
+			a.survey_id = #{surveyId}
+		</where>
+		<if test="sort != null">
+			order by ${sort}
+		</if>
+		<if test="offset != null">
+			limit #{offset}, #{pageSize}
+		</if>
+	</select>
+	
+	<select id="getCount" parameterType="map" resultType="Long">
+		select count(0) from survey_receivers a
+		<where>
+			<if test="surveyId != null">
+				a.survey_id = #{surveyId}
+			</if>
+		</where>
 	</select>
 	
 	<select id="getPointedSurveyReceiver" parameterType="map" resultMap="surveyReceiverDetailMap">
