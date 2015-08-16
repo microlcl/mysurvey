@@ -13,4 +13,5 @@ public interface SurveyReceiverMybatisDao {
 	public SurveyReceiver getPointedSurveyReceiver(Map<String, Object> map);
 	public List<SurveyReceiver> allSurveysByUser(String userId);
 	public void saveWithoutGroup(SurveyReceiver surveyreceiver);
+	public Long getCount(Map<String, Object> map);
 }
