@@ -60,12 +60,12 @@ function sendNoti(){
 	</h1>
 	<div  style="padding:20px;">
 		<ul class="nav nav-tabs" id="titleTab">
-		    <li class="active"><a href="#statistic" data-toggle="tab"><spring:message code="survey.statistic.statistictab"/></a></li>
-		    <li><a href="#submitted" data-toggle="tab"><spring:message code="survey.statistic.seeparticipation"/></a></li>
+		    <li><a href="#statistic" data-toggle="tab"><spring:message code="survey.statistic.statistictab"/></a></li>
+		    <li class="active"><a href="#submitted" data-toggle="tab"><spring:message code="survey.statistic.seeparticipation"/></a></li>
 	    </ul>
 	    
 	    <div id="titleTabContent" class="tab-content" style="padding:20px;">
-		   <div class="tab-pane fade in active" id="statistic">
+		   <div class="tab-pane fade" id="statistic">
 		      <c:forEach items="${questions}" var="question" varStatus="status">
 		      	<div id="question" >
                   <div class="accordion-heading">
@@ -104,7 +104,7 @@ function sendNoti(){
                    </div>
 		      </c:forEach>
 		   </div>
-		   <div class="tab-pane fade" id="submitted">
+		   <div class="tab-pane fade in active" id="submitted">
 		   		
 		   		
 		   		<c:if test="${survey.status=='1-0-3-1' || survey.status=='1-0-3-2'}">
@@ -189,6 +189,7 @@ function sendNoti(){
 							</div>
 						</div>
 					</div>
+					<tags:pagination page="${surveyReceiversDefinedByPage}" paginationSize="4"/>
 				</form>
 			</c:if>
 		   </div>
