@@ -63,6 +63,7 @@ public class SurveyController {
 	
 	private static final String APPPATH="AppPath";
 	private static final String SURVEYPATH="SurveyPath";
+	private static final String SORT_BY = "update_timestamp";
 	
 	private static Logger logger = LoggerFactory.getLogger(SurveyController.class);
 	
@@ -392,17 +393,19 @@ public class SurveyController {
 	}
 	
 	@RequestMapping(value = "statistic/{id}", method = RequestMethod.GET)
-	public String answerStatistics(@PathVariable("id") String surveyId,Model model,HttpSession session) {
+	public String answerStatistics(@PathVariable("id") String surveyId,
+			@RequestParam(value = "page", defaultValue = "1") int pageNumber,
+			Model model,HttpSession session) {
 		
 		Survey survey = surveyService.selectSurvey(surveyId);
 		List<Question> questions = answerService.answerStatisticsBySurvey(survey);
 		Set<String> answerIds = answerService.allAnswererIdsBySurvey(surveyId);
 		
-		List<SurveyReceiver> surveyReceivers=new ArrayList<SurveyReceiver>();
-		String receivers="";
+		String receivers = "";
 		Map<String, Object> map=new HashMap<String, Object>();
 		map.put("surveyId", survey.getId());
-		surveyReceivers=surveyService.getAssociatedReceivers(map);
+		Page<SurveyReceiver> surveyReceiversDefinedByPage = surveyService.getCurrentPageContentInReceivers(map, pageNumber, Integer.parseInt(configProperties.getProperty("receiver.pagesize")), SORT_BY);
+		List<SurveyReceiver> surveyReceivers = surveyReceiversDefinedByPage.getContent();
 		for(SurveyReceiver surveyReceiver : surveyReceivers){
 			if(surveyReceiver.getStatus().equals("0")){
 				receivers += surveyReceiver.getUserId()+",";
@@ -412,6 +415,7 @@ public class SurveyController {
 		
 		logger.info("receiver numbers:" + surveyReceivers.size());
 		
+		model.addAttribute("surveyReceiversDefinedByPage",surveyReceiversDefinedByPage);
 		model.addAttribute("surveyReceivers",surveyReceivers);
 		model.addAttribute("receivers",receivers);
 		model.addAttribute("questions", questions);
