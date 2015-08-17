@@ -333,7 +333,14 @@ public class SurveyController {
 		//检查是否有权限参与调查
 		if(!surveyService.selectSurvey(surveyId).getGroupsId().equals("")){
 			Map<String, Object> map = new HashMap<String, Object>();
-			map.put("userId", ((User)session.getAttribute("user")).getId());
+			//defect 102: 
+			String userId = "";
+			if (request.getParameter("userId")== null) {
+				userId = ((User)session.getAttribute("user")).getId();
+			} else {
+				userId = request.getParameter("userId");
+			}
+			map.put("userId", userId);
 			map.put("surveyId", surveyId);
 			if(surveyService.getPointedSurveyReceiver(map)==null){
 				return "error/401"; 
