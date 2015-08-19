@@ -85,4 +85,8 @@ public class PropertiesController {
 	protected String getEmailFrom() {
 		return configProperties.getProperty("SystemEmailFrom");
 	}
+	
+	protected String useLDAP() {
+		return configProperties.getProperty("useLDAP");
+	}
 }

@@ -23,12 +23,12 @@ import com.eastteam.myprogram.entity.Role;
 import com.eastteam.myprogram.entity.User;
 import com.eastteam.myprogram.service.account.AccountService;
 import com.eastteam.myprogram.service.role.RoleService;
+import com.eastteam.myprogram.web.PropertiesController;
 import com.eastteam.myprogram.web.WebUtils;
 
 @Controller
 @RequestMapping(value = "/login")
-public class LoginController {
-	
+public class LoginController extends PropertiesController {	
 	
 	@Autowired
 	AccountService accountService;
@@ -38,15 +38,19 @@ public class LoginController {
 	private static Logger logger = LoggerFactory.getLogger(LoginController.class);
 	
 	@RequestMapping(method = RequestMethod.GET)
-	public String login() {
+	public String login(HttpSession session) {
 		logger.info("in log controller");
+		logger.info("useLDAP=" + useLDAP());
+		session.setAttribute("useLDAP", useLDAP());
 		return "account/login";
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
 	public String login(User loginuser, HttpSession session, HttpServletRequest request,RedirectAttributes redirectAttributes,HttpServletResponse response) {
 		logger.debug("in log controller. user " + loginuser.getId() + ",password=" + loginuser.getPlainPassword());
-		User u = accountService.getUserByIdPwd(loginuser.getId(), loginuser.getPlainPassword());
+		boolean useLDAP = false;
+		if(useLDAP().equalsIgnoreCase("true")) useLDAP = true;
+		User u = accountService.getUserByIdPwd(loginuser.getId(), loginuser.getPlainPassword(), useLDAP);
 		RequestContext requestContext = new RequestContext(request);
 		if (u == null) {
 			redirectAttributes.addFlashAttribute("message", requestContext.getMessage("login.error"));

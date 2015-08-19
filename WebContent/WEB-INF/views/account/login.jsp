@@ -68,10 +68,15 @@ try{
 				<div class="controls">
 					<label class="checkbox" for="rememberMe"><input
 						type="checkbox" id="rememberMe" name="rememberMe" <%if(flag!=null && flag.equals("1") ){%> checked  <%}%> /> <spring:message code="login.rememberme"/></label> 
+						<c:if test="${useLDAP != 'true'}">
 						<label><a href="${ctx}/account/reset"">Forgot password</a></label>
+						</c:if>
 						<input
 						id="submit_btn" class="btn btn-primary" type="submit" value='<spring:message code="login.signin"/>' />
+						<c:if test="${useLDAP != 'true'}">
 						<a class="btn" href="${ctx}/account/register">Sign Up</a>
+						</c:if>
+						
 				</div>
 			</div>
 		</c:if>
