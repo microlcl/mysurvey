@@ -115,7 +115,8 @@
 				search_categoryId:$('#categorySelector').combotree('getValues'),
 				search_keyword : $('#searchKeyword').val(),
 				search_trashed : 'F',
-				search_userId : "${user.id}"
+				search_userId : "${user.id}",
+				sortType:"creat_timestamp DESC"
 			},
 
 			success : function(resp) {
