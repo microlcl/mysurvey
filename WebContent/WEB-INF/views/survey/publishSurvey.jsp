@@ -296,12 +296,11 @@
 					 </c:if>
 				</div>
 				<div class="control-group">
-			    <c:if test="${survey.status=='1-0-3-1' && survey.groupsString==''}">
-				<label for="question" class="control-label formlabel"><spring:message code="survey.publishsurvey.url"/></label>
-				    <div class="controls" style="width:550px">
-				   ${url}
-				    </div>
-				</c:if>	 
+					<c:if test="${survey.status=='1-0-3-1' && survey.groupsString==''}">
+						<label for="question" class="control-label formlabel"><spring:message
+								code="survey.publishsurvey.url" /></label>
+						<div class="controls" style="width: 550px">${url}</div>
+					</c:if>
 				</div>
 				<input type="text" name="surveyGroup" id="surveyGroup" style="display:none;">
 				<input type="hidden" name="isPublish" id="isPublish" value="${isPublish }">

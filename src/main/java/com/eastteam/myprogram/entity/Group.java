@@ -4,20 +4,26 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-/**
- * @author gongbinfeng
- *
- */
+
 public class Group extends IdEntity{
 	private String groupName;
 	private String comment;
 	private String content;
 	private Date editDate;
 	private User creater;
+	private String trashed;
 	private List<String []> gitems;
 	private String flagString = "none";
 	private List<GroupMember> groupMembers;
 	
+	
+	
+	public String getTrashed() {
+		return trashed;
+	}
+	public void setTrashed(String trashed) {
+		this.trashed = trashed;
+	}
 	public String getFlagString() {
 		return flagString;
 	}

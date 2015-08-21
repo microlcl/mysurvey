@@ -23,9 +23,9 @@
 	
 	
 	<select id="search" parameterType="String" resultMap="myGroupDetailMap">
-	   select g.group_id, g.group_name, g.comment, g.content , g.edit_date,g.user_id as creater_name from groups g
+	   select g.group_id, g.group_name, g.comment, g.content , g.edit_date,g.user_id,g.trashed as creater_name from groups g
 		<where>
-		  g.user_id=#{userId}
+		  g.user_id=#{userId} and g.trashed='F'
 		</where>
 		order by g.group_id
 	</select>
@@ -40,12 +40,12 @@
 		where group_id=#{id}
 	</update>
 	
-	<delete id="deleteGroup" parameterType="Long">
-		delete from groups where group_id=#{id}
+	<delete id="deleteGroup" parameterType="Group">
+		update groups set trashed='T' where group_id=#{id}
 	</delete>
 	
 	<select id="getSelectedGroup" parameterType="Long" resultMap="myGroupDetailMap">
-	    select group_id , group_name, comment, content, edit_date from groups where group_id=#{id}
+	    select group_id , group_name, comment, content, edit_date,trashed from groups where group_id=#{id}
 	</select>
 	
 	<select id="allGroupsByUser" parameterType="String" resultMap="myGroupDetailMap">

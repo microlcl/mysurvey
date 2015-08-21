@@ -94,7 +94,6 @@
 							<td>${survey.statusString}&nbsp;</td>
 							<td><fmt:formatDate value="${survey.updateTimestamp}"
 									pattern="yyyy-MM-dd   HH:mm" />&nbsp;</td>
-
 							<td><c:set var="gpString_ids" value="${survey.groupsString}" />
 								<c:set var="gpString" value="${fn:split(gpString_ids, ',')}" />
 								<c:forEach items="${survey.groupsId}" var="groupId"

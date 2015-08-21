@@ -96,13 +96,19 @@
 	</script>
 </head>
 <body>
-	<form  id="inputForm" onsubmit="return sub()" action="${ctx}/myGroup/updateGroup" method="post" class="form-horizontal" enctype="multipart/form-data">
-	<div class="form">
+<c:choose>
+
+
+<c:when test="${group.trashed =='F' }">
+	<form  id="inputForm" onsubmit="return sub()" action="${ctx}/myGroup/updateGroup" method="post" class="form-horizontal" enctype="multipart/form-data"  >
+	<div class="form" >
 	<h1><spring:message code="updategroup.title"/></h1>
 	<table>
+	
 	 <tbody>
 	  <tr valign="top">
 	    <td>
+	   
 	    <div id="warning-block" class="alert alert-error hide" style="width:300px;margin-left:130px"><strong><spring:message code="updategroup.warning1"/></strong> <spring:message code="updategroup.warning2"/></div>
 		<div class="control-group">
 				<label for="question" class="control-label formlabel"><spring:message code="updategroup.groupname"/></label>
@@ -151,5 +157,11 @@
 		</div>
 	</div>
 </form>
+</c:when>
+<c:otherwise>
+<h2><spring:message code="group.trashed"/></h2>
+<p><a href="javascript:window.history.back();"><spring:message code="error.back"/></a></p>
+</c:otherwise>
+</c:choose>
 </body>
 </html>
