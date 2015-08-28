@@ -49,6 +49,15 @@ $(document).ready(function(){
 	body {
     	background: none repeat scroll 0 0 #F2F2F2 !important;
 	}
+	
+	.appTitle {
+		font-weight:bold;
+		color: #1a445c;
+	}
+	
+	.appSubTitle {
+		color: #1a445c;
+	}
 </style>
 
 <sitemesh:head/>
