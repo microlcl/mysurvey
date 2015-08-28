@@ -6,7 +6,11 @@
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
 <div id="header">
 	<div id="title">
-	    <h1><a href="${ctx}"><spring:message code="app.title"/></a><small>--<spring:message code="app.subTitle"/> </small>
+	    <h1><img src="${ctx}/static/images/Logo.jpg" width="10%" class="img-responsive" alt="MS">
+	    	<small>
+			<span class="appTitle"><spring:message code="app.title"/> -- </span>
+			<span class="appSubTitle"><spring:message code="app.subTitle"/></span>
+		</small>
 	    	<c:if test="${not empty user.id}">
 			    <div class="btn-group pull-right">
 					<a class="btn dropdown-toggle" data-toggle="dropdown" href="#"> <i
