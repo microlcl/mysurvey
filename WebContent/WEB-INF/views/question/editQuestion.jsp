@@ -19,7 +19,7 @@
 	$(document).ready(function(){
 		$("#myquestion-tab").addClass("active");
 		
-		if($('input[name="questionType"]:checked').val() == "3"){
+		if("${question.questionType}" == "3"){
 			$("#options").hide();
 		}
 			
