@@ -173,7 +173,7 @@ function sendNoti(){
 								</c:forEach>
 									<c:if test="${(survey.status=='1-0-3-1')&& receivers!=''}">
 									<input type="text" name="surveyId" value="${survey.id }" style="display:none;">
-				                    <input type="text" name="subject" value="<spring:message code="survey.statistic.subject1"/>${survey.userId}<spring:message code="survey.statistic.subject2"/>${survey.subject}<spring:message code="survey.statistic.subject3"/>" style="display:none;"> 
+				                    <input type="text" name="subject" value="<spring:message code="survey.statistic.subject2"/>${survey.subject}<spring:message code="survey.statistic.subject3"/>" style="display:none;"> 
 				                    <input type="text" name="receivers" value="${receivers }" style="display:none;">
 				                    <input type="text" name="URL" value="${survey.paperURL }" style="display:none;">
 				                    </c:if>
