@@ -6,7 +6,7 @@
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
 <div id="header">
 	<div id="title">
-	    <h1><img src="${ctx}/static/images/Logo.jpg" width="10%" class="img-responsive" alt="MS">
+	    <h1><img src="${ctx}/static/images/logo.png" width="10%" class="img-responsive" alt="MS">
 	    	<small>
 			<span class="appTitle"><spring:message code="app.title"/> -- </span>
 			<span class="appSubTitle"><spring:message code="app.subTitle"/></span>
